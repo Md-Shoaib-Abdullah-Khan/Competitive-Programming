@@ -1,0 +1,48 @@
+#include<stdio.h>
+int main()
+{
+    long long int a,b,c=0,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z;
+    scanf("%lld",&t);
+    for(i=0;i<t;i++)
+    {r=0;
+        scanf("%lld%lld",&a,&b,&c,&d);
+        c=a;
+        d=b;
+        if(a>=b)
+        {
+                n=a;
+                m=b;
+        }
+        else
+        {
+            n=b;
+            m=a;
+        }
+        a=n;
+        b=m;
+        if(c>=d)
+        {
+                n=c;
+                m=d;
+        }
+        else
+        {
+            n=d;
+            m=c;
+        }
+        c=n;
+        d=m;
+        if(c>=a){r=c;}
+        else{r=a;}
+
+        if(r>=b+d)
+        {
+                r=r*r;
+        }
+         else
+        {
+                r=(b+d)*(b+d);
+        }
+        printf("%lld\n",r);
+    }
+}
