@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -58,80 +58,49 @@ void dbg_out(Head H, Tail... T) {
 
 void solve()
 {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
-
+    ll a, b;
 cin>>n;
 
-   char y[n+1][n+1];
-   long long int a[2],b[2],k=0;
-   for(i=0;i<n;i++)
-   {
-       scanf("%s",y[i]);
-   }
-   for(i=0;i<n;i++)
-   {
+    ll x[n+2],ans=-1,sum=0;
+    bool space=false;
 
-           printf("%s\n",y[i]);
+    for(i=0;i<n+2;i++)
+    {
+        cin>>x[i];
+        sum += x[i];
+    }
+    sort(x,x+n+2);
 
 
-   }
+    sum-=x[n+1];
 
-   for(i=0;i<n;i++)
-   {
-       for(j=0;j<n;j++)
-       {
-           if(y[i][j]=='*')
-           {
-               a[k]=i;
-               b[k]=j;
-               k++;
-           }
-       }
-   }
-   if(k==1)
-   {
-       for(i=0;i<n;i++)
-   {
-       for(j=0;j<n;j++)
-       {
-           cout<<y[i][j];
-       }
-       cout<<endl;
-   }
-   return;
-   }
-   if(a[0]!=a[1]&&b[0]!=b[1])
-   {
-       y[a[0]][b[1]] = '*';
-       y[a[1]][b[0]] = '*';
-   }
-   else if(a[0]==a[1])
-   {
+    for(i=0;i<n+1;i++)
+    {
+        if(sum-x[i]==x[n+1]||sum-x[i]==x[i])
+        {
+            ans = i;
+            break;
+        }
+    }
+    if(ans==-1)
+    {
+        cout<<"-1"<<endl;
+        return;
+    }
+    for(i=0;i<n+1;i++)
+    {
+        if(i!=ans)
+        {
+            if(space)cout<<" ";
+            cout<<x[i];
+            space=true;
+        }
+    }
+    cout<<endl;
 
-       if(a[0]+1<n)
-       {
-           y[a[0]+1][b[0]] = '*';
-           y[a[1]+1][b[1]] = '*';
-       }
-       else
-       {
-           y[a[0]-1][b[0]] = '*';
-           y[a[1]-1][b[1]] = '*';
-       }
-   }
-   else if(b[0]==b[1])
-   {
 
-       if(b[0]+1<n)
-       {
-           y[a[0]][b[0]+1] = '*';
-           y[a[1]][b[1]+1] = '*';
-       }
-       else
-       {
-           y[a[0]][b[0]-1] = '*';
-           y[a[1]][b[1]-1] = '*';
-       }
-   }
+
+
 
 
 

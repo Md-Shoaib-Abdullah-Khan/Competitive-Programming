@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -57,81 +57,66 @@ void dbg_out(Head H, Tail... T) {
 //----------------------------------------------------------------
 
 void solve()
-{long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
+{long long int  i,j,w,h,m,ma,e,t,tt,x5,y5;
+    ll a=0, b,k;
+    ll n,l,r,s;
 
-cin>>n;
+    cin>>n>>l>>r>>s;
 
-   char y[n+1][n+1];
-   long long int a[2],b[2],k=0;
-   for(i=0;i<n;i++)
-   {
-       scanf("%s",y[i]);
-   }
-   for(i=0;i<n;i++)
-   {
+    ll y[n],z[n+1];
 
-           printf("%s\n",y[i]);
+    for(i=0;i<n;i++)y[i]=-1;
+    for(i=0;i<n+1;i++)z[i]=1;
 
 
-   }
+    for(i=n;i>0;i--)
+    {   vector <ll> x;
+        a=0;
+        b=0;
+        for(j=i;j>0;j--)
+        {
+            if(a+j<=s)a+=j,b++,x.pb(j);
 
-   for(i=0;i<n;i++)
-   {
-       for(j=0;j<n;j++)
-       {
-           if(y[i][j]=='*')
-           {
-               a[k]=i;
-               b[k]=j;
-               k++;
-           }
-       }
-   }
-   if(k==1)
-   {
-       for(i=0;i<n;i++)
-   {
-       for(j=0;j<n;j++)
-       {
-           cout<<y[i][j];
-       }
-       cout<<endl;
-   }
-   return;
-   }
-   if(a[0]!=a[1]&&b[0]!=b[1])
-   {
-       y[a[0]][b[1]] = '*';
-       y[a[1]][b[0]] = '*';
-   }
-   else if(a[0]==a[1])
-   {
+            if(a==s)break;
+        }
+        if(b==abs(l-r)+1)
+        {
+        for(j=l-1,k=0;j<=r-1;j++,k++)
+        {
+        y[j] = x[k];
 
-       if(a[0]+1<n)
-       {
-           y[a[0]+1][b[0]] = '*';
-           y[a[1]+1][b[1]] = '*';
-       }
-       else
-       {
-           y[a[0]-1][b[0]] = '*';
-           y[a[1]-1][b[1]] = '*';
-       }
-   }
-   else if(b[0]==b[1])
-   {
+        z[x[k]]=0;
+        }
+        for(k=1;k<=n;k++)
+        {
+            if(z[k]==1)
+            {
 
-       if(b[0]+1<n)
-       {
-           y[a[0]][b[0]+1] = '*';
-           y[a[1]][b[1]+1] = '*';
-       }
-       else
-       {
-           y[a[0]][b[0]-1] = '*';
-           y[a[1]][b[1]-1] = '*';
-       }
-   }
+                z[k] =0;
+                for(j=0;j<n;j++)
+                {
+                    if((j<l-1||j>r-1)&&y[j]==-1) y[j] = k;
+                }
+            }
+        }
+        for(j=0;j<n;j++)
+        {
+            if(j>0) cout<<" ";
+            cout<<y[j];
+        }
+        cout<<endl;
+        return;
+        }
+
+    }
+
+
+
+
+
+
+
+
 
 
 

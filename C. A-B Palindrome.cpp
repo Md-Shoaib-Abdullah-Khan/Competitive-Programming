@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -58,80 +58,75 @@ void dbg_out(Head H, Tail... T) {
 
 void solve()
 {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
+    ll a, b;
+cin>>a>>b;
 
-cin>>n;
+    char x[mod];
 
-   char y[n+1][n+1];
-   long long int a[2],b[2],k=0;
-   for(i=0;i<n;i++)
-   {
-       scanf("%s",y[i]);
-   }
-   for(i=0;i<n;i++)
-   {
-
-           printf("%s\n",y[i]);
+    cin>>x;
 
 
-   }
 
-   for(i=0;i<n;i++)
-   {
-       for(j=0;j<n;j++)
-       {
-           if(y[i][j]=='*')
-           {
-               a[k]=i;
-               b[k]=j;
-               k++;
-           }
-       }
-   }
-   if(k==1)
-   {
-       for(i=0;i<n;i++)
-   {
-       for(j=0;j<n;j++)
-       {
-           cout<<y[i][j];
-       }
-       cout<<endl;
-   }
-   return;
-   }
-   if(a[0]!=a[1]&&b[0]!=b[1])
-   {
-       y[a[0]][b[1]] = '*';
-       y[a[1]][b[0]] = '*';
-   }
-   else if(a[0]==a[1])
-   {
+    for(i=0,j=strlen(x)-1;i<j;i++,j--)
+    {
 
-       if(a[0]+1<n)
-       {
-           y[a[0]+1][b[0]] = '*';
-           y[a[1]+1][b[1]] = '*';
-       }
-       else
-       {
-           y[a[0]-1][b[0]] = '*';
-           y[a[1]-1][b[1]] = '*';
-       }
-   }
-   else if(b[0]==b[1])
-   {
+        if(x[i]!='?'&&x[j]!='?'&&x[i]!=x[j])
+        {
+            cout<<"-1"<<endl;
+            return;
+        }
+        if(x[i]=='0'&&x[j]=='0')
+        {
+            a-=2;
+        }
+        else if(x[i]=='1'&&x[j]=='1')
+        {
+            b-=2;
+        }
+        else if(x[i]=='0'&&x[j]=='?')
+        {
+            x[j]='0';
+            a-=2;
+        }
+        else if(x[i]=='?'&&x[j]=='0')
+            {
+            x[i]='0';
+            a-=2;
+        }
+        else  if(x[i]=='1'&&x[j]=='?')
+        {
+            x[j]='1';
+            b-=2;
+        }
+        else if(x[i]=='?'&&x[j]=='1')
+            {
+            x[i]='1';
+            b-=2;
+        }
+    }
+    for(i=0,j=strlen(x)-1;i<=j;i++,j--)
+    {
+        if(i==j&&x[i]=='?')
+        {
+            if(a>=1)x[i]='0',a--;
+            else x[i]='1',b--;
+        }
+        else if(i==j)
+        {
+            if(x[i]=='0')a--;
+            else b--;
+        }
+        else if(x[i]=='?'&&x[j]=='?')
+        {
+            if(a>=2)x[i]='0',x[j]='0',a-=2;
+            else x[i]='1',x[j]='1',b-=2;
+        }
 
-       if(b[0]+1<n)
-       {
-           y[a[0]][b[0]+1] = '*';
-           y[a[1]][b[1]+1] = '*';
-       }
-       else
-       {
-           y[a[0]][b[0]-1] = '*';
-           y[a[1]][b[1]-1] = '*';
-       }
-   }
+
+    }
+    if(a==0&&b==0)cout<<x<<endl;
+    else cout<<"-1"<<endl;
+
 
 
 
