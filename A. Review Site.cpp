@@ -57,72 +57,16 @@ void dbg_out(Head H, Tail... T) {
 //----------------------------------------------------------------
 
 void solve()
-{long long int  i,j,w,h,m,ma,e,t,tt,x5,y5;
-    ll a=0, b,k;
-    ll n,l,r,s;
-    bool space =false;
-
-    cin>>n>>l>>r>>s;
-
-    long long int y[n+5],z[n+5];
-
-
-    for(i=0;i<n+5;i++)z[i]=1,y[i]=0;
-
-
-    for(i=n;i>0;i--)
-    {   vector <long long int> x;
-        a=0;
-        b=0;
-        for(j=i;j>0;j--)
+{long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
+    ll a=0, b;
+cin>>n;
+        ll x;
+        for(i=0;i<n;i++)
         {
-            if(a+j<=s)a+=j,b++,x.pb(j);
-
-            if(a==s)break;
+            cin>>x;
+            if(x==1||x==3)a++;
         }
-        if(b==abs(l-r)+1&&a==s)
-        {
-
-        for(j=0,k=l;j<b;j++,k++)y[k]=x[j],z[x[j]]=0;
-
-
-    cout<<z[1];
-
-        for(j=1,k=1;j<=n;k++)
-        {
-            if(k<l||k>r)
-            {
-                while(j<=n)
-                {   cout<<z[j]<<endl;
-                    if(z[j])
-                    {
-                        z[j]=0;
-                        y[j]=j;
-                        break;
-                    }
-                    j++;
-                }
-            }
-
-        }
-        for(j=1;j<=n;j++)
-        {
-
-        if(j>1)cout<<" ";
-        cout<<y[j];
-
-        }
-        cout<<endl;
-        return;
-        }
-
-    }
-
-    cout<<"-1"<<endl;
-
-
-
-
+        cout<<a<<endl;
 
 
 
