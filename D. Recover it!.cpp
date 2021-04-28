@@ -60,32 +60,29 @@ void dbg_out(Head H, Tail... T) {
     ll primeCnt=0;
     ll y[200000];
 
+#define forn(i, n) for (int i = 0; i < int(n); i++)
 
-void SieveOfEratosthenes(ll n)
-{
+const int N = 3 * 1000 * 1000 + 13;
 
-    bool prime[n + 1];
-    memset(prime, true, sizeof(prime));
-    memset(y, 0, sizeof(y));
+int lst[N];
+int num[N];
 
-    for (ll p = 2; p * p <= n; p++)
-    {
-        if (prime[p] == true)
-        {
-
-            for (ll i = p * p; i <= n; i += p)
-                prime[i] = false;
-        }
-    }
-
-    for (ll p = 2; p <= n; p++)
-        if (prime[p])
-        {
-            primeCnt++;
-            y[p] = primeCnt;
-            cout << p <<" "<<y[p]<<endl;
-
-        }
+void sieve(){
+	forn(i, N) lst[i] = i;
+	for (int i = 2; i < N; ++i){
+		if (lst[i] != i){
+			lst[i] = i / lst[i];
+			continue;
+		}
+		for (long long j = i * 1ll * i; j < N; j += i)
+			lst[j] = min(lst[j], i);
+	}
+	int cur = 0;
+	for (int i = 2; i < N; ++i) if (lst[i] == i)
+		{
+		    num[i] = ++cur;
+           // cout<<lst[i]<<endl;
+		}
 }
 
     // Print all prime numbers
@@ -121,7 +118,8 @@ ll binarySearch1( ll l, ll r, ll n)
 
 void solve()
 {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
-    ll a, b ,result;
+    ll a, b,k ,result;
+    vector <ll> divisor;
     vector <ll> ans;
     cin>>n;
 
@@ -137,44 +135,79 @@ void solve()
     sort(x.begin(),x.end());
 
 
-    SieveOfEratosthenes(x[n-1]);
+    sieve();
 
-    for(i=n-1;i>=0;i-=2)
-    {
+    for(i=n-1;i>=0;)
+    {cout<<lst[x[i]]<<endl;
 
 
         //cout<<x[i]<<" "<<result+1<<" "<<i<<endl;
 
-        if(y[x[i]])
+        if(lst[x[i]]==x[i])
         {
-            ans.pb(y[x[i]]);
-             ll result = binarySearch1( 0, n - 1, y[x[i]]);
-           // cout<<result<<endl;
-            x[result] = x[i];
-           sort(x.begin(),x.end());
+
+             ll result = binarySearch1( 0, i, num[x[i]]);
+            // cout<<result<<endl;
+             if(result==-1)
+                {a=0;
+
+        bool divided=false;
+            for(k=0;k<divisor.size();k++)
+            {
+                if(divisor[k]%x[i]==0)
+                {
+                    ans.pb(divisor[k]);
+                    x.erase(x.begin()+i-1);
+                    divisor.erase(divisor.begin()+k-1);
+                    divided=true;
+                    i-=2;
+                    break;
+                }
+            }
+            if(divided) continue;
+            divisor.pb(x[i]);
+            i--;
+
+        }
+        else
+            {
+
+                ans.pb(x[result]);
+
+                x.erase(x.begin()+result);
+                x.erase(x.begin()+i-1);
+                i-=2;
+            }
         }
         else
         {a=0;
-        ans.pb(x[i]);
-            for(j=sqrt(x[i]);j>1;j--)
+
+        bool divided=false;
+            for(k=0;k<divisor.size();k++)
             {
-                if(x[i]%j==0)
+                if(divisor[k]%x[i]==0)
                 {
-                    a= max(j,a);
-                    a= max(x[i]/j,a);
+                    ans.pb(divisor[k]);
+                    x.erase(x.begin()+i-1);
+                    divisor.erase(divisor.begin()+k-1);
+                    divided=true;
+                    i-=2;
+                    break;
                 }
             }
-            ll result = binarySearch1( 0, n - 1, a);
-            x[result] = x[i];
-           sort(x.begin(),x.end());
+            if(divided) continue;
+            divisor.pb(x[i]);
+            i--;
+
         }
     }
-
-    for(auto it = ans.begin(); it != ans.end();it++)
+    for(i=0;i<ans.size();i++)
     {
-        if(it!=ans.begin())cout<<" ";
-        cout<<*it;
+        if(i!=0)cout<<" ";
+            cout<<ans[i];
     }
+
+
     cout<<endl;
 
 
