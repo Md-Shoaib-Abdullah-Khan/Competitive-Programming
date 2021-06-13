@@ -42,7 +42,7 @@
     #define end0                    "\n"
     #define end1                    cout<<"\n";
     #define Pi                      acos(-1)
-    #define mod                     1000007
+    #define mod                     100000
     #define intlim                  2147483648
     #define infinity                (1<<28)
     #define EPS                     10E-9
@@ -56,125 +56,42 @@
     }
     //----------------------------------------------------------------
 
-        int x[2750132];
-        ll primeCnt=0;
-        ll y[200000];
+    ll dp[mod],N,M;
 
-    #define forn(i, n) for (int i = 0; i < int(n); i++)
-
-    const int N = 3 * 1000 * 1000 + 13;
-
-    int lst[N];
-    int num[N];
-
-    void sieve(){
-    	forn(i, N) lst[i] = i;
-    	for (int i = 2; i < N; ++i){
-    		if (lst[i] != i){
-    			lst[i] = i / lst[i];
-    			continue;
-    		}
-    		for (long long j = i * 1ll * i; j < N; j += i)
-    			lst[j] = min(lst[j], i);
-    	}
-    	int cur = 0;
-    	for (int i = 2; i < N; ++i) if (lst[i] == i)
-    		{
-    		    num[i] = ++cur;
-               // cout<<lst[i]<<endl;
-    		}
-    }
-
-        // Print all prime numbers
-
-
-
-    ll binarySearch1( ll l, ll r, ll n)
+    void nWays(ll posX , ll posY , ll value)
     {
-        if (r >= l) {
-            ll mid = l + (r - l) / 2;
 
-            // If the element is present at the middle
-            // itself
-            if (x[mid] == n)
-            {
-                return mid;
+        if(posX > N || posY > M) return ;
 
-            }
-            // If element is smaller than mid, then
-            // it can only be present in left subarray
-            if (x[mid] > n)
-                return binarySearch1( l, mid - 1, n);
-
-            // Else the element can only be present
-            // in right subarray
-            return binarySearch1( mid + 1, r, n);
+        if(posX == N && posY == M)
+        {
+            dp[value] = 1;
+           //cout<<value<<endl;
+            return ;
         }
 
-        // We reach here when element is not
-        // present in array
-        return -1;
+        cout<<posX<<" "<<posY<<endl;
+        nWays (posX+1,posY,value + posY);
+        nWays (posX,posY+1,value + posX);
     }
+
+
 
     void solve()
     {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
         ll a, b ,result;
-        vector <ll> ans;
-        cin>>n;
 
-        n*=2;
-        memset(x,0,sizeof(x));
+        cin>>N>>M>>result;
 
-        for(i=0;i<n;i++)
-        {
-            cin>>a;
-            x[a]++;
+       if(M>N)swap(N,M);
 
-        }
+       memset(dp,-1,sizeof(dp));
+
+       nWays(1,1,0);
 
 
-
-        sieve();
-
-        for(i=2750131;i>1;i--)
-        {
-        if(x[i]==0)continue;
-
-            //cout<<x[i]<<" "<<result+1<<" "<<i<<endl;
-
-            if(lst[i]==i)
-            {
-                for(j=0;j<x[i];j++)ans.pb(num[i]);
-       // cout<<i<<" "<<num[i]<<" "<<x[i]<<endl;
-                x[num[i]]-=x[i];
-                x[i]=0;
-
-
-            }
-            else
-            {a=0;
-            for(j=0;j<x[i];j++)ans.pb(i);
-                for(j=2;j<i;j++)
-                {
-                    if(i%j==0)
-                    {
-                        a= i/j;
-                        break;
-                    }
-                }
-               // cout<<i<<" "<<a<<" "<<x[i]<<endl;
-                x[a]-=x[i];
-                x[i]=0;
-
-            }
-        }
-
-    for(i=0;i<ans.size();i++)
-    {
-        if(i!=0)cout<<" ";
-        cout<<ans[i];
-    }
-        cout<<endl;
+       if(dp[result]== -1) cout<<"NO"<<endl;
+        else cout<<"YES"<<endl;
 
 
 
@@ -190,6 +107,7 @@
     int main(){
         long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
 
-        solve();
+        cin>>t;
+        while(t--)solve();
 
     }
