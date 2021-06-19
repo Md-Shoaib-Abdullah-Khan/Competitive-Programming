@@ -58,22 +58,40 @@ void dbg_out(Head H, Tail... T) {
 
 void solve()
 {long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
-        ll a=0, sum=0;
-        vector<ll> vec;
-    cin>> n;
+        ll x,y,x1,y1,x2,y2,x3,y3,x4,y4,a,b,c,d;
 
-    for(i=0;i<n;i++)
-    {
-        cin>>a;
-        sum+=a;
-        vec.pb(a);
-    }
-    if(sum==n)cout<<"0"<<endl;
-    else if(sum>n)cout<<sum-n<<endl;
-    else
-    {
-        cout<<"1"<<endl;
-    }
+        cin>>n>>m>>x>>y;
+
+        x1=n,y1=m;
+
+        x2=1,y2=m;
+
+        x3=n;y3=1;
+
+        x4=1,y4=1;
+
+        a=abs(x-x1)+abs(y-y1);
+        b=abs(x-x2)+abs(y-y2);
+        c=abs(x-x3)+abs(y-y3);
+        d=abs(x-x4)+abs(y-y4);
+
+        if(a>=b&&a>=c&&a>=d)
+        {
+            cout<<"1 "<<"1 "<<x1<<" "<<y1<<endl;
+        }
+        else if(b>=a&&b>=c&&b>=d)
+        {
+            cout<<n<<" "<<"1 "<<x2<<" "<<y2<<endl;
+        }
+        else if(c>=a&&c>=b&&c>=d)
+        {
+            cout<<"1 "<<m<<" "<<x3<<" "<<y3<<endl;
+        }
+        else if(d>=a&&d>=c&&d>=b)
+        {
+            cout<<n<<" "<<m<<" "<<x4<<" "<<y4<<endl;
+        }
+
 
 }
 
