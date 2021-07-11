@@ -55,37 +55,37 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
+ ll t;
 
-
-    ll a,b;
-    ll rec(ll n)
-    {
-        cout<<n<<endl;
-        if(n==1)  return 1;
-        else if(n<1)return 0;
-
-        else
-        {
-           if(n%a==0&&a!=1) return rec(n/a)+rec(n-b);
-           else return rec(n-b);
-
-        }
-    }
+bool compare(const tuple<int, int, int>& a,
+               const tuple<int, int, int>& b)
+{
+    return (get<2>(a) < get<2>(b));
+}
 
 void solve()
-{int i,c,j,k,l,w,h,n,m,ma,r,z,e,t,tt,x5,y5;
+{int i,a,b,c,j,k,l,w,h,n,m,ma,r,z,e,t,tt,x5,y5;
 
-    cin>>n>>a>>b;
+    cin>>n>>m;
 
-    ll ans = rec(n);
+    ll a1 = min(n,m);
+    ll a2 = abs(max(n,m) - min(n,m));
 
-    if(ans) cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+    ll ans1 = floor((long double)a1 / a2);
+    ll ans2 = ceil((long double)a1 / a2);
 
+    //cout<<ans1<<" "<<ans2<<" "<<a1<<" "<<a2<<endl;
 
+    if(n==m) cout<<0<<" "<<0<<endl;
 
+    else
+    {
+        if(a1 == a2) cout<<a2<<" "<<"0"<<endl;
+        else if(a1 < a2&&a1!=0) cout<<a2<<" "<<a2 - a1<<endl;
+        else cout<<a2<<" "<<min(abs(a2 * ans1 - a1) , abs(a2 * ans2 - a1))<<endl;
+    }
 }
-long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,tt,x5,y5;
 
 
 int main(){

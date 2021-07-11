@@ -57,32 +57,24 @@ void dbg_out(Head H, Tail... T) {
 //----------------------------------------------------------------
 
 
-    ll a,b;
-    ll rec(ll n)
-    {
-        cout<<n<<endl;
-        if(n==1)  return 1;
-        else if(n<1)return 0;
-
-        else
-        {
-           if(n%a==0&&a!=1) return rec(n/a)+rec(n-b);
-           else return rec(n-b);
-
-        }
-    }
 
 void solve()
-{int i,c,j,k,l,w,h,n,m,ma,r,z,e,t,tt,x5,y5;
-
-    cin>>n>>a>>b;
-
-    ll ans = rec(n);
-
-    if(ans) cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+{int i,a,b,c,j,k,l,w,h,n,m,ma,r,z,e,t,tt,x5,y5;
 
 
+    ll a1,a2,b1,b2,c1,c2;
+    cin>>a1>>a2;
+    cin>>b1>>b2;
+    cin>>c1>>c2;
+
+    if((a1==b1&&b1==c1&&((c2>a2&&c2<b2)||(c2>b2&&c2<a2)))||(a2==b2&&b2==c2&&((c1>a1&&c1<b1)||(c1>b1&&c1<a1))))
+    {
+        cout<<abs(a1-b1)+abs(a2-b2) +2<<endl;
+    }
+    else
+    {
+        cout<<abs(a1-b1)+abs(a2-b2)<<endl;
+    }
 
 }
 long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
