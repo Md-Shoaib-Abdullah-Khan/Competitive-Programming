@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,29 +56,60 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,a,w,h,n,m,ma,e,t,tt,x5,y5;
+
+        cin>>n;
+        ll x1[n+5],x2[n+5];
+        char y[n+5];
+
+        for(i=1;i<=n;i++)
+        {
+            cin>>x1[i];
+            x2[x1[i]] = i;
+        }
+        cin>>y;
+
+
+        vector<ll> one , zero;
+
+        for(i=0;i<n;i++)
+        {
+            if(y[i]=='1') one.pb(x1[i+1]);
+            else zero.pb(x1[i+1]);
+        }
+        ll ans[n+5];
+
+        sort(one.begin(),one.end());
+        sort(zero.begin(),zero.end());
+
+        for(i=0;i<zero.size();i++)
+        {
+            a=x2[zero[i]];
+            ans[a] = i+1;
+        }
+        for(i=0;i<one.size();i++)
+        {
+            a=x2[one[i]];
+            ans[a] = i+ zero.size()+1;
+        }
+
+        for(i=1;i<=n;i++)
+        {
+            if(i!=1)cout<<" ";
+            cout<<ans[i];
+        }
+        cout<<endl;
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
 

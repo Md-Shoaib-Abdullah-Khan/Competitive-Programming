@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<vector>
 using namespace std;
 
 
@@ -42,7 +43,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +57,59 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,a,b,c,w,h,n,m,ma,e,t,tt,x5,y5;
+
+    cin>>n;
+    char x[n+5];
+    vector<ll> y;
+      cin>>x;
+
+      for(i=0,j=strlen(x)-1;i<=j;)
+      {
+          if(x[i]!='a')i++;
+          if(x[j]!='a')j--;
+          if(x[i]=='a' && x[j] == 'a')break;
+      }
+
+      if(i>=j)
+      {
+          cout<<"-1"<<endl;
+          return;
+      }
+      else if(i+1==j)
+      {
+          cout<<"2"<<endl;
+          return;
+      }
+      b=0;
+      c=0;
+    ll ans=4;
+      for(i=i+1;i<=j;i++)
+      {
+          if(x[i] =='b')b++;
+          else if(x[i] == 'c') c++;
+          else
+          {
+              if(b<=1 && c<=1)ans = min(ans, b+c);
+              b=0;
+              c=0;
+          }
+      }
+
+
+      if(ans!=4)cout<<ans+2<<endl;
+      else cout<<"-1"<<endl;
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
-
 

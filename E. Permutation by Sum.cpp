@@ -56,34 +56,48 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-void solve()
-{long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
-        ll a=0, sum=0;
-        vector<ll> vec;
-    cin>> n;
-
-    for(i=0;i<n;i++)
-    {
-        cin>>a;
-        sum+=a;
-        vec.pb(a);
-    }
-    if(sum==n)cout<<"0"<<endl;
-    else if(sum>n)cout<<sum-n<<endl;
-    else
-    {
-        cout<<"1"<<endl;
-    }
-
+bool sortcol( const vector<int>& v1,
+               const vector<int>& v2 ) {
+ return v1[1] < v2[1];
 }
 
+int main()
+{
+    // Initializing 2D vector "vect" with
+    // values
+    vector< vector<int> > vect{{3, 5, 1},
+                                {4, 8, 6},
+                                {7, 2, 9}};
 
+    // Number of rows;
+    int m = vect.size();
 
-int main(){
-    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
-    cin >>t;
-    while (t--){
-    solve();
+    // Number of columns (Assuming all rows
+    // are of same size).  We can have different
+    // sizes though (like Java).
+    int n = vect[0].size();
+
+    // Displaying the 2D vector before sorting
+    cout << "The Matrix before sorting is:\n";
+    for (int i=0; i<m; i++)
+    {
+        for (int j=0; j<n ;j++)
+            cout << vect[i][j] << " ";
+        cout << endl;
     }
+
+    // Use of "sort()" for sorting on basis
+    // of 2nd column
+    sort(vect.begin(), vect.end(),sortcol);
+
+    // Displaying the 2D vector after sorting
+    cout << "The Matrix after sorting is:\n";
+    for (int i=0; i<m; i++)
+    {
+        for (int j=0; j<n ;j++)
+            cout << vect[i][j] << " ";
+        cout << endl;
+    }
+    return 0;
 }
 

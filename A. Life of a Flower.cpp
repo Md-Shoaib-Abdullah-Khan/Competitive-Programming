@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,28 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
-}
+void solve()
+{ll i,j,k,l,m,n,a,b,c,d,e,f;
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
+    cin>>n;
+    ll ans=0;
+    b=0;
+    for(i=0;i<n;i++)
     {
-        cout<<v[i]<<" ";
+        cin>>a;
+        if(b==1&&a==1)ans+=5;
+        else if(a==1) ans+=1;
+        b=a;
     }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
+
 }
 
 
+
+int main(){
+    ll t;
+    cin >>t;
+    while (t--){
+    solve();
+    }
+}

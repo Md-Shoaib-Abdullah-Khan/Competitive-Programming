@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,39 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
+        ll a=0, sum=0;
+       string s;
+       set<ll> x;
+    cin>> n;
+    ll ans =0;
+
+    i=1;
+    while(1)
+    {
+        if(i*i <= n)x.insert(i*i);
+        if(i*i*i <= n)x.insert(i*i*i);
+
+        if(i*i*i <= n || i*i <= n) i++;
+        else break;
+    }
+
+    cout<<x.size()<<endl;
+
+
+
+
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
-
 

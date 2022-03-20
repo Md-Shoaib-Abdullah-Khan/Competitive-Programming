@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,79 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,k,w,h,n,m,ma,e,t,tt,x5,y5;
+        ll  sum=0;
+       string s;
+       string a;
+       vector<ll> ans;
+       vector<ll>c;
+
+
+       cin>>a>>s;
+
+    for(i=a.size()-1, j=s.size()-1;i>=0;i--)
+    {
+        if(j<0)
+        {
+            cout<<"-1"<<endl;
+            return;
+        }
+        if(a[i]<=s[j])
+        {
+            ans.push_back(s[j]-a[i]);
+            //c.pb(s[j]-'0');
+            //cout<<s[j]-'0'<<endl;
+            j--;
+        }
+        else
+        {
+            m= s[j-1] - '0';
+            n = s[j] - '0';
+            k = a[i] - '0';
+            ans.push_back((m*10 + n) - k);
+            if(((m*10 + n) - k) >9||j-1<0||((m*10 + n) - k) <0)
+        {
+            cout<<"-1"<<endl;
+            return;
+        }
+            j-=2;
+        }
+
+
+    }
+    vector<ll> b;
+
+    for(j;j>=0;j--)
+    {
+        ans.push_back(s[j]-'0');
+    }
+
+
+
+
+    ll cnt=0;
+    for(j=ans.size()-1;j>=0;j--)
+    {
+        if(ans[j]!=0)cnt++;
+        if(cnt)cout<<ans[j];
+    }
+    cout<<endl;
+
+
+
+
+
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
-
 

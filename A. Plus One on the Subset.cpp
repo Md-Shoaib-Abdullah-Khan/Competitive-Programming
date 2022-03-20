@@ -56,50 +56,21 @@
     }
     //----------------------------------------------------------------
 
-    ll dp[mod],N,M;
-
-
-
-    void nWays(ll posX , ll posY , ll value)
-    {
-
-        if(posX > N || posY > M) return ;
-
-        if(posX == N && posY == M)
-        {
-            dp[value] = 1;
-           //cout<<value<<endl;
-            return ;
-        }
-
-        cout<<posX<<" "<<posY<<endl;
-        nWays (posX+1,posY,value + posY);
-        nWays (posX,posY+1,value + posX);
-    }
-
 
 
     void solve()
     {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
         ll a, b ,result;
 
-        cin>>N>>M>>result;
-
-       if(M>N)swap(N,M);
-
-       memset(dp,-1,sizeof(dp));
-
-       nWays(1,1,0);
-
-
-       if(dp[result]== -1) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
-
-
-
-        return;
-
-
+        cin>>n;
+        ll x[n+5]
+;
+        for(i=0;i<n;i++)
+        {
+            cin>>x[i];
+        }
+        sort(x,x+n);
+        cout<<x[n-1]-x[0]<<endl;
 
 
     }

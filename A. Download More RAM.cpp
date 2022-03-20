@@ -56,49 +56,45 @@
     }
     //----------------------------------------------------------------
 
-    ll dp[mod],N,M;
-
-
-
-    void nWays(ll posX , ll posY , ll value)
-    {
-
-        if(posX > N || posY > M) return ;
-
-        if(posX == N && posY == M)
-        {
-            dp[value] = 1;
-           //cout<<value<<endl;
-            return ;
-        }
-
-        cout<<posX<<" "<<posY<<endl;
-        nWays (posX+1,posY,value + posY);
-        nWays (posX,posY+1,value + posX);
-    }
-
 
 
     void solve()
     {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
-        ll a, b ,result;
+        ll a, b ,k,result;
 
-        cin>>N>>M>>result;
+        cin>>n>>k;
 
-       if(M>N)swap(N,M);
+        ll x[n][2];
+        vector<pair<ll,ll>> vec;
 
-       memset(dp,-1,sizeof(dp));
+        for(i=0;i<n;i++)
+        {
+            cin>>x[i][0];
 
-       nWays(1,1,0);
+        }
+        for(i=0;i<n;i++)
+        {
+            cin>>x[i][1];
 
+        }
+        for(i=0;i<n;i++)
+        {
+            vec.push_back(make_pair(x[i][0],x[i][1]));
 
-       if(dp[result]== -1) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
+        }
+        sort(vec.begin(), vec.end());
+        ll ans=k;
 
+        for(i=0;i<n;i++)
+        {
+            if(ans>= vec[i].first)
+            {
+                ans+=vec[i].second;
+            }
+            else break;
+        }
 
-
-        return;
-
+        cout<<ans<<endl;
 
 
 

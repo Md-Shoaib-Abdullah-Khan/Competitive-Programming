@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -54,32 +54,53 @@ void dbg_out(Head H, Tail... T) {
     cerr << ' ' << H;
      dbg_out(T...);
 }
-//----------------------------------------------------------------
-
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+//----------------------------------------------------------------0
+ll DigC(ll n)
+{ll m=0;
+    while(n)
+    {
+        n/=10;
+        m++;
+    }
+    return m;
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
+void solve()
+{long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
+        ll x1,x2,p1,p2;
+
+        cin>>x1>>p1>>x2>>p2;
+        ll n1=1,n2=1;
+        n=p1;
+
+        if(DigC(x1) + p1 > DigC(x2) + p2) cout<<">"<<endl;
+        else if(DigC(x1) + p1 < DigC(x2) + p2) cout<<"<"<<endl;
+        else
+        {
+            if(p1>p2)
+            {
+                n= p1-p2;
+                while(n--)x1*=10;
+            }
+            else
+            {
+                n= p2-p1;
+                while(n--)x2*=10;
+            }
+            if(x1 > x2) cout<<">"<<endl;
+            else if(x2 > x1)cout<<"<"<<endl;
+            else cout<<"="<<endl;
+        }
+
 }
 
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
+    }
+}
 

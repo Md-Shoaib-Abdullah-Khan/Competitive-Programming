@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,84 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
+        ll a=0, sum=0;
+        vector<ll> x1;
+        vector<ll> x2;
+        vector<ll> y1;
+        vector<ll> y2;
+        vector<ll> ans;
+        ll x,y;
+        cin>> x>>y;
+
+        cin>>n;
+        //cout<<n<<endl;
+        for(i=0;i<n;i++)
+        {
+            cin>>m;
+            x1.pb(m);
+            //cout<<m<<endl;
+        }
+        cin>>n;
+        for(i=0;i<n;i++)
+        {
+            cin>>m;
+            x2.pb(m);
+            //cout<<m<<endl;
+        }
+        cin>>n;
+        for(i=0;i<n;i++)
+        {
+            cin>>m;
+            y1.pb(m);
+            //cout<<m<<endl;
+        }
+        cin>>n;
+        for(i=0;i<n;i++)
+        {
+            cin>>m;
+            y2.pb(m);
+            //cout<<m<<endl;
+        }
+        sort(x1.begin(),x1.end());
+        sort(x2.begin(),x2.end());
+        sort(y1.begin(),y1.end());
+        sort(y2.begin(),y2.end());
+
+        m = (x1[x1.size()-1] - x1[0]) * y;
+        //cout<<m<<endl;
+
+        ans.pb(m);
+
+        m = (x2[x2.size()-1] - x2[0]) * y;
+
+        ans.pb(m);
+
+        m = (y1[y1.size()-1] - y1[0]) * x;
+
+        ans.pb(m);
+
+        m = (y2[y2.size()-1] - y2[0]) * x;
+
+        ans.pb(m);
+
+        sort(ans.begin(), ans.end());
+
+        cout<<ans[ans.size()-1]<<endl;
+
+
+
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
-
 

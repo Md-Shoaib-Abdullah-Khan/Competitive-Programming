@@ -56,49 +56,33 @@
     }
     //----------------------------------------------------------------
 
-    ll dp[mod],N,M;
-
-
-
-    void nWays(ll posX , ll posY , ll value)
-    {
-
-        if(posX > N || posY > M) return ;
-
-        if(posX == N && posY == M)
-        {
-            dp[value] = 1;
-           //cout<<value<<endl;
-            return ;
-        }
-
-        cout<<posX<<" "<<posY<<endl;
-        nWays (posX+1,posY,value + posY);
-        nWays (posX,posY+1,value + posX);
-    }
-
 
 
     void solve()
     {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
-        ll a, b ,result;
+        ll a, b ,c ,x,y,result;
 
-        cin>>N>>M>>result;
+        cin>>a>>b>>c;
+        x=abs(a-b);
+        y=abs(b-c);
+        if((a==b && b%c==0)||(c==b && b%a==0)||(a==c && a%b==0))cout<<"YES"<<endl;
 
-       if(M>N)swap(N,M);
-
-       memset(dp,-1,sizeof(dp));
-
-       nWays(1,1,0);
-
-
-       if(dp[result]== -1) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
-
-
-
-        return;
-
+        else if(a!=c && (abs(a-c)/2 + min(a,c))%b ==0 && abs(a-c)%2 == 0)
+        {
+            cout<<"YES"<<endl;
+        }
+        else if((b>c && (b+y) % a ==0)||(b<c && (b-y)%a ==0 && b-y>=a))
+        {
+            cout<<"YES"<<endl;
+        }
+        else if((a>b && (b-x)%c==0 && b-x >= c) || (a<b && (b+x)%c ==0))
+        {
+            cout<<"YES"<<endl;
+        }
+        else
+        {
+            cout<<"NO"<<endl;
+        }
 
 
 

@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,64 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
+    int gcd(int a, int b)
 {
-    return (get<2>(a) < get<2>(b));
+    // Everything divides 0
+    if (a == 0)
+       return b;
+    if (b == 0)
+       return a;
+
+    // base case
+    if (a == b)
+        return a;
+
+    // a is greater
+    if (a > b)
+        return gcd(a-b, b);
+    return gcd(a, b-a);
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
+void solve()
+{long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
+        ll a=0, sum=0;
+     cin>>n;
+     ll x[n+1];
+
+     for(i=1;i<=n;i++)
+     {
+         cin>>x[i];
+     }
+     ll gcd1=x[1],gcd2=x[2];
+     bool gcd20=true,gcd10=true;
+     for(i=3;i<=n;i+=2)
+     {
+         gcd1 = gcd(gcd1 , x[i]);
+     }
+     for(i=4;i<=n;i+=2)
+     {
+         gcd2 = gcd(gcd2 , x[i]);
+     }
+
+     for(i=1;i<=n;i++)
+     {
+         if(i%2!=0 && x[i]%gcd2 ==0) gcd20 =false;
+         else if(i%2==0 && x[i]%gcd1 ==0) gcd10 =false;
+     }
+     if(gcd20)cout<<gcd2<<endl;
+     else if(gcd10)cout<<gcd1<<endl;
+     else cout<<"0"<<endl;
+
+
 }
 
+
+
+int main(){
+    long long t;
+    cin >>t;
+    while (t--){
+    solve();
+    }
+}
 

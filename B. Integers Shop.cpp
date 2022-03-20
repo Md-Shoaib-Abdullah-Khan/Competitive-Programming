@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -55,31 +55,70 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
+bool sortcol( const vector<ll>& v1,
+               const vector<ll>& v2 ) {
+ return v1[1] < v2[1];}
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,w,h,n,m,ma,e,k,t,tt,x5,y5;
+        ll a=0,b,c, sum=0;
+        vector<vector<ll>> vec;
+    cin>> n;
+    ll mn=mod,mx=0,ans=0;
+    for(i=0;i<n;i++)
+    {
+        cin>>a>>b>>c;
+        vec.push_back({a,b,c});
+
+    }
+    cout<<vec[0][2]<<endl;
+    ans=vec[0][2];
+
+    ll a1=vec[0][0],b1=vec[0][1],c1=vec[0][2],a2=vec[0][0],b2=vec[0][1],c2=vec[0][2];
+    for(i=1;i<n;i++)
+    {
+        if(vec[i][0]<=a1&&vec[i][1]>=b2){
+
+               if((vec[i][0]<a1&&vec[i][1]>b2)||(vec[i][0]<a1&&vec[i][1]==b2)||(vec[i][0]==a1&&vec[i][1]>b2)||(vec[i][0]==a1&&vec[i][1]==b2&&vec[i][2]<ans)) {
+                    ans=vec[i][2];
+            a1=vec[i][0];
+            b1=vec[i][1];
+            c1=vec[i][2];
+            a2=vec[i][0];
+            b2=vec[i][1];
+            c2=vec[i][2];
+               }
+
+        }
+        else if((vec[i][0]<a1)||(vec[i][0]==a1&&vec[i][2] + c2<ans))
+        {
+           a1=vec[i][0];
+            b1=vec[i][1];
+            c1=vec[i][2];
+            ans = vec[i][2] + c2;
+        }
+        else if((vec[i][1]>b2)||(vec[i][1]==b2&&vec[i][2] + c1<ans))
+        {
+           a2=vec[i][0];
+            b2=vec[i][1];
+            c2=vec[i][2];
+            ans = vec[i][2] + c1;
+        }
+
+        cout<<ans<<endl;
+    }
+
+
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
-
 

@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define inf                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,69 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+const ll N = 1e5 + 5;
+
+ll b[4*N];
+ll a[N];
+
+void build(ll l, ll r, ll node){
+  if(l == r){
+    b[node] = a[l];
+    return;
+  }
+  ll mid = (l + r)/2;
+  ll n1 = 2*node;
+  ll n2 = n1 + 1;
+  build(l , mid , n1);
+  build(mid + 1, r, n2);
+  b[node] = min(b[n1] , b[n2]);
+  return;
+}
+ll get(ll l, ll r, ll node, ll x, ll y){
+  if(x > r || y < l) return inf;
+  if(x <= l && y >= r) return b[node];
+  ll mid = (l + r)/2;
+  ll n1 = 2*node;
+  ll n2 = n1 + 1;
+  return min(get(l , mid , n1, x , y) , get(mid+1, r, n2, x , y) );
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
+void up(ll l, ll r, ll node, ll x, ll v){
+
+  if(x < l || r < x) return; // type 1
+
+  if(l == r){ // type 3
+    b[node] = v;
+    return;
+  }
+  // type 2
+
+  ll mid = (l + r)/2;
+  ll n1 = 2*node;
+  ll n2 = n1 + 1;
+
+  up(l , mid , n1 , x , v);
+  up(mid + 1, r, n2, x , v);
+
+  b[node] = min(b[n1] , b[n2]);
+
+  return;
 }
 
+void solve(){
+
+   ll n;
+   cin >> n;
+   for(ll i=1;i<=n;i++) cin >> a[i];
+
+   build(1 , n , 1);
+
+   up(1,n,1, 2 , 5);
+   up(1,n,1, 3, 100);
+   up(1, n , 1, 4, 0);
+
+   cout << get(1, n , 1, 2 , 4);
+
+   return;
+}
 

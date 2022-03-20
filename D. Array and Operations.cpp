@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,30 +56,58 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool compare(const tuple<int, int, int>& a,
-               const tuple<int, int, int>& b)
-{
-    return (get<2>(a) < get<2>(b));
+void solve()
+{long long int  i,j,w,h,n,m,ma,k,e,t,tt,x5,y5;
+        ll a=0, sum=0;
+     cin>>n>>k;
+     ll x[n];
+
+     for(i=0;i<n;i++)cin>>x[i];
+
+     sort(x,x+n);
+
+     ll ans1=0, ans2=0,ans3=0;
+
+     for(i=n-2*k,j=n-1;i<n-k;i++,j--)
+     {
+         ans1+= x[i]/x[j];
+     }
+     for(i=0;i<n-2*k;i++)
+     {
+         ans1+= x[i];
+     }
+     for(i=0,j=n-1;i<k;i++,j--)
+     {
+         ans2+= x[i]/x[j];
+     }
+     for(i=k;i<n-k;i++)
+     {
+         ans2+= x[i];
+     }
+     for(i=n-1;i>=n-2*k;i-=2)
+     {
+         ans3+= x[i-1]/x[i];
+     }
+     for(i=n-2*k-1;i>=0;i--)
+     {
+         ans3+= x[i];
+     }
+    // cout<<ans1<<" "<<ans2<<endl;
+     cout<<min(ans3,min(ans1,ans2))<<endl;
+
+
+
+
+
 }
 
-int main()
-{
-    vector<int> v;
-    v.assign(5,10);
-    cout<<"the vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
-    }
-    v.push_back(15);
-    int n = v.size();
-    cout<<"\nThe last element is : "<<v[n-1];
-    v.pop_back();
-    cout<<"\nthe vector elements are:";
-    for(int i=0;i<v.size();i++)
-    {
-        cout<<v[i]<<" ";
+
+
+int main(){
+    long long t;
+    cin >>t;
+    while (t--){
+    solve();
     }
 }
-
 

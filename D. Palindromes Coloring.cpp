@@ -56,48 +56,62 @@
     }
     //----------------------------------------------------------------
 
-    ll dp[mod],N,M;
-
-
-
-    void nWays(ll posX , ll posY , ll value)
-    {
-
-        if(posX > N || posY > M) return ;
-
-        if(posX == N && posY == M)
-        {
-            dp[value] = 1;
-           //cout<<value<<endl;
-            return ;
-        }
-
-        cout<<posX<<" "<<posY<<endl;
-        nWays (posX+1,posY,value + posY);
-        nWays (posX,posY+1,value + posX);
-    }
-
 
 
     void solve()
-    {long long int  i,j,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
-        ll a, b ,result;
+    {long long int  i,j,l,w,h,n,m,ma,r,z,s,k,e,t,tt,x5,y5;
+        ll a, b ,c ,y,result;
 
-        cin>>N>>M>>result;
+        cin>>n>>k;
+       char x[n+5];
+       ll cnt[30];
 
-       if(M>N)swap(N,M);
-
-       memset(dp,-1,sizeof(dp));
-
-       nWays(1,1,0);
+       memset(cnt, 0 ,sizeof(cnt));
 
 
-       if(dp[result]== -1) cout<<"NO"<<endl;
-        else cout<<"YES"<<endl;
+       cin>>x;
+       for(i=0;i<n;i++)
+       {
+           cnt[x[i]-'a']++;
+       }
+
+        ll even=0,odd=0;
+
+        for(i=0;i<=26;i++)
+        {
+            if(cnt[i]%2==0 && cnt[i]!=0)
+            {
+                even+=cnt[i];
+            }
+            else if(cnt[i]%2!=0 && cnt[i]!=0)
+            {
+                even+= cnt[i]-1;
+                odd++;
+            }
+        }
+        ll ans=0;
+        //cout<<even<<" "<<odd<<endl;
+        if(n==k )
+        {
+            cout<<"1"<<endl;
+            return;
+        }
 
 
+            if(even%k==0 && (even/k)%2==0 &&odd >= k)
+            {
+                if(odd >= k) ans = even/k +1;
+                else ans = even/k;
+            }
+            else
+            {
+                ans = even/k;
+            }
 
-        return;
+        if(ans==0) ans++;
+        cout<<ans<<endl;
+
+
 
 
 
