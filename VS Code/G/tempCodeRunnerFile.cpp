@@ -1,2 +1,1 @@
-ios_base::sync_with_stdio(false);
-    //    cin.tie(NULL);
+cout<<i<<" "<<prime[i]<<endl;

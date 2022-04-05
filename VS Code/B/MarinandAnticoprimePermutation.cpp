@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     998244353
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -56,49 +56,36 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-    vector<ll> ans;
-    ll m,n;
 
- ll recur(ll x, ll i){
+bool sortcol( const vector<int>& v1,
+               const vector<int>& v2 ) {
+ return v1[1] < v2[1];
+}
+bool compare(ll x, ll y){
+    return x>y;
+}
+ll exponen(ll a){
 
-     if(i == ans.size())return x;
-     ll a = recur(x*ans[i] , i+1);
-     ll b = recur(x, i+1);
+    if(a == 0) return 1;
+    
 
-     return min(max(a, m/a), max(b,m/b));
+    return (a*exponen(a-1))%mod;
+}
 
- }
 
 void solve(){
 
-    ll k,i,x,y;
-    
-    cin>> n;
-    m=n;
-    ll cnt=1;
+    ll n,k,i,x,a,b,y;
 
-    if(n==1) {
-        cout<<"1 1"<<endl;
+    cin>> n;
+
+    if(n%2){
+        cout<<"0"<<endl;
         return;
     }
-    for(i=2;i*i<=n;i++){
-        if(n%i == 0)
-        while(n%i == 0){
-            cnt *= i;
-            n /= i;
-        }
-        if(cnt!=1)ans.pb(cnt);
-        cnt=1;
-    }
-    if(n>1)ans.pb(n);
-    if(ans.size() == 1){
-        cout<<"1 "<<ans[0]<<endl;
-        return;
-    }
-   
-     ll a = recur(1, 0);
-     ll b = m/a;
-     cout<<a<<" "<<b<<endl;
+    ll ans = exponen(n/2);
+    cout<< (ans*ans)%mod<<endl;
+    
    
     
 
@@ -110,6 +97,11 @@ void solve(){
 
 int main()
 {
-   solve();
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
+   int t;
+  cin>>t;
+   
+    while(t--) solve();
 }
 

@@ -43,7 +43,6 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     100000
-
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,53 +55,61 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-    vector<ll> ans;
-    ll m,n;
 
- ll recur(ll x, ll i){
+bool sortcol( const vector<int>& v1,
+               const vector<int>& v2 ) {
+ return v1[1] < v2[1];
+}
+bool compare(ll x, ll y){
+    return x>y;
+}
 
-     if(i == ans.size())return x;
-     ll a = recur(x*ans[i] , i+1);
-     ll b = recur(x, i+1);
+ll prime[mod+10];
+void sieve(ll n){
+    for(ll i=0;i<mod+10;i++) prime[i] = 1;
+    prime[0]=0;
+    prime[1]=0;
+    for(ll i=0;i<=sqrt(n);i++){
+        if(prime[i]){
+            for(ll j=2;i*j<=n;j++){
+                prime[i*j] = 0;
+            }
+        }
+    }
+    
+}
 
-     return min(max(a, m/a), max(b,m/b));
-
- }
 
 void solve(){
 
-    ll k,i,x,y;
-    
+    ll n,i;
     cin>> n;
-    m=n;
-    ll cnt=1;
-
-    if(n==1) {
-        cout<<"1 1"<<endl;
-        return;
+    ll sum=0,numbers[n];
+    for(i=0;i<n;i++){
+        cin>>numbers[i];
+        sum += numbers[i];
     }
-    for(i=2;i*i<=n;i++){
-        if(n%i == 0)
-        while(n%i == 0){
-            cnt *= i;
-            n /= i;
+    if(!prime[sum]){
+        cout<<n<<endl;
+        for(i=0;i<n;i++){
+            if(i!=0)cout<<" ";
+            cout<<i+1;
         }
-        if(cnt!=1)ans.pb(cnt);
-        cnt=1;
+        cout<<endl;
     }
-    if(n>1)ans.pb(n);
-    if(ans.size() == 1){
-        cout<<"1 "<<ans[0]<<endl;
-        return;
+    else{
+        cout<<n-1<<endl;
+        ll check = true;
+        for(i=0;i<n;i++){
+            if(check && numbers[i]%2){
+                check = false;
+                continue;
+               }
+            if(i!=0)cout<<" ";
+            cout<<i+1;
+        }
+        cout<<endl;
     }
-   
-     ll a = recur(1, 0);
-     ll b = m/a;
-     cout<<a<<" "<<b<<endl;
-   
-    
-
-
 
 
     return;
@@ -110,6 +117,10 @@ void solve(){
 
 int main()
 {
-   solve();
+   int t;
+   sieve(mod);
+   
+   cin>>t;
+   while(t--)solve();
 }
 

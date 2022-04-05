@@ -42,8 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
-
+#define mod                     1000000000
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -56,60 +55,59 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-    vector<ll> ans;
-    ll m,n;
 
- ll recur(ll x, ll i){
+bool sortcol( const vector<int>& v1,
+               const vector<int>& v2 ) {
+ return v1[1] < v2[1];
+}
+bool compare(ll x, ll y){
+    return x>y;
+}
 
-     if(i == ans.size())return x;
-     ll a = recur(x*ans[i] , i+1);
-     ll b = recur(x, i+1);
 
-     return min(max(a, m/a), max(b,m/b));
-
- }
 
 void solve(){
 
-    ll k,i,x,y;
-    
+    ll n,m,k,i,j;
     cin>> n;
-    m=n;
-    ll cnt=1;
+    ll numbers[n],mn=1e6;
+    bool check = false;
 
-    if(n==1) {
-        cout<<"1 1"<<endl;
-        return;
-    }
-    for(i=2;i*i<=n;i++){
-        if(n%i == 0)
-        while(n%i == 0){
-            cnt *= i;
-            n /= i;
+    for(i=0;i<n;i++){
+        cin>>numbers[i];
+        if(i!=0){
+            if(numbers[i-1] != numbers[i]){
+                check = true;
+            }
         }
-        if(cnt!=1)ans.pb(cnt);
-        cnt=1;
+        mn = min(mn, numbers[i]);
     }
-    if(n>1)ans.pb(n);
-    if(ans.size() == 1){
-        cout<<"1 "<<ans[0]<<endl;
+    if(!check){
+        cout<<"-1"<<endl;
         return;
     }
-   
-     ll a = recur(1, 0);
-     ll b = m/a;
-     cout<<a<<" "<<b<<endl;
-   
+
+    ll ans=0;
+    for(i=0;i<n;i++){
+
+        ans = GCD(ans, (numbers[i]-mn));
+    }
+    cout<<ans<<endl;
     
 
+     
+     
 
-
-
-    return;
 }
 
 int main()
 {
-   solve();
+    //  ios_base::sync_with_stdio(false);
+    //     cin.tie(NULL); 
+   int t;
+
+   cin>>t;
+   
+  while(t--) solve();
 }
 

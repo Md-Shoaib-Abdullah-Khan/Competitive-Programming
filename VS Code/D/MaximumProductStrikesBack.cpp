@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     1000000007
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -56,60 +56,97 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-    vector<ll> ans;
-    ll m,n;
 
- ll recur(ll x, ll i){
+bool sortcol( const vector<int>& v1,
+               const vector<int>& v2 ) {
+ return v1[1] < v2[1];
+}
+bool compare(ll x, ll y){
+    return x>y;
+}
 
-     if(i == ans.size())return x;
-     ll a = recur(x*ans[i] , i+1);
-     ll b = recur(x, i+1);
+ll fact(ll n){
+    if(n==1) return 1;
 
-     return min(max(a, m/a), max(b,m/b));
-
- }
+    cout<<n<<endl;
+    return (2*n*n*fact(n-1)) % (2*mod);
+}
 
 void solve(){
 
-    ll k,i,x,y;
-    
-    cin>> n;
-    m=n;
-    ll cnt=1;
+    ll n,k,i,a,b;
 
-    if(n==1) {
-        cout<<"1 1"<<endl;
-        return;
-    }
-    for(i=2;i*i<=n;i++){
-        if(n%i == 0)
-        while(n%i == 0){
-            cnt *= i;
-            n /= i;
+    cin>>n;
+
+    ll numbers[n+1];
+    for(i=1;i<=n;i++)cin>>numbers[i];
+    ll product =1,mx=0,x=-1,y=-1;
+    bool direction = false;
+    
+    for(i=1;i<=n;i++){
+        if(numbers[i]) product *= numbers[i];
+        if((numbers[i] == 0 || i == n) && abs(product) > mx){
+        
+        if(product < 0)direction = true;
+        else  direction = false;
+
+            mx = product;
+            product = 1;
+           if(i==n) y=i;
+           else y= i-1;        
         }
-        if(cnt!=1)ans.pb(cnt);
-        cnt=1;
+        
     }
-    if(n>1)ans.pb(n);
-    if(ans.size() == 1){
-        cout<<"1 "<<ans[0]<<endl;
+    if(mx == 0){
+        cout<<n<<" 0"<<endl;
         return;
     }
-   
-     ll a = recur(1, 0);
-     ll b = m/a;
-     cout<<a<<" "<<b<<endl;
-   
+    for(i=y;i>0;i--){
+        if(numbers[i] == 0 || i==1){
+            x = i+1;
+            break;
+        }
+    }
+
+    ll product1=1, product2=1,x1=0,y1=0;
     
+    if(direction){
 
+        for(i=x;i<=y;i++){
+            product1 *= abs(numbers[i]);
+            if(numbers[i] < 0){
+                x1=i;
+                break;
+            }
+            
+        }
+        for(i=y;i>=x;i--){
+            product2 *= abs(numbers[i]);
+            if(numbers[i] < 0){
+                y1=i;
+                break;
+            }        
+            
+        }
+        if(product1<=product2) {
+            x = x1 + 1;
+            }
+        else {
+            y = y1 - 1;
+            //x++;
+            }
 
-
-
-    return;
+    }
+    
+    cout<<x -1<<" "<<n - y<<endl;
+    
 }
 
 int main()
 {
-   solve();
+   int t;
+  cin>>t;
+   
+    while(t--) solve();
 }
 

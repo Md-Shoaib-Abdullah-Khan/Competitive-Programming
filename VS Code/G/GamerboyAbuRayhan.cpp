@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     100005
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -63,48 +63,44 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-vector<ll> arr;
 
-ll prime[mod];
-void sieve(ll n){
-    for(ll i=0;i<mod;i++) prime[i] = 1;
-    prime[0]=0;
-    prime[1]=0;
-    for(ll i=0;i<=sqrt(n);i++){
-        if(prime[i]){
-            for(ll j=2;i*j<=n;j++){
-                prime[i*j] = 0;
-            }
-        }
-    }
-    for(ll i=0;i<mod;i++){
-        if(prime[i]){
-            arr.pb(i);
-        }
-    }
-}
 
 
 void solve(){
 
     ll n,i,j;
     cin>> n;
-     ll strength[n+5];
+     ll strength[n+5], mx=0;
+     
     for(i=0;i<n;i++){
         cin>>strength[i];
+        mx = max(mx, strength[i]);
     }
-    ll cnt=0, mx=1;
-    
-    for(i=0;i<arr.size() ; i++){
-        for(j=0; j < n; j++){
-            if(strength[j] % arr[i] == 0) cnt++;
+    ll prime[mx+5];
+    memset(prime, 0 , sizeof(prime));
+
+    if(mx == 1){
+        cout<<"1"<<endl;
+        return;
+    }
+
+    for(j=0;j<n;j++){
+
+   for(i=2;i*i<=strength[j];i++){
+        if(strength[j]%i == 0)
+        prime[i]++;
+        while(strength[j]%i == 0){
+            strength[j] /= i;
         }
-        mx = max(cnt, mx);
-        cnt=0;
+
+    }
+    if(strength[j]>1)prime[strength[j]]++;
+    // cout<<i<<" "<<prime[i]<<endl;
     }
     
-    cout<<mx;
-    end1;
+    sort(prime, prime+mx+5);
+
+    cout<<prime[mx+4]<<endl;
 
 
 
@@ -113,10 +109,9 @@ void solve(){
 
 int main()
 {
-     ios_base::sync_with_stdio(false);
-        cin.tie(NULL); 
+    //  ios_base::sync_with_stdio(false);
+    //     cin.tie(NULL); 
    int t;
-   sieve(mod);
    
    solve();
 }
