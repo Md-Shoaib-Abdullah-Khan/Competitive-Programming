@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -13,7 +14,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +43,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     998244353
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -64,45 +65,52 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-ll vis[mod], level[mod];
-vector<ll> nodes[mod];
-vector<vector<ll>> ranges;
-ll d[2000];
-
-DFS(ll node){
-    vis[node] = true;
-
-    for(ll elements : nodes[node]){
-        if()
-    }
+void reverse(string str)
+{
+    for (int i = str.length() - 1; i >= 0; i--)
+        cout << str[i];
 }
-
 
 
 void solve(){
 
- ll n,i;
+    ll n,k,x,i,y;
+
+    ll a,b,c;
+    string s;
     cin>>n;
- 
+    cin>>s;
 
- for(i=0; i<n; i++){
-     ll node1, node2;
-     cin>>node1>>node2;
 
-    nodes[node1].push_back(node2);
-    nodes[node2].push_back(node1);
- } 
- BFS(1);
 
- for(i=1;i<=n;i++)cout<<level[i]<<" ";
+    string ans="";
+    for(i=n-1;i>=0;){
+        if(s[i]!='0'){
+            ans += char('a' + (s[i] - '0') -1);
+            i--;
+        }
+        else{
+            i--;
+            int z = (s[i-1] - '0')*10;
+            z+= s[i] - '0';
+            ans+=char('a' + z -1);
+            i-=2;
+        }
+        
+        //cout<<ans<<endl;
+    }
+    reverse(ans);
+    cout<<endl;
 
     
+    
+  
 }
 
 int main()
 {
-    
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
    int t;
   cin>>t;
    

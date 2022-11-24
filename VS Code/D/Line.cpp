@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     998244353
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -65,44 +65,61 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll vis[mod], level[mod];
-vector<ll> nodes[mod];
-vector<vector<ll>> ranges;
-ll d[2000];
-
-DFS(ll node){
-    vis[node] = true;
-
-    for(ll elements : nodes[node]){
-        if()
-    }
-}
-
 
 
 void solve(){
 
- ll n,i;
-    cin>>n;
- 
+    ll n,k,i,j,x,a,b,y;
 
- for(i=0; i<n; i++){
-     ll node1, node2;
-     cin>>node1>>node2;
+    cin>> n;
 
-    nodes[node1].push_back(node2);
-    nodes[node2].push_back(node1);
- } 
- BFS(1);
+    string line;
+    vector<ll> ans;
+    
+    cin>>line;
+    ll value=0;
+    if(n==1){
+        cout<<"0"<<endl;
+        return;
+    }
+    
+    for(i=0;i<n;i++){
+        if(line[i]=='L')value += i;
+        else value += (n-1-i);
+    }
+    //if(n%2!=0)value+=n/2;
+    //cout<<value<<endl;
+    for(i=0, j=n-1;i<j;i++,j--){
+        if(line[i]=='L'){
+            line[i] = 'R';
+            value -= i;
+            value += (n-1-i);
+            ans.pb(value);
+        }
+         if(line[j]=='R'){
+            line[i] = 'L';
+            value -= (n-1-j);
+            value += j;
+            ans.pb(value);
+        }
+    }
+   
+    
 
- for(i=1;i<=n;i++)cout<<level[i]<<" ";
 
+   for(i=ans.size();i<=n;i++)ans.pb(value);
+
+    for(i=0;i<n;i++)cout<<ans[i]<<" ";
+    cout<<endl;
+
+    
     
 }
 
 int main()
 {
-    
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
    int t;
   cin>>t;
    

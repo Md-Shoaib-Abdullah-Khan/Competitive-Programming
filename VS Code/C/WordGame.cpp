@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<iostream>
 using namespace std;
 
 
@@ -13,7 +14,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +43,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     998244353
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -65,44 +66,74 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll vis[mod], level[mod];
-vector<ll> nodes[mod];
-vector<vector<ll>> ranges;
-ll d[2000];
-
-DFS(ll node){
-    vis[node] = true;
-
-    for(ll elements : nodes[node]){
-        if()
-    }
-}
-
 
 
 void solve(){
 
- ll n,i;
-    cin>>n;
- 
+    ll n,i,j,k,x,y;
 
- for(i=0; i<n; i++){
-     ll node1, node2;
-     cin>>node1>>node2;
+    cin>> n;
 
-    nodes[node1].push_back(node2);
-    nodes[node2].push_back(node1);
- } 
- BFS(1);
+    string p1[n], p2[n], p3[n];
 
- for(i=1;i<=n;i++)cout<<level[i]<<" ";
+    ll point1=0, point2=0, point3=0;
+    ll z[27][27][27];
 
+    memset(z, 0, sizeof(z));
     
+    for(i=0;i<n;i++){
+        cin>>p1[i];
+        z[p1[i][0]-'a'][p1[i][1]-'a'][p1[i][2]-'a'] += 1;
+    }
+    for(i=0;i<n;i++){
+        cin>>p2[i];
+        z[p2[i][0]-'a'][p2[i][1]-'a'][p2[i][2]-'a'] += 2;
+    }
+    for(i=0;i<n;i++){
+        cin>>p3[i];
+        z[p3[i][0]-'a'][p3[i][1]-'a'][p3[i][2]-'a'] += 4;
+    }
+
+    for(i=0;i<27;i++){
+        for(j=0;j<27;j++){
+            for(k=0;k<27;k++){
+
+                if(z[i][j][k]==7){
+                    continue;
+                }
+                else if(z[i][j][k]==3){
+                    point1++;
+                    point2++;
+                }
+                else if(z[i][j][k]==6){
+                    point2++;
+                    point3++;
+                }
+                else if(z[i][j][k]==5){
+                    point1++;
+                    point3++;
+                }
+                else if(z[i][j][k]==1){
+                    point1+=3;
+                }
+                else if(z[i][j][k]==2){
+                     point2+=3;   
+                }
+                else if(z[i][j][k]==4){
+                    point3+=3;   
+                }
+            }
+        }
+        
+    }
+
+    cout<<point1<<" "<<point2<<" "<<point3<<endl;
 }
 
 int main()
 {
-    
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
    int t;
   cin>>t;
    

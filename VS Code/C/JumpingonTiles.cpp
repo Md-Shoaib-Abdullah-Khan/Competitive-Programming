@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -13,7 +14,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +43,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     998244353
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -64,45 +65,65 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-ll vis[mod], level[mod];
-vector<ll> nodes[mod];
-vector<vector<ll>> ranges;
-ll d[2000];
-
-DFS(ll node){
-    vis[node] = true;
-
-    for(ll elements : nodes[node]){
-        if()
-    }
+void reverse(string str)
+{
+    for (int i = str.length() - 1; i >= 0; i--)
+        cout << str[i];
 }
-
 
 
 void solve(){
 
- ll n,i;
-    cin>>n;
- 
+    ll n,m,k,x,i,y;
 
- for(i=0; i<n; i++){
-     ll node1, node2;
-     cin>>node1>>node2;
-
-    nodes[node1].push_back(node2);
-    nodes[node2].push_back(node1);
- } 
- BFS(1);
-
- for(i=1;i<=n;i++)cout<<level[i]<<" ";
-
+    ll a,b,c;
+    string s1,s2;
+    cin>>s1;
+    n = s1.size();
+    ll cnt[27];
+    vector<ll>pos[27];
+    vector<ll>ans;
     
+    memset(cnt,0,sizeof(cnt));
+
+    for(i=0;i<n;i++){
+        if(!cnt[s1[i] - 'a'])s2 += s1[i];
+        cnt[s1[i]-'a']++;
+        pos[s1[i] - 'a'].pb(i+1);
+    }
+    sort(s2.begin(), s2.end());
+    m=s2.size();
+    int start,end;
+    for(i=0;i<m;i++){
+        if(s2[i]==s1[0])start=i;
+        if(s2[i]==s1[n-1])end=i;
+    }
+   
+    ll jump=0,cost = abs(s1[0] - s1[n-1]);
+    if(start <= end){
+        for(i=start; i<=end; i++){
+            jump += cnt[s2[i] - 'a'];
+
+            for(int j=0;j<pos[s2[i]-'a'].size();j++)ans.push_back(pos[s2[i]-'a'][j]);
+        }
+    }
+    else{
+       for(i=start; i>=end; i--){
+            jump += cnt[s2[i] - 'a'];
+            for(int j=0;j<pos[s2[i]-'a'].size();j++)ans.push_back(pos[s2[i]-'a'][j]);
+        } 
+        
+    }
+    cout<<cost<<" "<<jump<<endl;
+    for(i=0;i<ans.size();i++)cout<<ans[i]<<" ";
+    cout<<endl;
+  
 }
 
 int main()
 {
-    
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
    int t;
   cin>>t;
    

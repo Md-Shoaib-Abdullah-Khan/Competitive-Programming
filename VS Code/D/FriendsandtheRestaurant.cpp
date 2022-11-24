@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -13,7 +14,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +43,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     998244353
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -64,45 +65,53 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-ll vis[mod], level[mod];
-vector<ll> nodes[mod];
-vector<vector<ll>> ranges;
-ll d[2000];
-
-DFS(ll node){
-    vis[node] = true;
-
-    for(ll elements : nodes[node]){
-        if()
-    }
+void reverse(string str)
+{
+    for (int i = str.length() - 1; i >= 0; i--)
+        cout << str[i];
 }
-
 
 
 void solve(){
 
- ll n,i;
+    ll n,k,i,j;
+
+    ll a,b,c;
+    string s;
     cin>>n;
- 
+    
+    ll x[n],y[n],diff[n];
+    bool check[n];
+    memset(check,false,sizeof(check));
 
- for(i=0; i<n; i++){
-     ll node1, node2;
-     cin>>node1>>node2;
+    for(i=0;i<n;i++)cin>>x[i];
+    for(i=0;i<n;i++)cin>>y[i];
+    for(i=0;i<n;i++)diff[i]=y[i]-x[i];
 
-    nodes[node1].push_back(node2);
-    nodes[node2].push_back(node1);
- } 
- BFS(1);
+    sort(diff, diff+n);
+    ll ans=0;
+    for(i=n-1,j=0;i>j;j++){
+        
+            if(diff[j] +diff[i] >=0 && !check[j]&& !check[i] ){
+                ans++;
+                check[j]=true;
+                check[i]=true;
+                i--;
+            }
 
- for(i=1;i<=n;i++)cout<<level[i]<<" ";
+    }
+    cout<<ans<<endl;
+
 
     
+    
+  
 }
 
 int main()
 {
-    
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
    int t;
   cin>>t;
    

@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100000
+#define mod                     1000
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -65,39 +65,24 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll vis[mod], level[mod];
-vector<ll> nodes[mod];
-vector<vector<ll>> ranges;
-ll d[2000];
-
-DFS(ll node){
-    vis[node] = true;
-
-    for(ll elements : nodes[node]){
-        if()
-    }
-}
-
 
 
 void solve(){
 
- ll n,i;
-    cin>>n;
+        ll n,i,j,m,k,rating;
+        ll a, b,c;
+    cin>>n>>k;
+    ll arr[n+1];
+    ll ans=0;
+    for(i=0;i<n;i++){
+        cin>>a;
+        ans = max(ans, a|k);
+    }
+    cout<<ans<<endl;
+    
+    
  
 
- for(i=0; i<n; i++){
-     ll node1, node2;
-     cin>>node1>>node2;
-
-    nodes[node1].push_back(node2);
-    nodes[node2].push_back(node1);
- } 
- BFS(1);
-
- for(i=1;i<=n;i++)cout<<level[i]<<" ";
-
-    
 }
 
 int main()
