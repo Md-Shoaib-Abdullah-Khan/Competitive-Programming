@@ -69,48 +69,43 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,x,a,b,y;
+    ll n,k,i,j,b;
+    cin>>n;
 
-    cin>> n;
+    ll a[n][n];
+    vector<pair<ll,ll>>one;
+    vector<pair<ll,ll>>two;
+    
+    for(i=1;i<=n;i++)
+        for(j=i;j<=n;j++)
+            {
+                cin>>a[i][j];
+                if(a[i][j]==1 && i!=j)one.push_back(make_pair(i,j));
+                else if(a[i][j]==2 && i!=(j+1))two.push_back(make_pair(i,j));
+            }
 
-  string s[2];
 
-  cin>>s[0];
-  cin>>s[1];
-  bool up=false, down = false;
-  ll cnt=0;
-  for(i=0;i<n;i++){
-    if(i!=n-1 && ((s[0][i]=='B' && s[0][i+1]=='W' && s[1][i]=='W') || (s[1][i]=='B' && s[1][i+1]=='W' && s[0][i]=='W')) ){
-      cout<<"NO"<<endl;
-      return;
-      }
-    if(s[0][i] == 'B' && s[1][i] == 'B'){
-      // up=true;
-      // down = true;
-      cnt++;
-    }
-    else{
-      if(s[0][i]=='B'){
-        if((cnt && cnt%2 && up)||(cnt && cnt%2==0 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=true;
-        down = false;
+    sort(one.begin(), one.end());
         
-      }
-      else{
-        if((cnt && cnt%2==0 && up)||(cnt && cnt%2 && down)){
-          cout<<"NO"<<endl;
-          return;
+    for(i=1;i<one.size();){
+        if(one[i].first >=one[i-1].first && one[i].first <= one[i-1].second){
+           one[i-1].second = max(one[i].second, one[i-1].second); 
+           one.erase(one.begin()+i);
         }
-        up=false;
-        down = true;
-      }
-      cnt=0;
+        else i++;
     }
-  }
-  cout<<"YES"<<endl;
+    for(i=0;i<one.size();i++)cout<<one[i].first<<" "<<one[i].second<<endl;
+
+    
+
+    
+    
+
+
+    
+    
+
+  
     
 }
 

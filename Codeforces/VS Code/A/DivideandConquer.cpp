@@ -73,44 +73,35 @@ void solve(){
 
     cin>> n;
 
-  string s[2];
+    ll arr[n],sum=0;
+    for(i=0;i<n;i++){
+        cin>>arr[i];
+        sum+= arr[i];
+    }
+    if(sum%2==0){
+        cout<<"0"<<endl;
+        return;
+    }
 
-  cin>>s[0];
-  cin>>s[1];
-  bool up=false, down = false;
-  ll cnt=0;
-  for(i=0;i<n;i++){
-    if(i!=n-1 && ((s[0][i]=='B' && s[0][i+1]=='W' && s[1][i]=='W') || (s[1][i]=='B' && s[1][i+1]=='W' && s[0][i]=='W')) ){
-      cout<<"NO"<<endl;
-      return;
-      }
-    if(s[0][i] == 'B' && s[1][i] == 'B'){
-      // up=true;
-      // down = true;
-      cnt++;
-    }
-    else{
-      if(s[0][i]=='B'){
-        if((cnt && cnt%2 && up)||(cnt && cnt%2==0 && down)){
-          cout<<"NO"<<endl;
-          return;
+    ll ans=100000,cnt=0;
+    for(i=0;i<n;i++){
+        while(arr[i]){
+            if((arr[i]%2==0 &&(arr[i]/2)%2!=0)||(arr[i]%2!=0 &&(arr[i]/2)%2==0)){
+                cnt++;
+                break;
+            }
+            else{
+                cnt++;
+                arr[i]/=2;
+            }
         }
-        up=true;
-        down = false;
-        
-      }
-      else{
-        if((cnt && cnt%2==0 && up)||(cnt && cnt%2 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=false;
-        down = true;
-      }
-      cnt=0;
+        ans=min(cnt, ans);
+        cnt=0;
     }
-  }
-  cout<<"YES"<<endl;
+
+    cout<<ans<<endl;
+
+  
     
 }
 

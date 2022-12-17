@@ -69,48 +69,31 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,x,a,b,y;
+    ll n,k,i,a,b;
+    cin>>n;
 
-    cin>> n;
+    ll x[n];
+    
+    for(i=0;i<n;i++)cin>>x[i];
 
-  string s[2];
+    ll ans1=x[0],ans=x[0];
 
-  cin>>s[0];
-  cin>>s[1];
-  bool up=false, down = false;
-  ll cnt=0;
-  for(i=0;i<n;i++){
-    if(i!=n-1 && ((s[0][i]=='B' && s[0][i+1]=='W' && s[1][i]=='W') || (s[1][i]=='B' && s[1][i+1]=='W' && s[0][i]=='W')) ){
-      cout<<"NO"<<endl;
-      return;
-      }
-    if(s[0][i] == 'B' && s[1][i] == 'B'){
-      // up=true;
-      // down = true;
-      cnt++;
+    sort(x,x+n);
+
+    
+    
+
+
+    for(i=n-1;i>0;i--){
+        if(ans1<x[i])ans1+=ceil((x[i]-ans1)/2.0);
     }
-    else{
-      if(s[0][i]=='B'){
-        if((cnt && cnt%2 && up)||(cnt && cnt%2==0 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=true;
-        down = false;
-        
-      }
-      else{
-        if((cnt && cnt%2==0 && up)||(cnt && cnt%2 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=false;
-        down = true;
-      }
-      cnt=0;
+    for(i=1;i<n;i++){
+        if(ans<x[i])ans+=ceil((x[i]-ans)/2.0);
     }
-  }
-  cout<<"YES"<<endl;
+    cout<<max(ans,ans1)<<endl;
+    
+
+  
     
 }
 

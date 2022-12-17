@@ -84,7 +84,7 @@ void solve(){
         vec.push_back(make_pair(a,b));
         arr[a] = min(b,arr[a]);
     }
-    sort(vec.begin(), vec.end());
+    //sort(vec.begin(), vec.end());
 
     for(i=n-1;i>0;i--)if(arr[i+1]<=arr[i])arr[i] = arr[i+1];
     //for(i=1;i<=n;i++)cout<<arr[i]<<" ";

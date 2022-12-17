@@ -69,48 +69,72 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,x,a,b,y;
+    ll n,k,i,j,m,x,a,b,y;
 
     cin>> n;
 
-  string s[2];
+    vector<ll>price;
+    set<ll>one;
+    set<ll>two;
+    set<ll>three;
 
-  cin>>s[0];
-  cin>>s[1];
-  bool up=false, down = false;
-  ll cnt=0;
-  for(i=0;i<n;i++){
-    if(i!=n-1 && ((s[0][i]=='B' && s[0][i+1]=='W' && s[1][i]=='W') || (s[1][i]=='B' && s[1][i+1]=='W' && s[0][i]=='W')) ){
-      cout<<"NO"<<endl;
-      return;
-      }
-    if(s[0][i] == 'B' && s[1][i] == 'B'){
-      // up=true;
-      // down = true;
-      cnt++;
+    for(i=0;i<n;i++){
+        cin>>a;
+        price.pb(a);
     }
-    else{
-      if(s[0][i]=='B'){
-        if((cnt && cnt%2 && up)||(cnt && cnt%2==0 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=true;
-        down = false;
-        
-      }
-      else{
-        if((cnt && cnt%2==0 && up)||(cnt && cnt%2 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=false;
-        down = true;
-      }
-      cnt=0;
+    for(i=0;i<n;i++){
+        cin>>a;
+        if(a==1)one.insert(price[i]);
+        else if(a==2)two.insert(price[i]);
+        else three.insert(price[i]);
     }
-  }
-  cout<<"YES"<<endl;
+    for(i=0;i<n;i++){
+        cin>>a;
+        if(a==1)one.insert(price[i]);
+        else if(a==2)two.insert(price[i]);
+        else three.insert(price[i]);
+    }
+    
+
+    cin>>m;
+    for(i=0;i<m;i++){
+        cin>>a;
+        if(a==1 && !one.empty()){
+            cout<<*one.begin()<<" ";
+            b=*one.begin();
+            set<ll>:: iterator ita;
+            set<ll>:: iterator itb;
+            ita = two.find(b);
+            itb = three.find(b);
+            one.erase(one.begin());
+            if(ita != two.end())two.erase(ita);
+            if(itb != three.end())three.erase(itb);
+        }
+        else if(a==2 && !two.empty()){
+            cout<<*two.begin()<<" ";
+            b=*two.begin();
+            set<ll>:: iterator ita ;
+            set<ll>:: iterator itb ;
+            ita = one.find(b);
+            itb = three.find(b);
+            two.erase(two.begin());
+            if(ita != one.end()) one.erase(ita);
+            if(itb != three.end())three.erase(itb);
+        }
+        else if(a==3 && !three.empty()){
+            cout<<*three.begin()<<" ";
+            b=*three.begin();
+            three.erase(three.begin());
+            set<ll>::iterator ita;
+            set<ll>::iterator itb;
+            ita =two.find(b);
+            itb =one.find(b);
+            if(ita != two.end())two.erase(ita);
+            if(itb != one.end())one.erase(itb);
+        }
+        else cout<<"-1"<<" ";
+    }
+
     
 }
 
@@ -118,9 +142,8 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-  cin>>t;
    
-    while(t--) solve();
+   
+     solve();
 }
 

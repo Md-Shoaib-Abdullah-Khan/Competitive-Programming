@@ -69,48 +69,28 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,x,a,b,y;
+    ll n,k,i,a,b;
 
-    cin>> n;
+    ll x[3],y[3];
+    cin>> x[0]>>y[0];
+    cin>> x[1]>>y[1];
+    cin>> x[2]>>y[2];
 
-  string s[2];
 
-  cin>>s[0];
-  cin>>s[1];
-  bool up=false, down = false;
-  ll cnt=0;
-  for(i=0;i<n;i++){
-    if(i!=n-1 && ((s[0][i]=='B' && s[0][i+1]=='W' && s[1][i]=='W') || (s[1][i]=='B' && s[1][i+1]=='W' && s[0][i]=='W')) ){
-      cout<<"NO"<<endl;
-      return;
-      }
-    if(s[0][i] == 'B' && s[1][i] == 'B'){
-      // up=true;
-      // down = true;
-      cnt++;
-    }
-    else{
-      if(s[0][i]=='B'){
-        if((cnt && cnt%2 && up)||(cnt && cnt%2==0 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=true;
-        down = false;
-        
-      }
-      else{
-        if((cnt && cnt%2==0 && up)||(cnt && cnt%2 && down)){
-          cout<<"NO"<<endl;
-          return;
-        }
-        up=false;
-        down = true;
-      }
-      cnt=0;
-    }
-  }
-  cout<<"YES"<<endl;
+
+    sort(x,x+3);
+    sort(y,y+3);
+
+    if((x[0]==x[1] || x[1]==x[2])&&(y[0]==y[1] || y[1]==y[2]))cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+
+    
+    
+    
+
+    
+
+  
     
 }
 

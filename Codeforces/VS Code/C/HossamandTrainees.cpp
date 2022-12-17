@@ -65,6 +65,27 @@ bool compare(ll x, ll y){
     return x>y;
 }
 vector<ll>Prime;
+const int N = 100000;
+
+bool vis[N];
+
+void Sieve(){
+   
+    memset(vis, true, sizeof(vis));
+    
+    vis[0] = vis[1] = false;
+    for(int i = 4 ; i < N ; i += 2)
+        vis[i] = false;
+    for(int i = 3 ; i < N / i ; i += 2){
+        if(!vis[i])continue;
+        for(int j = i * i ; j < N ; j += i + i)
+            vis[j] = false;
+    }
+    Prime.pb(2);
+    for(int i = 3 ; i < N ; i+=2)
+        if(vis[i]) Prime.pb(i);
+}
+
 void SieveOfEratosthenes(int n)
 {
 	// Create a boolean array "prime[0..n]" and initialize
@@ -76,10 +97,7 @@ void SieveOfEratosthenes(int n)
 	for (int p = 2; p * p <= n; p++) {
 		// If prime[p] is not changed, then it is a prime
 		if (prime[p] == true) {
-			// Update all multiples of p greater than or
-			// equal to the square of it numbers which are
-			// multiple of p and are less than p^2 are
-			// already been marked.
+		
 			for (int i = p * p; i <= n; i += p)
 				prime[i] = false;
 		}
@@ -98,45 +116,63 @@ void SieveOfEratosthenes(int n)
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,y;
+    ll n,k,i,j,a,b,y;
     
     cin>> n;
 
-    
-    
-    set<ll>ansSet;
     ll arr[n];
     for(i=0;i<n;i++){
     
     cin>>arr[i];
     
     }
-    map<ll, int>cnt;
+    map<ll, int> cnt;
      
-for(k=0;k<n;k++){
-    a=arr[k];
-    for ( i = 0; Prime[i]*Prime[i]<=a; i++)
-	{
-		// While i divides n, print i and divide n
-        if(cnt[Prime[i]]>0 && a % Prime[i]==0){
-                cout<<"YES"<<endl;
-                return;
-            }
-		while (a % Prime[i] == 0)
-		{ 
-            cnt[Prime[i]]++;
-			a = a/Prime[i];
-		}
-	}
-	if (a > 2){
-	    if(cnt[a]>0){
-                cout<<"YES"<<endl;
-                return;
-            }
-    	cnt[a]++;
+// for(k=0;k<n;k++){
+//     a=arr[k];
+//     for ( i = 0; Prime[i]*Prime[i]<=a; i++)
+// 	{
+//         if(cnt[Prime[i]] && a % Prime[i]==0){
+//                 cout<<"YES"<<endl;
+//                 return;
+//             }
+// 		while (a % Prime[i] == 0)
+// 		{ 
+//             cnt[Prime[i]]=1;
+// 			a = a/Prime[i];
+// 		}
+// 	}
+// 	if (a > 2){
+// 	    if(cnt[a]){
+//                 cout<<"YES"<<endl;
+//                 return;
+//             }
+//     	cnt[a]=1;
     
-    }
-}
+//     }
+// }
+for( i=0;i<n;i++){
+            ll x=arr[i];
+            for(ll pp=0;Prime[pp]*Prime[pp]<=x;pp++){
+                if(cnt[Prime[pp]] && x % Prime[pp]==0){
+                cout<<"YES"<<endl;
+                return;
+            }
+                if(x%Prime[pp]==0){
+                    cnt[Prime[pp]]++;
+                    while(x%Prime[pp]==0){
+                        x/=Prime[pp];
+                    }
+                }
+            }
+            if(x!=1){
+                if(cnt[x]){
+                cout<<"YES"<<endl;
+                return;
+            }
+                cnt[x]++;
+            }
+        }
     //for(i=0;i<cnt.size();i++)cout<<cnt[i]<<" ";
     
 cout<<"NO"<<endl;
@@ -151,8 +187,8 @@ int main()
     //   cin.tie(NULL); 
    int t;
   cin>>t;
-  SieveOfEratosthenes(100000);
-   
+ // SieveOfEratosthenes(100000);
+   Sieve();
     while(t--) solve();
 }
 

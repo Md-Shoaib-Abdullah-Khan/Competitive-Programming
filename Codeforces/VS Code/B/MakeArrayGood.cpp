@@ -73,44 +73,40 @@ void solve(){
 
     cin>> n;
 
-  string s[2];
+    ll arr1[n],arr[n],sum=0;
+    for(i=0;i<n;i++){
+        cin>>arr[i];
+        arr1[i]=arr[i];
+    }
+    sort(arr, arr+n);
+    vector<pair<ll, ll>>ans;
+    map<ll, int> Map;
+    ll cnt=0;
 
-  cin>>s[0];
-  cin>>s[1];
-  bool up=false, down = false;
-  ll cnt=0;
-  for(i=0;i<n;i++){
-    if(i!=n-1 && ((s[0][i]=='B' && s[0][i+1]=='W' && s[1][i]=='W') || (s[1][i]=='B' && s[1][i+1]=='W' && s[0][i]=='W')) ){
-      cout<<"NO"<<endl;
-      return;
-      }
-    if(s[0][i] == 'B' && s[1][i] == 'B'){
-      // up=true;
-      // down = true;
-      cnt++;
-    }
-    else{
-      if(s[0][i]=='B'){
-        if((cnt && cnt%2 && up)||(cnt && cnt%2==0 && down)){
-          cout<<"NO"<<endl;
-          return;
+    for(i=1;i<n;i++){
+        if(arr[i-1]>arr[i] && arr[i-1]%arr[i]!=0){
+            Map[arr[i]]=arr[i-1]-arr[i];
+            arr[i] += (arr[i-1]-arr[i]);
+            cnt++;
+            
         }
-        up=true;
-        down = false;
-        
-      }
-      else{
-        if((cnt && cnt%2==0 && up)||(cnt && cnt%2 && down)){
-          cout<<"NO"<<endl;
-          return;
+        else if(arr[i]%arr[i-1]!=0){
+            sum = (arr[i-1]-(arr[i]%arr[i-1]));
+            Map[arr[i]] = sum; 
+            arr[i] +=sum;
+            cnt++;
         }
-        up=false;
-        down = true;
-      }
-      cnt=0;
     }
-  }
-  cout<<"YES"<<endl;
+    cout<<cnt<<endl;
+    for(i=0;i<n;i++){
+        if(Map[arr1[i]]!=0)cout<<i+1<<" "<<Map[arr1[i]]<<endl;
+
+    }
+    
+
+    
+
+  
     
 }
 
