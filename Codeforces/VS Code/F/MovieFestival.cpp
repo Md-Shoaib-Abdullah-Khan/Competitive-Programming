@@ -69,52 +69,45 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,j,b;
-    cin>>n;
+    ll n,k,i,j,m,x,a,b,y;
 
-    ll a[n][n];
-    vector<pair<ll,ll>>one;
-    vector<pair<ll,ll>>two;
-    
-    for(i=1;i<=n;i++)
-        for(j=i;j<=n;j++)
-            {
-                cin>>a[i][j];
-                if(a[i][j]==1 && i!=j)one.push_back(make_pair(i,j));
-                else if(a[i][j]==2 && i!=(j+1))two.push_back(make_pair(i,j));
-            }
+    cin>> n;
+    vector<pair<ll,ll>> vec;
 
+    for(i=0;i<n;i++){
+        cin>>a>>b;
+        vec.push_back(make_pair(a,b));
+    }
 
-    sort(one.begin(), one.end());
-    sort(two.begin(), two.end());
-        
-    for(i=1;i<one.size();){
-        if(one[i].first >=one[i-1].first && one[i].first <= one[i-1].second){
-           one[i-1].second = max(one[i].second, one[i-1].second); 
-           one.erase(one.begin()+i);
+    sort(vec.begin(), vec.end());
+
+    for(i=0;i<vec.size()-1;){
+        if(vec[i].first==vec[i+1].first){
+            vec[i+1].second = min(vec[i].second, vec[i+1].second);
+            vector<pair<ll,ll>>::iterator it;
+           it = vec.begin()+i;
+           it=vec.begin()+i+1;
+        }
+        else if(vec[i].second >= vec[i+1].second && vec[i].first < vec[i+1].second){
+            vector<pair<ll,ll>>::iterator it;
+            it = vec.begin()+i;
+           it=vec.begin()+i+1;
         }
         else i++;
     }
-    for(i=0;i<one.size();i++)cout<<one[i].first<<" "<<one[i].second<<endl;
-
-    for(i=1;i<two.size();){
-        if(two[i].first >=two[i-1].first && two[i].first <= two[i-1].second){
-           one[i-1].second = max(one[i].second, one[i-1].second); 
-           one.erase(one.begin()+i);
+    // for(i=0;i<vec.size();i++){
+    //     cout<<vec[i].first<<" "<<vec[i].second<<endl;
+    // }
+   // ll cnt[vec.size()];
+   // memset(cnt, 0, sizeof(cnt));
+    for(i=0;i<vec.size()-1;){
+        if(vec[i].first<vec[i+1].first && vec[i].second > vec[i+1].first){
+            vec.erase(vec.begin()+i+1);
         }
         else i++;
     }
+    cout<<vec.size()<<endl;
 
-    
-
-    
-    
-
-
-    
-    
-
-  
     
 }
 
@@ -122,9 +115,8 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-  cin>>t;
    
-    while(t--) solve();
+   
+     solve();
 }
 

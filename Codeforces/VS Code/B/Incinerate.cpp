@@ -69,52 +69,45 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,j,b;
-    cin>>n;
+    ll n,k,i,j,m,x,a,b,y;
 
-    ll a[n][n];
-    vector<pair<ll,ll>>one;
-    vector<pair<ll,ll>>two;
+    cin>> n>>k;
     
-    for(i=1;i<=n;i++)
-        for(j=i;j<=n;j++)
-            {
-                cin>>a[i][j];
-                if(a[i][j]==1 && i!=j)one.push_back(make_pair(i,j));
-                else if(a[i][j]==2 && i!=(j+1))two.push_back(make_pair(i,j));
-            }
-
-
-    sort(one.begin(), one.end());
-    sort(two.begin(), two.end());
+   vector<pair<ll,ll>>vec;
+   ll maxHealth=0;
+    for(i=0;i<n;i++){
+        cin>>a;
+        vec.push_back(make_pair(0,a));
+        maxHealth = max(maxHealth,a);
+    }
+    for(i=0;i<n;i++){
+        cin>>a;
+        vec[i].first=a;
+    }
+    sort(vec.begin(), vec.end());
+    ll cnt=k;
+    //maxHealth -= k;
+    for(i=0;i<n;){
+        if(vec[i].second - cnt>0){
+            maxHealth -= k;
+            k -= vec[i].first;
+           //cout<<k<<" ";
+            cnt += k;
+            //vec[i].second -= cnt;
+            //cout<<cnt<<" "<<k<<endl;
+            
+        }
+        else i++;
         
-    for(i=1;i<one.size();){
-        if(one[i].first >=one[i-1].first && one[i].first <= one[i-1].second){
-           one[i-1].second = max(one[i].second, one[i-1].second); 
-           one.erase(one.begin()+i);
-        }
-        else i++;
+        // for(j=0;j<n;j++)cout<<vec[i].second<<" "; 
+
+        if(k<=0)break;
     }
-    for(i=0;i<one.size();i++)cout<<one[i].first<<" "<<one[i].second<<endl;
+    if(k>0)maxHealth-=k;
 
-    for(i=1;i<two.size();){
-        if(two[i].first >=two[i-1].first && two[i].first <= two[i-1].second){
-           one[i-1].second = max(one[i].second, one[i-1].second); 
-           one.erase(one.begin()+i);
-        }
-        else i++;
-    }
-
-    
-
-    
-    
-
-
-    
-    
-
-  
+    if(maxHealth >0)cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+   
     
 }
 
@@ -122,9 +115,9 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-  cin>>t;
+   ll t;
+   cin>>t;
    
-    while(t--) solve();
+     while(t--)solve();
 }
 

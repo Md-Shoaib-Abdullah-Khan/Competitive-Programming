@@ -69,52 +69,32 @@ bool compare(ll x, ll y){
 
 void solve(){
 
-    ll n,k,i,j,b;
-    cin>>n;
+    ll n,k,i,j,m,x,a,b,y;
 
-    ll a[n][n];
-    vector<pair<ll,ll>>one;
-    vector<pair<ll,ll>>two;
+    cin>> n;
     
-    for(i=1;i<=n;i++)
-        for(j=i;j<=n;j++)
-            {
-                cin>>a[i][j];
-                if(a[i][j]==1 && i!=j)one.push_back(make_pair(i,j));
-                else if(a[i][j]==2 && i!=(j+1))two.push_back(make_pair(i,j));
+    ll arr[n];
+    for(i=0;i<n;i++)cin>>arr[i];
+
+    sort(arr, arr+n);
+    ll ans=0;
+    for(i=0;i<n-1;i++){
+
+        for(j=0;j<=10;j++){
+            if((arr[i] & (1<<j)) == (1<<j) && (arr[n-1] & (1<<j)) == 0){
+                arr[i] = arr[i]^(1<<j);
+                arr[n-1] = arr[n-1]|(1<<j);
             }
-
-
-    sort(one.begin(), one.end());
-    sort(two.begin(), two.end());
-        
-    for(i=1;i<one.size();){
-        if(one[i].first >=one[i-1].first && one[i].first <= one[i-1].second){
-           one[i-1].second = max(one[i].second, one[i-1].second); 
-           one.erase(one.begin()+i);
+            if((arr[0] & (1<<j)) == (1<<j) && (arr[i] & (1<<j)) == 0){
+                arr[0] = arr[0]^(1<<j);
+                arr[i] = arr[i]|(1<<j);
+            }
         }
-        else i++;
+
     }
-    for(i=0;i<one.size();i++)cout<<one[i].first<<" "<<one[i].second<<endl;
+   // sort(arr, arr+n);
+    cout<<arr[n-1]-arr[0]<<endl;
 
-    for(i=1;i<two.size();){
-        if(two[i].first >=two[i-1].first && two[i].first <= two[i-1].second){
-           one[i-1].second = max(one[i].second, one[i-1].second); 
-           one.erase(one.begin()+i);
-        }
-        else i++;
-    }
-
-    
-
-    
-    
-
-
-    
-    
-
-  
     
 }
 
@@ -122,9 +102,9 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-  cin>>t;
+   ll t;
+   cin>>t;
    
-    while(t--) solve();
+     while(t--)solve();
 }
 
