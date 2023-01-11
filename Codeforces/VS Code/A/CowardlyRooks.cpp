@@ -71,7 +71,7 @@ void solve(){
 
     ll n,k,i,j,m,x,a=0,b,y;
 
-    cin>> n>>m;
+    cin>> n>>m;;
 
     ll arr[m][2];
 
