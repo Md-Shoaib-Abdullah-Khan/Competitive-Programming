@@ -38,12 +38,11 @@ using namespace std;
 #define DBG0                    cerr << __LINE__ << ": ----" << '\n'
 #define DBG(...)                cerr << __LINE__ <<':' << "(" << #__VA_ARGS__ << ")"<< " = ", dbg_out(__VA_ARGS__)
 #define GCD(a, b)               __gcd(a, b)
-#define lcm(a, b)               (a)*((b)/__gcd(a,b))
+#define lcm(a, b)               (a)*((b)/gcd(a,b))
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
+#define mod                     1000000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -57,61 +56,82 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool sortcol( const vector<int>& v1,
-               const vector<int>& v2 ) {
- return v1[1] < v2[1];
-}
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(const tuple<int, int, int>& a,
+               const tuple<int, int, int>& b)
+{
+    return (get<2>(a) < get<2>(b));
 }
 
+void solve()
+{int i,a,b,c,j,k,l,w,h,n,m,ma,r,z,e,t,tt,x5,y5;
 
 
-void solve(){
 
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
+    char x[55];
+    int y[8];
+
+    memset(y,0,sizeof(y));
+    cin>>x;
+
+    for(i=0;i<strlen(x);i++)
+    {
+        if(x[i]=='A')
+        {
+            y[0]++;
+            y[1]++;
+            y[2]++;
+            y[3]++;
+            y[4]--;
+            y[5]--;
+            y[6]--;
+            y[7]--;
+        }
+        if(x[i]=='B')
+        {
+            y[0]--;
+            y[1]++;
+            y[2]++;
+            y[3]--;
+            y[4]--;
+            y[5]++;
+            y[6]++;
+            y[7]--;
+        }
+        if(x[i]=='C')
+        {
+            y[0]--;
+            y[1]++;
+            y[2]--;
+            y[3]++;
+            y[4]--;
+            y[5]++;
+            y[6]--;
+            y[7]++;
+        }
+        for(j=0;j<8;j++)
+        {
+            if(y[j]<0){y[j]=-100;}
+        }
     }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
 
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
+    for(i=0;i<8;i++)
+    {
+        if(y[i]==0)
+        {
+            cout<<"YES"<<endl;
             return;
         }
     }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
-    
-    cout<<"YES"<<endl;
-    
-}
+    cout<<"NO"<<endl;
+    return;
 
-int main()
-{
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
-}
 
+
+}
+long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+
+
+int main(){
+    cin>>t;
+    while(t--){solve();}
+}

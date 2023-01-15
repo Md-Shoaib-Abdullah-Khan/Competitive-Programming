@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -64,54 +65,42 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
+void reverse(string str)
+{
+    for (int i = str.length() - 1; i >= 0; i--)
+        cout << str[i];
+}
 
 
 void solve(){
 
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
-    }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
+    ll n,m,k,x,i,y,z;
 
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
-        }
-    }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
+    ll a,b,c,d;
+  
     
-    cout<<"YES"<<endl;
-    
+    cin>>x>>y>>z;
+    cin>>a>>b>>c>>d;
+
+    ll ans1=0,ans2=0;
+    ans1+=abs(a-c);
+    ans1+=min(b+d,y-b+y-d);
+    ans1+=z;
+
+    ans2+=abs(b-d);
+    ans2+=min(a+c,x-a+x-c );
+    ans2+=z;
+    cout<<min(ans1,ans2)<<endl;
+  
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
+   int t;
+  cin>>t;
    
-     while(t--)solve();
+    while(t--) solve();
 }
 

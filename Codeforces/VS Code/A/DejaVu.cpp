@@ -38,15 +38,15 @@ using namespace std;
 #define DBG0                    cerr << __LINE__ << ": ----" << '\n'
 #define DBG(...)                cerr << __LINE__ <<':' << "(" << #__VA_ARGS__ << ")"<< " = ", dbg_out(__VA_ARGS__)
 #define GCD(a, b)               __gcd(a, b)
-#define lcm(a, b)               (a)*((b)/__gcd(a,b))
+#define lcm(a, b)               (a)*((b)/gcd(a,b))
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
+#define mod                     1000000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
+#define Max                     300010
 
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
@@ -57,61 +57,57 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool sortcol( const vector<int>& v1,
-               const vector<int>& v2 ) {
- return v1[1] < v2[1];
-}
-bool compare(ll x, ll y){
-    return x>y;
-}
+void solve()
+{long long i,j,k,l,w,h,n,m,ma,r,z,s,e,t,tt,x5,y5;
+ll ans=1,ans2=1;
+    int c=0;
+    char x[Max];
 
+    cin>>x;
+    bool printed =false;
 
-
-void solve(){
-
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
+    for(i=0;i<strlen(x);i++)
+    {
+        if(x[i]=='a')c++;
+        else break;
     }
-    if(n%3==2){
+    if(c==strlen(x))
+    {
         cout<<"NO"<<endl;
         return;
     }
-    for(i=1;i<n-1;i+=3){
+    else cout<<"YES"<<endl;
 
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
+    for(i=0,j=strlen(x)-1;i<=j;i++,j--)
+    {
+        if('a'!=x[j]&&!printed){cout<<"a";
+        printed=true;
         }
+        if(i==j&&!printed){cout<<"a";
+        printed=true;
+        }
+        cout<<x[i];
     }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
-    
-    cout<<"YES"<<endl;
-    
+    if(!printed)cout<<"a";
+    strrev(x);
+    if(strlen(x)%2==0)x[i]='\0';
+    else x[i-1]='\0';
+    strrev(x);
+    cout<<x;
+    cout<<endl;
+    return;
+
+
+
+
 }
 
-int main()
-{
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
-}
 
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
+    }
+}

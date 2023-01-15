@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -64,54 +65,66 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
+void reverse(string str)
+{
+    for (int i = str.length() - 1; i >= 0; i--)
+        cout << str[i];
+}
 
 
 void solve(){
 
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
-    }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
+    ll n,m,k,x,i,y,z;
 
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
+    ll a,b,c,d;
+  cin>>n;
+  string s1;
+  cin>>s1;
+  string s2=s1;
+  ll arr[n];
+    vector<pair<ll,char>>vec;
+    ll cnt=0;
+    ll cnt2[27];
+    memset(cnt2, 0, sizeof(cnt2));
+    sort(s2.begin(), s2.end());
+
+    for(i=0;i<n-1;i++){
+        cnt2[s2[i]-'a']++;
+        if(s2[i]==s2[i+1])cnt++;
+        else{
+            vec.push_back(make_pair(cnt, s2[i]));
+            cnt=0;
         }
     }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
+    if(cnt!=0)vec.push_back(make_pair(cnt, s2[i]));
+    cnt2[s2[n-1]-'a']++;
+
+
+    ll cnt1[100001];
+
+    memset(cnt1,0,sizeof(cnt1));
+    ll mx=0,indx=0;
+    for(i=0;i<26;i++){
+        cnt1[cnt2[i]]+=cnt2[i]; 
+        if(mx<cnt1[cnt2[i]]){
+            mx=cnt1[cnt2[i]];
+            indx=cnt2[i];
+        }
+    }
+    sort(cnt1,cnt1+100001, compare);
+    cout<<indx<<endl;
+
     
-    cout<<"YES"<<endl;
-    
+  
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
+   int t;
+  cin>>t;
    
-     while(t--)solve();
+    while(t--) solve();
 }
 

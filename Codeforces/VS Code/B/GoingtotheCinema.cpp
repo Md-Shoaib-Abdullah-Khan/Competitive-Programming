@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+
 using namespace std;
 
 
@@ -64,54 +65,46 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
+void reverse(string str)
+{
+    for (int i = str.length() - 1; i >= 0; i--)
+        cout << str[i];
+}
 
 
 void solve(){
 
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
-    }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
+    ll n,m,k,x,i,y,z;
 
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
-        }
+    ll a,b,c,d;
+  cin>>n;
+  ll arr[n];
+    for(i=0;i<n;i++){
+        cin>>arr[i];
     }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
+    sort(arr,arr+n);
+
+    ll sum=0,ans=0;
+
+    for(i=0;i<n-1;i++){
+        if(sum>=arr[i] && sum+1<arr[i+1])ans++;
+        sum++;
+        // if(sum>arr[i])ans++;
+    }
+    if(sum>=arr[n-1])ans++;
+    if(arr[0]!=0)ans++;
+    cout<<ans<<endl;
     
-    cout<<"YES"<<endl;
-    
+  
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
+   int t;
+  cin>>t;
    
-     while(t--)solve();
+    while(t--) solve();
 }
 

@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include<math.h>
 using namespace std;
 
 
@@ -38,12 +39,11 @@ using namespace std;
 #define DBG0                    cerr << __LINE__ << ": ----" << '\n'
 #define DBG(...)                cerr << __LINE__ <<':' << "(" << #__VA_ARGS__ << ")"<< " = ", dbg_out(__VA_ARGS__)
 #define GCD(a, b)               __gcd(a, b)
-#define lcm(a, b)               (a)*((b)/__gcd(a,b))
+#define lcm(a, b)               (a)*((b)/gcd(a,b))
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
+#define mod                     1000000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -57,61 +57,73 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool sortcol( const vector<int>& v1,
-               const vector<int>& v2 ) {
- return v1[1] < v2[1];
+void solve()
+{long long int  i,j,w,h,a,n,m,ma,e,t,tt,x5,y5;
+
+      cin>>n;
+
+       ll setA[n+1], setB[n+1],ans=0,cheacked[n+1];
+       vector<ll> vecA;
+       vector<ll> vecB;
+       memset(cheacked , -1,sizeof(cheacked));
+
+       for(i=0;i<n;i++)
+       {
+           cin>>a;
+           vecA.pb(a);
+           setA[a] = i;
+       }
+       for(i=0;i<n;i++)
+       {
+           cin>>a;
+           vecB.pb(a);
+           setB[a] = i;
+       }
+
+       for(i=0;i<n;i++)
+       {
+           ll b,c,sum=0;
+           b = i;
+
+           if(cheacked[vecA[i]]!=-1) continue;
+
+           while(1)
+           {
+               cheacked[vecA[b]] =1;
+
+               sum += vecA[b];
+
+               sum -= vecB[b];
+
+            //cout<<sum<<endl;
+            if(sum==0)
+            {
+                ans++;
+                break;
+            }
+
+               b = setB[vecA[b]];
+           }
+       }
+       ll ans1 =1;
+      while(ans--)
+      {
+          ans1*=2;
+          ans1%=mod;
+      }
+
+       cout<<ans1<<endl;
+
+
+
 }
-bool compare(ll x, ll y){
-    return x>y;
-}
 
 
 
-void solve(){
-
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
-
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
-        }
-    }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
-    
-    cout<<"YES"<<endl;
-    
 }
-
-int main()
-{
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
-}
-

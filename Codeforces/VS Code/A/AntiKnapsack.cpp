@@ -1,4 +1,5 @@
 #include<bits/stdc++.h>
+#include <set>
 using namespace std;
 
 
@@ -38,12 +39,11 @@ using namespace std;
 #define DBG0                    cerr << __LINE__ << ": ----" << '\n'
 #define DBG(...)                cerr << __LINE__ <<':' << "(" << #__VA_ARGS__ << ")"<< " = ", dbg_out(__VA_ARGS__)
 #define GCD(a, b)               __gcd(a, b)
-#define lcm(a, b)               (a)*((b)/__gcd(a,b))
+#define lcm(a, b)               (a)*((b)/gcd(a,b))
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
+#define mod                     1000000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -57,61 +57,45 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool sortcol( const vector<int>& v1,
-               const vector<int>& v2 ) {
- return v1[1] < v2[1];
-}
-bool compare(ll x, ll y){
-    return x>y;
-}
-
-
-
-void solve(){
-
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
-    }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
-
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
-        }
-    }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
-    
-    cout<<"YES"<<endl;
-    
-}
-
-int main()
+bool compare(const tuple<int, int, int>& a,
+               const tuple<int, int, int>& b)
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
+    return (get<2>(a) < get<2>(b));
 }
 
+void solve()
+{int i,a,b,c,j,k,l,w,h,n,m,ma,r,z,e,t,tt,x5,y5;
+
+
+
+    cin>>n>>k;
+
+    vector<int> x;
+    for(i=k+1;i<=n;i++){x.pb(i);}
+
+    i=k/2;
+    if(k%2!=0)i++;
+    for(;i<k&&k!=1;i++){x.pb(i);}
+
+    sort(x.begin(),x.end());
+
+    cout<<x.size()<<endl;
+    for(i=0,j=0;i<x.size();j++,i++)
+    {
+        cout<<x[i];
+        if(j!=x.size()-1)cout<<" ";
+        else cout<<endl;
+    }
+
+
+
+
+
+}
+long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+
+
+int main(){
+    cin>>t;
+    while(t--){solve();}
+}

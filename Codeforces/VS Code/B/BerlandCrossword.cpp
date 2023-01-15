@@ -38,12 +38,11 @@ using namespace std;
 #define DBG0                    cerr << __LINE__ << ": ----" << '\n'
 #define DBG(...)                cerr << __LINE__ <<':' << "(" << #__VA_ARGS__ << ")"<< " = ", dbg_out(__VA_ARGS__)
 #define GCD(a, b)               __gcd(a, b)
-#define lcm(a, b)               (a)*((b)/__gcd(a,b))
+#define lcm(a, b)               (a)*((b)/gcd(a,b))
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
+#define mod                     1000000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -57,61 +56,77 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool sortcol( const vector<int>& v1,
-               const vector<int>& v2 ) {
- return v1[1] < v2[1];
-}
-bool compare(ll x, ll y){
-    return x>y;
-}
-
-
-
-void solve(){
-
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
-    }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
-
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
-        }
-    }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
-    
-    cout<<"YES"<<endl;
-    
-}
-
-int main()
+bool compare(const tuple<int, int, int>& a,
+               const tuple<int, int, int>& b)
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
+    return (get<2>(a) < get<2>(b));
 }
 
+void solve()
+{int i,a,b,c,j,k,w,h,n,m,ma,z,e,t,tt,x5,y5;
+
+
+
+    int u=0,r=0,d=0,l=0,u1=0,r1=0,d1=0,l1=0;
+
+    cin>>n>>u>>r>>d>>l;
+
+    if(u==n)
+    {
+        r1++;;
+        l1++;
+    }
+    if(d==n)
+    {
+        r1++;;
+        l1++;
+    }
+    if(r==n)
+    {
+        u1++;;
+        d1++;
+    }
+    if(l==n)
+    {
+        u1++;;
+        d1++;
+    }
+    if(u==n-1)
+    {
+        if(r>=1&&r1<r)r1++;
+        else l1++;
+    }
+    if(d==n-1)
+    {
+        if(r>=1&&r1<r)r1++;
+        else l1++;
+    }
+    if(r==n-1)
+    {
+        if(u>=1&&u1<u)u1++;
+        else d1++;
+    }
+    if(l==n-1)
+    {
+        if(u>=1&&u1<u)u1++;
+        else d1++;
+    }
+    if(r1<=r&&u1<=u&&d1<=d&&l1<=l)
+        {
+            cout<<"YES"<<endl;
+        return;
+    }
+
+    cout<<"NO"<<endl;
+    return;
+
+
+
+}
+long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+
+
+int main(){
+    cin>>t;
+    while(t--){solve();}
+}

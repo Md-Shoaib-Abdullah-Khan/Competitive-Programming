@@ -38,12 +38,11 @@ using namespace std;
 #define DBG0                    cerr << __LINE__ << ": ----" << '\n'
 #define DBG(...)                cerr << __LINE__ <<':' << "(" << #__VA_ARGS__ << ")"<< " = ", dbg_out(__VA_ARGS__)
 #define GCD(a, b)               __gcd(a, b)
-#define lcm(a, b)               (a)*((b)/__gcd(a,b))
+#define lcm(a, b)               (a)*((b)/gcd(a,b))
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
+#define mod                     1000007
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
@@ -57,61 +56,51 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
-bool sortcol( const vector<int>& v1,
-               const vector<int>& v2 ) {
- return v1[1] < v2[1];
-}
-bool compare(ll x, ll y){
-    return x>y;
-}
+void solve()
+{long long int  i,j,w,h,n,m,ma,e,t,tt,x5,y5;
+        ll x,y,x1,y1,x2,y2,x3,y3,x4,y4,a,b,c,d;
 
+        cin>>n>>m>>x>>y;
 
+        x1=n,y1=m;
 
-void solve(){
+        x2=1,y2=m;
 
-    ll n,k,i,j,m,x,a,b,y;
-    string s;
-    cin>>n;
-    cin>> s;
-    if(n==1){
-        cout<<"YES"<<endl;
-        return;
-    }
-    if(n%3==2){
-        cout<<"NO"<<endl;
-        return;
-    }
-    for(i=1;i<n-1;i+=3){
+        x3=n;y3=1;
 
-         if(s[i]!=s[i+1]){
-            cout<<"NO"<<endl;
-            return;
+        x4=1,y4=1;
+
+        a=abs(x-x1)+abs(y-y1);
+        b=abs(x-x2)+abs(y-y2);
+        c=abs(x-x3)+abs(y-y3);
+        d=abs(x-x4)+abs(y-y4);
+
+        if(a>=b&&a>=c&&a>=d)
+        {
+            cout<<"1 "<<"1 "<<x1<<" "<<y1<<endl;
         }
+        else if(b>=a&&b>=c&&b>=d)
+        {
+            cout<<n<<" "<<"1 "<<x2<<" "<<y2<<endl;
+        }
+        else if(c>=a&&c>=b&&c>=d)
+        {
+            cout<<"1 "<<m<<" "<<x3<<" "<<y3<<endl;
+        }
+        else if(d>=a&&d>=c&&d>=b)
+        {
+            cout<<n<<" "<<m<<" "<<x4<<" "<<y4<<endl;
+        }
+
+
+}
+
+
+
+int main(){
+    long long i,j,k,l,n,m,ma,y,r,c[567890],z,s,e,t,tt,x5,y5;
+    cin >>t;
+    while (t--){
+    solve();
     }
-    // reverse(s.begin(), s.end());
-    // if(s[0]!=s[1])
-    //  for(i=1;i<n;i+=3){
-    //     if(i+1==n-1){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    //     else if(s[i]!=s[i+1]){
-    //         cout<<"NO"<<endl;
-    //         return;
-    //     }
-    // }
-    
-    cout<<"YES"<<endl;
-    
 }
-
-int main()
-{
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
-}
-
