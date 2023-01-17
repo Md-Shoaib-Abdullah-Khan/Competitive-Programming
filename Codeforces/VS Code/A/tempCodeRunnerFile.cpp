@@ -1,2 +1,4 @@
-
-    ll n,k,i,x,b,y;
+if(n==2){
+    //     cout<<"-1"<<endl;
+    //     return;
+    // }

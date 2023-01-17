@@ -112,7 +112,9 @@ void solve(){
         }
     }
     sort(cnt1,cnt1+100001, compare);
-    cout<<indx<<endl;
+    // cout<<indx<<endl;
+
+    
 
     
   

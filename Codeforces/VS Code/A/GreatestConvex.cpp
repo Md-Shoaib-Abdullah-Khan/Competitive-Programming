@@ -69,63 +69,34 @@ ll vis[mod], level[mod];
 vector<ll> nodes[mod];
 vector<vector<ll>> ranges;
 ll d[2000];
-
-
-DFS(ll node){
-    vis[node] = true;
-
-    
+ll ans[1005];
+bool isPrime(ll n){
+    for(ll i=2;i<=sqrt(n);i++){
+        if(n%i == 0)return false;
+    }
+    return true;
 }
+
 
 
 
 void solve(){
 
- ll n,i,j,k;
+ ll n,i,j,t;
     cin>>n;
- 
-    ll arr[n][2];
- for(i=0; i<n; i++){
-    cin>>arr[i][0];
-    cin>>arr[i][1];
- }
- ll ans[n];
-    for(i=0; i<n; i++){
-         if(arr[i][0] == arr[i][1]) {
-             ans[i]=arr[i][0];
-             continue;
-         }
-
-        for(j=arr[i][0];j<=arr[i][1];j++){
-            bool found = false;
-            for(k=0;k<n;k++){
-                
-                if((j >= arr[k][0] && j <= arr[k][1]) &&  i!=k){
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
-                ans[i] = j;
-                break;
-            }
-        }
- }
- for(i=0;i<n;i++){
-    cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<ans[i]<<endl;
- }
-
+    ll ans=0, fact=1;
     
-
+    cout<<n-1<<endl;
+    
     
 }
 
 int main()
 {
     
-   int t;
+    int t;
   cin>>t;
    
-    while(t--) solve();
+    while(t--)solve();
 }
 

@@ -69,53 +69,42 @@ ll vis[mod], level[mod];
 vector<ll> nodes[mod];
 vector<vector<ll>> ranges;
 ll d[2000];
+ll ans[1005];
 
 
-DFS(ll node){
-    vis[node] = true;
-
-    
-}
 
 
 
 void solve(){
 
- ll n,i,j,k;
-    cin>>n;
- 
-    ll arr[n][2];
- for(i=0; i<n; i++){
-    cin>>arr[i][0];
-    cin>>arr[i][1];
- }
- ll ans[n];
-    for(i=0; i<n; i++){
-         if(arr[i][0] == arr[i][1]) {
-             ans[i]=arr[i][0];
-             continue;
-         }
+ ll n,i,j,t;
+    cin>>n>>t;
+    ll arr[n];
+    ll sum=0,ans=n;
+    for(i=0;i<n;i++){
+        cin>>arr[i];
+        sum+=arr[i];
+    }
+    if(n==1&&arr[0]>t){
+        cout<<"0"<<endl;
+        return;
+    }
+    sum=0;
+    ans=0;
 
-        for(j=arr[i][0];j<=arr[i][1];j++){
-            bool found = false;
-            for(k=0;k<n;k++){
-                
-                if((j >= arr[k][0] && j <= arr[k][1]) &&  i!=k){
-                    found = true;
-                    break;
-                }
-            }
-            if(!found){
-                ans[i] = j;
-                break;
-            }
-        }
- }
- for(i=0;i<n;i++){
-    cout<<arr[i][0]<<" "<<arr[i][1]<<" "<<ans[i]<<endl;
- }
+    for(i=0,j=0;j<n;){
+       if(sum<=t){
+        sum+=arr[j];
+        j++;
+       }
+       else{
+        sum-=arr[i];
+        i++;
+       }
+       if(sum<=t)ans=max(ans,j-i);
+    }
 
-    
+    cout<<ans<<endl;
 
     
 }
@@ -123,9 +112,6 @@ void solve(){
 int main()
 {
     
-   int t;
-  cin>>t;
-   
-    while(t--) solve();
+    solve();
 }
 
