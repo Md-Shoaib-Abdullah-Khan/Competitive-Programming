@@ -64,39 +64,51 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
     return x.first > y.first;
 }
+vector<ll>nodes[100005];
+ll cats[100005],m,ans;
+bool vis[100005];
+
+void DFS(ll n, ll cat){
+
+    if(cats[n] == 1)cat++;
+    else cat=0;
+    
+    if(cat>m || vis[n])return;
+    if(nodes[n].size() == 1)ans++;
+    vis[n] = true;
+    
+
+    for(ll i : nodes[n]){
+        DFS(i, cat);
+    }
+}
 
 
 
 void solve(){
 
-    ll n,k,i,j,m,x,a=0,b,y;
-    set<ll> s;
-    cin>>n;
-    bool ans=false;
-    vector<pair<ll , set<ll>>>vec;
-    for(i=0;i<n;i++){
-        set<ll>s1;
-        cin>>m;
-        for(j=0;j<m;j++){
-            cin>>a;
-            s1.insert(a);
-        }
-        vec.push_back(make_pair(m, s1));
-        s1.clear();
-    }
-    sort(vec.begin(), vec.end(), compare);
+    ll n,k,i,j,x,a=0,b,y;
 
-    for(i=0;i<n;i++){
-        x= s.size();
-        s.insert(vec[i].second.begin(), vec[i].second.end());
-        if(s.size()==x)ans=true;
-    }
-
+    cin>>n>>m;
     
-    if(ans)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
-
+    ll R=0;
+    ans=0;
+    for(i=1;i<=n;i++){
+        cin>>cats[i];
+        vis[i] = false;
+    }
+    for(i=1;i<=n-1;i++){
+        cin>>a>>b;
+        
+        nodes[a].push_back(b);
+        nodes[b].push_back(a);
+    }
+    DFS(1,0);
+    if(nodes[1].size()==1)ans--;
+    cout<<ans<<endl;
     
+    
+
      
     
 }
@@ -105,9 +117,6 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
+   solve();
 }
 

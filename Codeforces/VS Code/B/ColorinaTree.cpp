@@ -64,39 +64,46 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
     return x.first > y.first;
 }
+vector<ll>nodes[10005];
+ll color[10005],condition[10005],clr;
+
+void DFS(ll n){
+
+    condition[n]=clr;
+    //cout<<n<<" "<<clr<<endl;
+    for(ll i:nodes[n]){
+        DFS(i);
+    }
+    return;
+
+}
 
 
 
 void solve(){
 
     ll n,k,i,j,m,x,a=0,b,y;
-    set<ll> s;
+
     cin>>n;
-    bool ans=false;
-    vector<pair<ll , set<ll>>>vec;
-    for(i=0;i<n;i++){
-        set<ll>s1;
-        cin>>m;
-        for(j=0;j<m;j++){
-            cin>>a;
-            s1.insert(a);
+    memset(condition, 0, sizeof(condition));
+    ll ans=0,R=0;
+    for(i=2;i<=n;i++){
+        cin>>a;
+        nodes[a].push_back(i);
+    }
+    for(i=1;i<=n;i++){
+        cin>>color[i];
+    }
+    for(i=1;i<=n;i++){
+        if(condition[i]!=color[i]){
+            clr=color[i];
+            DFS(i);
+            ans++;
         }
-        vec.push_back(make_pair(m, s1));
-        s1.clear();
     }
-    sort(vec.begin(), vec.end(), compare);
-
-    for(i=0;i<n;i++){
-        x= s.size();
-        s.insert(vec[i].second.begin(), vec[i].second.end());
-        if(s.size()==x)ans=true;
-    }
-
+    cout<<ans<<endl;
     
-    if(ans)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
 
-    
      
     
 }
@@ -105,9 +112,6 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   ll t;
-   cin>>t;
-   
-     while(t--)solve();
+   solve();
 }
 

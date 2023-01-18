@@ -70,33 +70,20 @@ bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
 void solve(){
 
     ll n,k,i,j,m,x,a=0,b,y;
-    set<ll> s;
-    cin>>n;
-    bool ans=false;
-    vector<pair<ll , set<ll>>>vec;
-    for(i=0;i<n;i++){
-        set<ll>s1;
-        cin>>m;
-        for(j=0;j<m;j++){
-            cin>>a;
-            s1.insert(a);
+    string s;
+    cin>>s;
+
+    ll ans=0,R=0;
+    for(i=0;i<s.size();i++){
+        if(s[i]=='R'){
+            ans=max(R,ans);
+            R=0;
         }
-        vec.push_back(make_pair(m, s1));
-        s1.clear();
+        else R++;
     }
-    sort(vec.begin(), vec.end(), compare);
+    if(R>0)ans=max(ans,R);
+    cout<<ans+1<<endl;
 
-    for(i=0;i<n;i++){
-        x= s.size();
-        s.insert(vec[i].second.begin(), vec[i].second.end());
-        if(s.size()==x)ans=true;
-    }
-
-    
-    if(ans)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
-
-    
      
     
 }

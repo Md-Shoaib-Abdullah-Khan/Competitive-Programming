@@ -65,38 +65,81 @@ bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
     return x.first > y.first;
 }
 
+ll arr[600000], last_index,ans,sz;
+vector<ll>sequence;
+
+
+ll index(ll n){
+    ll i=1, x=0;
+    while(i<n){
+        x+=i;
+        i*=2;
+    }
+    return x;
+}
+
+ll BST(ll n){
+    if(arr[n] != 0)return arr[n];
+    return arr[n] = BST(2*n)+BST(2*n+1);
+}
+
+void allign(ll n){
+
+    if(2*n+1 > last_index + sz){
+        return;
+    }
+    allign(2*n);
+    allign(2*n+1);
+    if(arr[2*n]>arr[2*n+1]){
+    ans++;
+    }
+    return;
+}
+
+void traverse(ll n){
+    if(2*n +1 > last_index + sz){
+        sequence.pb(arr[n]);
+        return;
+    }
+    if(arr[2*n]<arr[2*n+1]){
+        traverse(2*n);
+        traverse(2*n+1);
+    }
+    else {
+        traverse(2*n+1);
+        traverse(2*n);
+    }
+    return;
+}
+
 
 
 void solve(){
 
     ll n,k,i,j,m,x,a=0,b,y;
-    set<ll> s;
+
     cin>>n;
-    bool ans=false;
-    vector<pair<ll , set<ll>>>vec;
-    for(i=0;i<n;i++){
-        set<ll>s1;
-        cin>>m;
-        for(j=0;j<m;j++){
-            cin>>a;
-            s1.insert(a);
+    ans=0;
+    memset(arr, 0, sizeof(arr));
+    last_index = index(n)+1;
+    sz=n;
+    for(i=last_index; i<last_index+n; i++){
+        cin>>arr[i];
+    }
+    sequence.clear();
+    a = BST(1);
+    allign(1);
+    sequence.pb(0);
+    traverse(1);
+
+    for(i=1;i<sequence.size();i++){
+        if(i!=sequence[i]){
+            cout<<"-1"<<endl;
+            return;
         }
-        vec.push_back(make_pair(m, s1));
-        s1.clear();
     }
-    sort(vec.begin(), vec.end(), compare);
-
-    for(i=0;i<n;i++){
-        x= s.size();
-        s.insert(vec[i].second.begin(), vec[i].second.end());
-        if(s.size()==x)ans=true;
-    }
-
     
-    if(ans)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
-
-    
+    cout<<ans<<endl;
      
     
 }
