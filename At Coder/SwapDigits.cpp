@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
- 
- 
+
+
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -42,12 +42,12 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     100005
+#define mod                     998244353
 #define inf                     1000000001
 #define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -56,7 +56,7 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
- 
+
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
@@ -64,67 +64,46 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
- 
-int parent[mod];
-int siz[mod];
-void make(int n){
-    parent[n] = n;
-    siz[n] = 1;
-}
- 
-int find(int n){
-    if(parent[n] == n)return n;
- 
-    return parent[n] = find(parent[n]);
-}
- 
-void Union(int a, int b){
-    a = find(a);
-    b = find(b);
-    if(a != b){
-        if(siz[a] < siz[b])swap(a,b);
-        parent[b] = a;
-        siz[a] += siz[b];
+
+
+ll digit(string s){
+    ll j=1, digit=0;
+    for(ll i=s.size()-1;i>=0;i--){
+        digit+=(((s[i]-'0')%mod)*(j%mod))%mod;
+        j*=10;
     }
+    return digit;
 }
- 
+
 void solve(){
- 
-    int n,k,i,j,m,x,a=0,b,y;
- 
-    cin>>n;
- 
-    for(i=1;i<=n;i++)make(i);
- 
-    int arr[n+5], vis[n+5], mx=0, indx=0;
-    memset(vis, 0, sizeof(vis));
-    
-    for(i=1;i<=n;i++){   
-        cin>>arr[i];
-       mx=max(mx,arr[i]);
-       vis[arr[i]]=1;
-       if(mx!=i && vis[i]==0)Union(arr[i], i);
-        else if(mx > arr[i])Union(mx,arr[i]);
+
+    ll n,k,i,j,m,x,y;
+    string a, b ;
+    cin>>n>>a>>b;
+    ll ans=mod;
+    string s1, s2;
+    for(i=n-1;i>=0;i--){
+         s1=a;
+         s2=b;
+        swap(s1[i], s2[i]);
+        x=digit(s1);
+        y=digit(s2);
+        if(x*y<(digit(a)*digit(b))){
+            a=s1;
+            b=s2;
+        }
     }
+    cout<<(digit(a)*digit(b))%mod<<endl;
     
-   memset(vis, 0, sizeof(vis));
-    int ans=0;
-    for(i=1;i<=n;i++){
-        a=find(i);
-        if(vis[a]==0)ans++;
-        vis[a]=1;
-    }
     
-    cout<<ans<<endl;
+   
    
 }
- 
+
 int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-   cin>>t;
-   
-   while(t--)  solve();
+     solve();
 }
+
