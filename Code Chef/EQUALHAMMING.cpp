@@ -61,62 +61,56 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
-    return x.first > y.first;
-}
-vector<int>nodes[100005];
-int level[1000];
-int N;
-vector<int>sequence;
-int DFS(int n, int cnt){
-    if(n==N)return cnt;
-    int ans=mod;
-    for(int i:nodes[n]){
-        ans = min(ans,DFS(i,cnt+1));
-    }
-    return ans;
-}
-void BFS(int n){
-    queue<int> qu;
-    qu.push(n);
-    while(!qu.empty()){
-        int x = qu.front();
-        qu.pop();
-        for(int i:nodes[x]) {
-            qu.push(i);
-            level[i]=level[x]+1;
-        }
-    }
-    return;
+bool compare(int x, int y){
+    return x > y;
 }
 
+
+const int INF=1e9+7;
+
+ll power(ll n, ll m){
+    ll i,num=1;
+    for(i=1;i<=m;i++)num= (num%INF * n%INF)%INF;
+    return num;
+}
+
+
+ll binaryToDecimal(string s){
+    ll i,num=0;
+    reverse(s.begin(),s.end());
+    for(i=0;i<s.size();i++){
+        num+= (s[i]-'0')*power(2,i);
+    }
+    return num;
+}
 
 
 void solve(){
 
-    int n,k,i,j,m,x,a=0,b,y;
+    ll n,k,i,j,m,x,a=0,b,c,d,y;
+    string str1,str2;
+    cin>>n>>str1>>str2;
+   
+    ll ans=0,same=0,diff=0,one=0,zero=0;
 
-    cin>>n>>m;
-    N=n-1;
-    string s;
-    cin>>s;
-    for(i=0;i<n;i++){
-        j=min(i+m,n-1);
-        while(j>i && s[i]=='1' && j<n){
+    for(i=0;i<n;i++)
+        if(str1[i]==str2[i])same++;
+        else {
+            diff++;
+            if(str1[i]=='1')one++;
+            else zero++;
+        }    
 
-            if(s[j]=='1'){
-                nodes[i].push_back(j);
-                //cout<<i<<" "<<j<<endl;
-                break;
-            }
-            j--;
-        }
+    if(diff>0 && one%2==0 && zero%2==0)
+    {   ans= ((one*one)%INF)/4 + ((zero*zero)%INF)/4;
+        if(same>0)cout<<power(2,same)*2 + ans<<endl;
+        else cout<< ans<<endl;
     }
-    memset(level, 0, sizeof(level));
-  //ll ans = DFS(0,0);
-  BFS(0);
-  if(level[n-1]==0)cout<<"-1"<<endl;
-  else  cout<< level[n-1]<<endl;
+    else {
+        if(diff>0)cout<<power(2,same)*2<<endl;
+            else cout<<power(2,same)<<endl;
+    
+    }
    
     }
 
@@ -124,6 +118,8 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   solve();
+   ll t;
+   cin>>t;
+   while(t--)solve();
 }
 

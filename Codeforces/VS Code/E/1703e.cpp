@@ -64,27 +64,36 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
     return x.first > y.first;
 }
-vector<int>nodes[100005];
-int level[1000];
+
+map<int,int> level;
 int N;
-vector<int>sequence;
-int DFS(int n, int cnt){
-    if(n==N)return cnt;
-    int ans=mod;
-    for(int i:nodes[n]){
-        ans = min(ans,DFS(i,cnt+1));
-    }
-    return ans;
-}
+map<int,int> parent;
+// int DFS(int n, int cnt){
+//     if(n==N)return cnt;
+//     int ans=mod;
+//     for(int i:nodes[n]){
+//         ans = min(ans,DFS(i,cnt+1));
+//     }
+//     return ans;
+// }
 void BFS(int n){
     queue<int> qu;
     qu.push(n);
     while(!qu.empty()){
         int x = qu.front();
+        //cout<<x<<" ";
         qu.pop();
-        for(int i:nodes[x]) {
-            qu.push(i);
-            level[i]=level[x]+1;
+        int a=x*2;
+        int b=x*10+1;
+        if(a<=N){
+            qu.push(x*2);
+            parent[a]=x;
+            if(a==N)return;
+        }
+        if(b<=N){
+            qu.push(b);
+            parent[b]=x;
+            if(b==N)return;
         }
     }
     return;
@@ -96,27 +105,28 @@ void solve(){
 
     int n,k,i,j,m,x,a=0,b,y;
 
-    cin>>n>>m;
-    N=n-1;
-    string s;
-    cin>>s;
-    for(i=0;i<n;i++){
-        j=min(i+m,n-1);
-        while(j>i && s[i]=='1' && j<n){
-
-            if(s[j]=='1'){
-                nodes[i].push_back(j);
-                //cout<<i<<" "<<j<<endl;
-                break;
-            }
-            j--;
-        }
+    cin>>n>>N;
+    
+   
+    parent[N]=0;
+    BFS(n);
+    vector<int>sequence;
+    parent[1]=0;
+    if(parent[N]==0){
+        cout<<"NO"<<endl;
+        return;
     }
-    memset(level, 0, sizeof(level));
-  //ll ans = DFS(0,0);
-  BFS(0);
-  if(level[n-1]==0)cout<<"-1"<<endl;
-  else  cout<< level[n-1]<<endl;
+    else cout<<"YES"<<endl;
+    i=N;
+    while(i!=n){
+        sequence.pb(i);
+        i=parent[i];
+    }
+    sequence.pb(n);
+    cout<<sequence.size()<<endl;
+    for(i=sequence.size()-1; i>=0;i--){
+        cout<<sequence[i]<<" ";
+    }
    
     }
 

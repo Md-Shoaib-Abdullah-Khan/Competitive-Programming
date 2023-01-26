@@ -64,10 +64,10 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
     return x.first > y.first;
 }
-vector<int>nodes[100005];
-int level[1000];
+vector<int>nodes[200005];
+int level[200005];
 int N;
-vector<int>sequence;
+int parent[200005];
 int DFS(int n, int cnt){
     if(n==N)return cnt;
     int ans=mod;
@@ -85,6 +85,7 @@ void BFS(int n){
         for(int i:nodes[x]) {
             qu.push(i);
             level[i]=level[x]+1;
+            parent[i]=x;
         }
     }
     return;
@@ -96,27 +97,24 @@ void solve(){
 
     int n,k,i,j,m,x,a=0,b,y;
 
-    cin>>n>>m;
-    N=n-1;
-    string s;
-    cin>>s;
-    for(i=0;i<n;i++){
-        j=min(i+m,n-1);
-        while(j>i && s[i]=='1' && j<n){
-
-            if(s[j]=='1'){
-                nodes[i].push_back(j);
-                //cout<<i<<" "<<j<<endl;
-                break;
-            }
-            j--;
-        }
+    cin>>n;
+    
+    for(i=2;i<=n;i++){
+        cin>>a;
+        nodes[a].push_back(i);
     }
     memset(level, 0, sizeof(level));
-  //ll ans = DFS(0,0);
-  BFS(0);
-  if(level[n-1]==0)cout<<"-1"<<endl;
-  else  cout<< level[n-1]<<endl;
+    BFS(1);
+    vector<int>sequence;
+    parent[1]=0;
+    i=n;
+    while(i){
+        sequence.pb(i);
+        i=parent[i];
+    }
+    for(i=sequence.size()-1; i>=0;i--){
+        cout<<sequence[i]<<" ";
+    }
    
     }
 

@@ -61,62 +61,26 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
-    return x.first > y.first;
-}
-vector<int>nodes[100005];
-int level[1000];
-int N;
-vector<int>sequence;
-int DFS(int n, int cnt){
-    if(n==N)return cnt;
-    int ans=mod;
-    for(int i:nodes[n]){
-        ans = min(ans,DFS(i,cnt+1));
-    }
-    return ans;
-}
-void BFS(int n){
-    queue<int> qu;
-    qu.push(n);
-    while(!qu.empty()){
-        int x = qu.front();
-        qu.pop();
-        for(int i:nodes[x]) {
-            qu.push(i);
-            level[i]=level[x]+1;
-        }
-    }
-    return;
+bool compare(int x, int y){
+    return x > y;
 }
 
+
+const int INF=1e9+5;
 
 
 void solve(){
 
-    int n,k,i,j,m,x,a=0,b,y;
+    int n,k,i,j,m,x,a=1,b,c,d,y;
 
-    cin>>n>>m;
-    N=n-1;
-    string s;
-    cin>>s;
-    for(i=0;i<n;i++){
-        j=min(i+m,n-1);
-        while(j>i && s[i]=='1' && j<n){
+    cin>>a>>b;
+   
+    int ans = a-b;
 
-            if(s[j]=='1'){
-                nodes[i].push_back(j);
-                //cout<<i<<" "<<j<<endl;
-                break;
-            }
-            j--;
-        }
-    }
-    memset(level, 0, sizeof(level));
-  //ll ans = DFS(0,0);
-  BFS(0);
-  if(level[n-1]==0)cout<<"-1"<<endl;
-  else  cout<< level[n-1]<<endl;
+    a+=(a*10)/100;
+
+    cout<<a-ans<<endl;
+    
    
     }
 
@@ -124,6 +88,8 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   solve();
+   ll t;
+   cin>>t;
+   while(t--)solve();
 }
 

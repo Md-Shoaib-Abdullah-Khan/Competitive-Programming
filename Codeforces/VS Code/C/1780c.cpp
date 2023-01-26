@@ -61,62 +61,56 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
-    return x.first > y.first;
+bool compare(int x, int y){
+    return x > y;
 }
-vector<int>nodes[100005];
-int level[1000];
-int N;
-vector<int>sequence;
-int DFS(int n, int cnt){
-    if(n==N)return cnt;
-    int ans=mod;
-    for(int i:nodes[n]){
-        ans = min(ans,DFS(i,cnt+1));
-    }
-    return ans;
-}
-void BFS(int n){
-    queue<int> qu;
-    qu.push(n);
-    while(!qu.empty()){
-        int x = qu.front();
-        qu.pop();
-        for(int i:nodes[x]) {
-            qu.push(i);
-            level[i]=level[x]+1;
-        }
-    }
-    return;
-}
+
+
 
 
 
 void solve(){
 
-    int n,k,i,j,m,x,a=0,b,y;
+    int n,k,i,j,m,x,a=1,b,y;
 
     cin>>n>>m;
-    N=n-1;
-    string s;
-    cin>>s;
-    for(i=0;i<n;i++){
-        j=min(i+m,n-1);
-        while(j>i && s[i]=='1' && j<n){
+    
+   int arr[n+5], table[m];
+    for(i=0;i<n;i++)cin>>arr[i];
+    for(i=0;i<m;i++)cin>>table[i];
 
-            if(s[j]=='1'){
-                nodes[i].push_back(j);
-                //cout<<i<<" "<<j<<endl;
-                break;
-            }
-            j--;
+    sort(arr, arr+n);
+    sort(table, table+m, compare);
+
+    multiset<int, greater<int>>sum;
+
+    for(i=0;i<n-1;i++){
+        if(arr[i]==arr[i+1])a++;
+        else {
+            sum.insert(a);
+            //cout<<a<<" ";
+            a=1;
         }
     }
-    memset(level, 0, sizeof(level));
-  //ll ans = DFS(0,0);
-  BFS(0);
-  if(level[n-1]==0)cout<<"-1"<<endl;
-  else  cout<< level[n-1]<<endl;
+    sum.insert(a);
+    //for(auto l:sum)cout<<l<<" ";
+
+    int ans=0;
+    i=0;
+     for(auto it=sum.begin();it!=sum.end() && i<m;it++,i++){
+        //cout<<*it<<" "<<table[i]<<endl;
+        if(*it > table[i]){
+            ans+=table[i];
+            sum.insert(*it-table[i]);
+        }
+        else {
+            ans+=*it;
+            
+        }
+        
+     }
+     cout<<ans<<endl;
+    
    
     }
 
@@ -124,6 +118,8 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   solve();
+   ll t;
+   cin>>t;
+   while(t--)solve();
 }
 

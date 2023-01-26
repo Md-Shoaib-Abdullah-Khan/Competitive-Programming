@@ -61,62 +61,52 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
-    return x.first > y.first;
-}
-vector<int>nodes[100005];
-int level[1000];
-int N;
-vector<int>sequence;
-int DFS(int n, int cnt){
-    if(n==N)return cnt;
-    int ans=mod;
-    for(int i:nodes[n]){
-        ans = min(ans,DFS(i,cnt+1));
-    }
-    return ans;
-}
-void BFS(int n){
-    queue<int> qu;
-    qu.push(n);
-    while(!qu.empty()){
-        int x = qu.front();
-        qu.pop();
-        for(int i:nodes[x]) {
-            qu.push(i);
-            level[i]=level[x]+1;
-        }
-    }
-    return;
+bool compare(int x, int y){
+    return x > y;
 }
 
+
+const int INF=1e9+5;
+
+ll power(ll n, ll m){
+    ll i,num=1;
+    for(i=1;i<=m;i++)num*=n;
+    return num;
+}
+
+
+ll binaryToDecimal(string s){
+    ll i,num=0;
+    reverse(s.begin(),s.end());
+    for(i=0;i<s.size();i++){
+        num+= (s[i]-'0')*power(2,i);
+    }
+    return num;
+}
 
 
 void solve(){
 
-    int n,k,i,j,m,x,a=0,b,y;
+    ll n,k,i,j,m,x,a=1,b,c,d,y;
+    string str;
+    cin>>n>>str;
+   
 
-    cin>>n>>m;
-    N=n-1;
-    string s;
-    cin>>s;
-    for(i=0;i<n;i++){
-        j=min(i+m,n-1);
-        while(j>i && s[i]=='1' && j<n){
-
-            if(s[j]=='1'){
-                nodes[i].push_back(j);
-                //cout<<i<<" "<<j<<endl;
-                break;
-            }
-            j--;
-        }
+    ll ans=0;
+    if(str.size()==1){
+        cout<<"NO"<<endl;
+        return;
     }
-    memset(level, 0, sizeof(level));
-  //ll ans = DFS(0,0);
-  BFS(0);
-  if(level[n-1]==0)cout<<"-1"<<endl;
-  else  cout<< level[n-1]<<endl;
+    else if(str.size()==2){
+        if(str[0]=='1' && str[1]=='1') cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+        return;
+    }
+
+    for(i=0;i<str.size();i++)if(str[i]=='1')ans++;
+    if(ans<=3)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+    
    
     }
 
@@ -124,6 +114,8 @@ int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   solve();
+   ll t;
+   cin>>t;
+   while(t--)solve();
 }
 
