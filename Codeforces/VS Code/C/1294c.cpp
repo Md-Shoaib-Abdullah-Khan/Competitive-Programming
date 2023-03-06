@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-
+ 
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -43,11 +43,11 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
-
-#define intlim                  2147483648
+ 
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
-
+ 
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -56,7 +56,7 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-
+ 
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
@@ -64,60 +64,58 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
-
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
+ vector<int>factors;
+void Prime_factor(int n){
+    for(int i=2;i*i<=n;i++){
+        while(n%i==0){
+            n/=i;
+            factors.pb(i);
         }
     }
-    //cout<<cnt<<endl;
-    return cnt;
+    if(n>1)factors.pb(n);
 }
-
-
-
+ 
+ 
+ 
 void solve(){
+ 
+   int n,m, k,q,i,j,x=0,a,b,d,c,y=0;
+ 
+    factors.clear();
+    cin>>n;
+   Prime_factor(n);
+    for(auto l: factors)cout<<l<<" ";
 
-    ll n,k,i,j,x,a,b,c,y;
+    // vector<int>ans;
+    // a=1;
+    // b=1;
+    // for(i=0;i<factors.size();i++){
+    //     a*=factors[i];
+    //     if(a!=b && ans.size()<2){
+    //         ans.pb(a);
+    //         b=a;
+    //         a=1;
+    //     }
+    // }
+    // if(a>1 && a!=b && a!= ans[0])ans.pb(a);
+    // if(ans.size()==3){
+    //     cout<<"YES"<<endl;
+    //     for(auto l:ans)cout<<l<<" ";
+    //     cout<<endl;
+    // }
+    // else cout<<"NO"<<endl;
 
-    cin>> n;
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
-
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
-    }
-   cout<<ans<<endl;
+    
     
 }
-
+ 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+      ios_base::sync_with_stdio(false);
+       cin.tie(NULL);
    int t;
-  cin>>t;
-   
-    while(t--) solve();
+   cin>>t;
+    while(t--)solve();
 }
-
+ 

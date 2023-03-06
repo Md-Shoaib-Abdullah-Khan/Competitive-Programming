@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
+#define mod                     1000
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -65,59 +65,29 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
-
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
-    }
-    //cout<<cnt<<endl;
-    return cnt;
-}
-
 
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
-
-    cin>> n;
-
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
-
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
-    }
-   cout<<ans<<endl;
+        ll n,i,j,m,k,rating;
+        ll a, b,c;
     
+   string s;
+   cin>>s;
+
+   for(i=0;i<s.size();i++)
+    if(s[i]>='A' && s[i]<='Z')cout<<i+1<<endl;
+    
+      
+ 
+
 }
 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   int t;
-  cin>>t;
+    
+
    
-    while(t--) solve();
+    solve();
 }
 

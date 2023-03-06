@@ -84,30 +84,28 @@ ll count_inversion(ll arr[], ll n){
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+   int n,k,i,j,x,a,b,c,y;
 
     cin>> n;
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
+    string str;
+    cin>>str;
+    int cnt[27];
+    memset(cnt, 0, sizeof(cnt));
 
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
+    for(i=0;i<str.size(); i++)cnt[str[i]-'a']++;
 
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
-    }
-   cout<<ans<<endl;
+    k=0;
+    for(i=0;i<26;i++)if(cnt[i]>0)k++;
+
+    if(n%k!=0){
+        for(i=k+1;i<=n;i++)if(n%i==0)break;
+        a=i;
+        for(i=k-1;i>=0;i--)if(n%i==0)break;
+        b=i;
+        if(k- )
+    } 
+    
     
 }
 

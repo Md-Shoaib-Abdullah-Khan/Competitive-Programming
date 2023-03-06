@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-
+ 
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -43,11 +43,11 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
-
-#define intlim                  2147483648
+ 
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
-
+ 
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -56,7 +56,7 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-
+ 
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
@@ -65,59 +65,76 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
 
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
+ 
+int sumOfDigits(int n){
+    int i,j,sum=0;
+    i=10;
+    while(n){
+        sum+=n%i;
+        n/=i;
     }
-    //cout<<cnt<<endl;
-    return cnt;
+    return sum;
 }
-
-
-
+ 
+ int test =1;
+ 
 void solve(){
+ 
+   int n,m, k,q,i,j,x=0,a,b,d,c,y=0,z;
 
-    ll n,k,i,j,x,a,b,c,y;
+    cin>>n;
+    int arr1[n], arr2[n];
 
-    cin>> n;
+    for(i=0;i<n;i++)cin>>arr1[i];
+    for(i=0;i<n;i++)cin>>arr2[i];
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
+    bool alice=true, bob= false;
 
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
+    set<int>div;
+    for(i=0;i<n;i++){
+        for(j=1;j*j<=arr1[i]; j++)if(arr1[i]%j==0){
+            div.insert(j);
+            div.insert(arr1[i]/j);
         }
     }
-   cout<<ans<<endl;
+    //for(auto l:div)cout<<l<<" ";
+    for(i=0;i<n;i++){
+        auto it = div.find(arr2[i]);
+        if(it==div.end()){
+            alice=false;
+        }
+    }
+    a=-1;
+    b=-1;
+    int cnt=0;
+    if(arr2[0]%arr1[0]==0)a=arr2[0]/arr1[0];
+    if(arr1[0]%arr2[0]==0)b=arr1[0]/arr2[0];
+    for(i=0;i<n && a!=-1;i++){
+        if(arr2[i]%arr1[i]==0)cnt++;
+    }
+    for(i=0;i<n && b!=-1;i++){
+        if(arr1[i]%arr2[i]!=0)cnt++;
+    }
+    if(cnt==n)bob=true;
+    cout<<"Case "<<test<<": ";
+    if(alice==true)cout<<"Yes ";
+    else cout<<"No ";
+    if(bob==true)cout<<"Yes"<<endl;
+    else cout<<"No"<<endl;
     
 }
-
+ 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+    //   cin.tie(NULL);
    int t;
   cin>>t;
-   
-    while(t--) solve();
+ 
+    while(t--) {
+        solve();
+        test++;
+    }
 }
-
+ 

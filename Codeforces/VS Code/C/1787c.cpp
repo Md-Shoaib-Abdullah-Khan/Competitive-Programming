@@ -44,7 +44,7 @@ using namespace std;
 #define Pi                      acos(-1)
 #define mod                     998244353
 
-#define intlim                  2147483648
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
 
@@ -65,59 +65,70 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
-
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
-    }
-    //cout<<cnt<<endl;
-    return cnt;
-}
-
 
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+   ll n,m,k,i,j,x,a,b,c,y;
 
-    cin>> n;
+    cin>> n>>m;
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
+    ll arr[n];
+    for(i=0;i<n;i++){
+        cin>>arr[i];
 
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
+    }
+    for(i=0;i<n;i++){
 
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
+    if(arr[i]==0){
+        cout<<0<<endl;
+        return;
+    }
+    }
+
+
+    ll sum=0,str=arr[0];
+
+    for(i=1;i<=n-2;i++){
+        
+        if(i<n-2){
+            if(str<m){
+                sum+=str*(arr[i]-m);
+                str=m;
+            }
+            else{
+                sum += str*m;
+                str=(arr[i]-m);
             }
         }
+        else{
+            if(arr[n-1]<str){
+                sum+=str*m;
+                sum+= arr[n-1]*(arr[i]-m);
+            }
+            else{
+                sum+=str*(arr[i]-m);
+                sum+= arr[n-1]*m;
+            }
+        }
+        cout<<sum<<" ";
     }
-   cout<<ans<<endl;
-    
+    cout<<sum<<endl;
+
+
+
+
+
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+    //   cin.tie(NULL);
    int t;
   cin>>t;
-   
+
     while(t--) solve();
 }
+
 

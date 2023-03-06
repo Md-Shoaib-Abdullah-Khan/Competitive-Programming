@@ -1,3 +1,5 @@
+
+
 #include<bits/stdc++.h>
 using namespace std;
 
@@ -44,7 +46,7 @@ using namespace std;
 #define Pi                      acos(-1)
 #define mod                     998244353
 
-#define intlim                  2147483648
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
 
@@ -64,60 +66,41 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
-
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
+bool prime[100005];
+void SieveOfEratosthenes(int n)
+{  
+    memset(prime, true, sizeof(prime));
+ 
+    for (int p = 2; p * p <= n; p++) {
+        if (prime[p] == true) {
+            for (int i = p * p; i <= n; i += p)
+                prime[i] = false;
         }
     }
-    //cout<<cnt<<endl;
-    return cnt;
+ 
+    
 }
-
-
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+   ll n,m,k,i,j,x,a,b,c,y;
 
     cin>> n;
-
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
-
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
-    }
-   cout<<ans<<endl;
     
+    cout<<n<<endl;
+  
+
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+    //   cin.tie(NULL);
    int t;
   cin>>t;
-   
+   // SieveOfEratosthenes(100005);
+
     while(t--) solve();
 }
+
 

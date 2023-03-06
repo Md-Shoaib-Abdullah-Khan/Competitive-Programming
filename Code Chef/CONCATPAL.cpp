@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+#
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -61,63 +61,76 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(int x, int y){
+    return x > y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
 
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
+const int INF=1e9+7;
 
-        if(arr[i]==1){
-            cnt += zero;
-        }
+ll power(ll n, ll m){
+    ll i,num=1;
+    for(i=1;i<=m;i++)num= (num%INF * n%INF)%INF;
+    return num;
+}
+
+
+ll binaryToDecimal(string s){
+    ll i,num=0;
+    reverse(s.begin(),s.end());
+    for(i=0;i<s.size();i++){
+        num+= (s[i]-'0')*power(2,i);
     }
-    //cout<<cnt<<endl;
-    return cnt;
+    return num;
 }
-
 
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
-
-    cin>> n;
-
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
-
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
+    ll n,k,i,j,m,x,a=0,b,c,d,y;
+    string str1,str2;
+    cin>>n>>m>>str1>>str2;
+   
+    if(m>n){
+        swap(n,m);
+        swap(str1,str2);
     }
-   cout<<ans<<endl;
-    
+    a = n-(n+m)/2;
+  //  cout<<str1<<" "<<str2<<endl;
+  int cnt1[26],cnt2[26];
+  memset(cnt1,0,sizeof(cnt1));
+  for(i=0;i<n;i++)cnt1[str1[i]-'a']++;
+  for(i=0;i<m;i++){
+    cnt1[str2[i]-'a']--;
+    if(cnt1[str2[i]-'a']<0){
+        cout<<"NO"<<endl;
+        return;
+    }
+  }
+
+  int cnt=0;
+  for(i=0;i<26;i++){
+    if(cnt1[i]>0 && cnt1[i]%2!=0)cnt++;
+  }
+ 
+
+  if((n+m)%2==0){
+    if(cnt==0)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+  }
+  else {
+    if(cnt==1)cout<<"YES"<<endl;
+    else cout<<"NO"<<endl;
+  }
 }
+
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-  cin>>t;
-   
-    while(t--) solve();
+   ll t;
+   cin>>t;
+   while(t--)solve();
 }
 

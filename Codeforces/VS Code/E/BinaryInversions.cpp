@@ -88,29 +88,26 @@ void solve(){
 
     cin>> n;
 
-    ll arr[n],sum=0,bit=-1;
+    string str[n];
+    for(i=0;i<n;i++)cin>>str;
 
-    for(i=0;i<n;i++)cin>>arr[i];
+    ll vis[n][n];
+    memset(vis, 0, sizeof(vis));
+    ll ans=0;
+    for(i=0;i<n/2;i++){
+        for(j=0;j<n;j++){
+            if(vis[i][i]==0){
+                vis[i][j]=1;
+                vis[j][n-i-j]=1;
+                vis[n-i-1][n-j-1]=1;
+                vis[n-j-1][i]=1;
 
-    //cout<<count_inversion(arr, n)<<endl;
-    sum = count_inversion(arr, n);
-    for(j=n-1;j>=0;j--){
-        if(arr[j]==1)arr[j]=0;
-        else arr[j]=1;
-        
-        a = count_inversion(arr, n);
-        if(a>sum){
-            sum=a;
+                ll cnt = str[i][j] + str[j][n-i-j] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
+                ans+=min(cnt,4-cnt);
+            }
         }
-
-        if(arr[j]==1)arr[j]=0;
-        else arr[j]=1;
     }
-
-    
-
-    cout<<sum<<endl;
-   
+   cout<<ans<<endl;
     
 }
 

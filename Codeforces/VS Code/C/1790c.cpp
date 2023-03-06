@@ -86,39 +86,11 @@ void solve(){
         }
     }
      vector<ll>ans;
-    if(n==3){
-        if(vec[0][0]==vec[1][0]){
-                ans.pb(vec[0][0]);
-                ans.pb(vec[2][0]);
-        }
-        else if(vec[1][0]==vec[2][0]){
-                ans.pb(vec[1][0]);
-                ans.pb(vec[0][0]);
-        }
-        else if(vec[0][0]==vec[2][0]){
-                ans.pb(vec[0][0]);
-                ans.pb(vec[1][0]);
-        }
-        if(vec[0][1]==vec[1][1]){
-                ans.pb(vec[0][1]);
-               
-        }
-        else if(vec[1][1]==vec[2][1]){
-                ans.pb(vec[1][1]);
-                
-        }
-        else if(vec[0][1]==vec[2][1]){
-                ans.pb(vec[0][1]);
-                
-        }
-        for(i=0;i<ans.size();i++)cout<<ans[i]<<" ";
-    cout<<endl;
-        return;
-    }
+    
     ll cnt[n+1];
     memset(cnt,0,sizeof(cnt));
    
-    for(i=0;i<n-1;i++){
+    for(i=0;i<n-2;i++){
         ll temp=0;
         for(j=0;j<n;j++){
             cnt[vec[j][i]]++;
@@ -133,8 +105,18 @@ void solve(){
     ans.pb(a);
     cnt[a]=0;
     }
+     for(j=1;j<=n;j++){
+            if(cnt[j]>0){
+                ans.pb(j);
+                cnt[j]=0;
+                break;
+            }
+        }
 
     ll temp=0;
+    for(j=0;j<n;j++){
+            cnt[vec[j][n-2]]++;
+        }
     for(j=1;j<=n;j++){
             if(cnt[j]>temp){
                 temp=cnt[j];
@@ -156,4 +138,3 @@ int main()
    cin>>t;
    while(t--)solve();
 }
-

@@ -76,14 +76,30 @@ void solve(){
     cin>>n;
     
    int arr[n+5];
-    for(i=1;i<=n;i++)cin>>arr[i];
+    for(i=0;i<n;i++)cin>>arr[i];
+    
     int ans=0;
-    for(i=1;i<=n;i++){
-        a=abs(arr[i]-i);
-        ans=max(ans,min(a,min(arr[i],n-arr[i])));
-    }
 
-    cout<<ans<<endl;
+    int temp=2;
+    for(i=0;i<n;i++){
+        if(arr[i]==temp){
+            temp++;
+        }
+    }
+    ans=n-temp+1;
+    //cout<<ans<<endl;
+    temp=n-1;
+    for(i=n-1;i>=0;i--){
+        if(arr[i]==temp){
+            temp--;
+        }
+        //cout<<temp<<endl;
+    }
+    if(min(ans,temp)==0 && (arr[0]!=1||arr[n-1]!=n)){
+        cout<<1<<endl;
+        return;
+    }
+    cout<<min(ans,temp)<<endl;
    
 
     

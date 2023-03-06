@@ -44,7 +44,7 @@ using namespace std;
 #define Pi                      acos(-1)
 #define mod                     998244353
 
-#define intlim                  2147483648
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
 
@@ -65,59 +65,55 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
 
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
-    }
-    //cout<<cnt<<endl;
-    return cnt;
-}
 
 
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+   int n,m, k,i,j,x=0,a,b,d,c,y=0;
 
-    cin>> n;
+    string s;
+    cin>>n>>s;
+    int cnt1[26],cnt2[26];
+    int dist1=0,dist2=0;
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
+    memset(cnt1,0,sizeof(cnt1));
+    memset(cnt2,0,sizeof(cnt2));
 
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
 
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
+    for(i=0;i<s.size();i++){
+        if(cnt2[s[i]-'a']==0)dist2++;
+        cnt2[s[i]-'a']++;
     }
-   cout<<ans<<endl;
+    
+
+    int ans=dist2;
+    for(i=0;i<n;i++){
+        a=s[i]-'a';
+        if(cnt1[a]==0){
+            dist1++; 
+        }
+        if(cnt2[a]==1)dist2--;
+        cnt1[a]++;
+        cnt2[a]--;
+        ans=max(ans,dist1+dist2);
+    }
+    cout<<ans<<endl;
+    
+    
+
     
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+    //   cin.tie(NULL);
    int t;
   cin>>t;
-   
+
     while(t--) solve();
 }
+
 

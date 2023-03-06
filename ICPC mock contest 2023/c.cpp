@@ -1,7 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
-
-
+ 
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -43,11 +43,11 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
-
-#define intlim                  2147483648
+ 
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
-
+ 
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -56,7 +56,7 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-
+ 
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
@@ -64,60 +64,84 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
-
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
+ 
+int sumOfDigits(int n){
+    int i,j,sum=0;
+    i=10;
+    while(n){
+        sum+=n%i;
+        n/=i;
     }
-    //cout<<cnt<<endl;
-    return cnt;
+    return sum;
 }
+ 
+ int cnt=1;
+ int parent[100005];
 
+ int find(int n){
+    if(parent[n] == n)return n;
 
-
+    return parent[n]=find(parent[n]);
+}
+ 
 void solve(){
+ 
+   int n,m, k,q,i,j,x=0,a,b,d,c,y=0;
+ 
+    
+    cin>>n;
 
-    ll n,k,i,j,x,a,b,c,y;
+    int arr[n+5],pens[n+5];
+    for(i=0;i<=n;i++)pens[i]=1;
+    for(i=1;i<=n;i++)cin>>arr[i];
+    cin>>m;
+    int hold[n+5];
+    for(i=1;i<=n;i++)parent[i]=i;
+    for(i=0;i<m;i++){
+        cin>>a;
+        if(a==1){
+            cin>>b>>c;
+            if(arr[b]==0 || arr[c]==0 || arr[b]==arr[c])continue;
 
-    cin>> n;
-
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
-
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
+            if(arr[b]>arr[c]){
+                arr[b]+=arr[c];
+                arr[c]=0;
+                parent[c]=find(b);
+                pens[b]+=pens[c];
+                pens[c]=0;
             }
+            else{
+                arr[c]+=arr[b];
+                arr[b]=0;
+                parent[b]=find(c);
+                pens[c]+=pens[b];
+                pens[b]=0;
+            }
+
+        }
+        else if(a==2){
+            cin>>b;
+            cout<<pens[b]<<endl;
+        }
+        else {
+            cin>>b;
+            cout<<find(b)<<endl;
         }
     }
-   cout<<ans<<endl;
+
+
+    
     
 }
-
+ 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+      ios_base::sync_with_stdio(false);
+      cin.tie(NULL);
    int t;
   cin>>t;
-   
-    while(t--) solve();
+ 
+    while(t--) 
+    solve();
 }
-
+ 

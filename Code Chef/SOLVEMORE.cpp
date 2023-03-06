@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+#
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -61,63 +61,85 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(int x, int y){
+    return x > y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
 
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
+const int INF=1e9+7;
 
-        if(arr[i]==1){
-            cnt += zero;
-        }
+ll power(ll n, ll m){
+    ll i,num=1;
+    for(i=1;i<=m;i++)num= (num%INF * n%INF)%INF;
+    return num;
+}
+
+
+ll binaryToDecimal(string s){
+    ll i,num=0;
+    reverse(s.begin(),s.end());
+    for(i=0;i<s.size();i++){
+        num+= (s[i]-'0')*power(2,i);
     }
-    //cout<<cnt<<endl;
-    return cnt;
+    return num;
 }
-
 
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+    ll n,k,i,j,m,x,a=0,b=0,c=0,d=0,y;
+    
+    cin>>n>>m;
 
-    cin>> n;
+    vector<pair<ll,pair<ll,ll>>>vec(n);
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
+    for(i=0;i<n;i++){
+        cin>>a;
+        vec[i].second.first=a;
+    }
+    for(i=0;i<n;i++){
+        cin>>a;
+        vec[i].second.second=a;
+        vec[i].first=vec[i].second.second + vec[i].second.first;
+    }
 
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
+    sort(vec.begin(), vec.end());
 
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
+    for(i=0;i<n-1;i++){
+        if(vec[i].first == vec[i+1].first && vec[i].second.first > vec[i+1].second.first)swap(vec[i], vec[i+1]);
+    }
+    ll ans=0, sum=0,temp=0;
+
+    for(i=0;i<n;i++){
+        if(sum+vec[i].second.first <= m){
+            sum+=vec[i].first;
+            ans++;
+            temp=i;
+        }
+        else{
+                sum-=vec[temp].first;
+                if(sum+vec[i].first+vec[temp].second.first <= m){
+                    ans++;
+                    break;
+                }
+                sum+=vec[temp].first;
+                
         }
     }
-   cout<<ans<<endl;
+    cout<<ans<<endl;
+
     
+
+
 }
+
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
     //   cin.tie(NULL); 
-   int t;
-  cin>>t;
-   
-    while(t--) solve();
+   ll t;
+   cin>>t;
+   while(t--)solve();
 }
 

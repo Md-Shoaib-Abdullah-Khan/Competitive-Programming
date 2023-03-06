@@ -44,7 +44,7 @@ using namespace std;
 #define Pi                      acos(-1)
 #define mod                     998244353
 
-#define intlim                  2147483648
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
 
@@ -65,59 +65,61 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
+char s[100][100];
+int dp[100][100],vis[100][100],m,n;
+int floodfill(int x, int y){
 
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
-    }
-    //cout<<cnt<<endl;
-    return cnt;
+    if(x<0 || x==n || vis[x][y])return 0;
+    else if(s[x][y]=='#' || s[x][y]=='S')return 0;
+    else if(s[x][y]=='X')return 1;
+    else if(dp[x][y]!=0)return dp[x][y];
+    vis[x][y]=1;
+    int a,b,c,d;
+    
+    a= floodfill(x+1,y);
+    b= floodfill(x,y+1);
+    c= floodfill(x-1,y);
+    d= floodfill(x,y-1);
+    return dp[x][y]=a|b|c|d;
 }
 
 
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+   ll k,i,j,x,a,b,c,y;
 
-    cin>> n;
-
-    string str[n];
-    for(i=0;i<n;i++)cin>>str[i];
-
-    ll vis[n][n];
+    cin>>n>>m;
+    memset(dp, 0, sizeof(dp));
     memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<(n+1)/2;i++){
-        for(j=0;j<n/2;j++){
-            if(vis[i][j]==0){
-                vis[i][j]=1;
-                vis[j][n-i-1]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-1] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
-        }
-    }
-   cout<<ans<<endl;
     
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            cin>>s[i][j];
+    }
+    }
+
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            if(s[i][j] == '@'){
+                a=floodfill(i,j);
+                if(a==1)cout<<"YES"<<endl;
+                else cout<<"NO"<<endl;
+                break;
+            }
+    }
+    }
+
 }
 
 int main()
 {
     //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+    //   cin.tie(NULL);
    int t;
   cin>>t;
-   
+
     while(t--) solve();
 }
+
 
