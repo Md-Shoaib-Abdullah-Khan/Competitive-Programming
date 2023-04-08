@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
  
- #define lower(x,y)        lower_bound(x.begin(), x.end(), y) - x.begin()
-#define upper(x,y)        upper_bound(x.begin(), x.end(), y) - x.begin()
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -14,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -62,83 +61,94 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(pair<pair<int,char>,pair<int,int>>&x, pair<pair<int,char>,pair<int,int>>& y){
+    return x.first.first<y.first.first;
 }
- 
-int sumOfDigits(int n){
-    int i,j,sum=0;
-    i=10;
-    while(n){
-        sum+=n%i;
-        n/=i;
-    }
-    return sum;
-}
-vector<ll>sum1;
-vector<ll>sum2;
- 
-  ll binary_search(ll l, ll r, ll value){
+int dist(pair<pair<int,char>,pair<int,int>>&x, pair<pair<int,char>,pair<int,int>>& y){
+    return sqrt((x.second.first-y.second.first)*(x.second.first-y.second.first)+(x.second.second-y.second.second)*(x.second.second-y.second.second));
+ }
+ double angle(int a, int b, int c, int d){
+    double ans=atan((double)(d-b)/(c-a));
+    if(ans>=0)return (ans*180)/Pi;
+    else return (ans*180)/Pi+180;
+ }
+ bool turn(pair<pair<int,char>,pair<int,int>>&x, pair<pair<int,char>,pair<int,int>>& y, pair<pair<int,char>,pair<int,int>>& z){
+    int x1,y1,x2,y2;
+    
+    x1=y.second.first-x.second.first;
+    y1=y.second.second-x.second.second;
+    x2=z.second.first-y.second.first;
+    y2=z.second.second-y.second.second;
+    if((x1*y2-x2*y1)>0)return false;
+    else return true;
 
-    if(l > r) return r;
-    else{
-        ll mid = l + (r-l)/2;
+ }
+ stack<int> grahamScan(vector<pair<pair<int,char>,pair<int,int>>>&points){
+    int i,j,a,b,c,d,m,n;
 
-        if(sum2[mid]==value){
-            return mid;
+        stack<int>stack;
+        stack.push(0);
+        stack.push(1);
+        n=points.size();
+        for(i=2;i<n;i++){
+            b=stack.top();
+            stack.pop();
+            a=stack.top();
+            stack.pop();
+           
+            while(1){
+                if(!turn(points[a],points[b],points[i]))break;
+                b=a;
+                a=stack.top();
+                stack.pop();
+               
+            }
+            stack.push(a);
+            stack.push(b);
+            stack.push(i);
+            cout<<i<<endl;
         }
-        if(sum2[mid] > value) return binary_search(l, mid-1, value);
-        else return binary_search(mid+1, r, value);
-    }
+        return stack;
 
-  }
- 
-  void subsum(ll arr[], ll i, ll n, ll sum, bool check){
-    if(i>=n){
-        if(!check)sum1.pb(sum);
-        else sum2.pb(sum);
-        return;
-    }
+ }
+    int dp[600][600];
+    int rec(string s1, string s2, int i, int j,int cnt, bool enable){
+       if(i<0||i>=s1.size()||j>=s2.size())return false;
+        if(s1[i]!=s2[j])return false;
+        if(cnt==s2.size())return true;
+        //if(dp[i][j]!=-1)return dp[i][j];
+        bool a;
+        
+        if(enable)a=rec(s1, s2, i+1,j+1,cnt+1, true);
+        a|=rec(s1, s2, i-1,j+1,cnt+1, false);
+        return a; 
+   }
 
-    subsum(arr, i+1, n, arr[i]+sum, check);
-    subsum(arr, i+1, n, sum, check);
-
-    return;
-  }
+  
  
 void solve()
 {
-    ll i,j,a,b,c,m,n;
+    ll i,j,k,a,b,c,d,m,n;
   
+    string s;
 
-    cin>>n>>a>>b;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-
-    ll n1,n2;
+    cin>>s;
+    sort(s.begin(), s.end());
+    if(s[0]==s[3]){
+        cout<<-1<<endl;
+        return;
+    }
+    int cnt=0;
+    if(s[1]==s[2] && s[2]==s[3])cnt=2;
+    if(s[0]==s[1] && s[1]==s[2])cnt=2;
     
-        n1=n/2;
-        if(n%2==0)n1--;
-        n2=n1+1;
-
-        subsum(arr, 0, n1+1, 0, 0);
-        subsum(arr, n2, n, 0, 1);
-        sort(sum2.begin(), sum2.end());
-
-        n2=sum2.size();
-
-        ll ans=0;
-        for(auto l:sum1){
-            
-            //cout<<l<<" "<<x<<" "<<y<<endl;
-             
-        ans += (upper(sum2, b - l)) - (lower(sum2, a - l));
-        }
-        cout<<ans<<endl;
-
-
    
-   
+    cout<<4+cnt<<endl;
+        
+    
+    
+    
+    
     
 }
  
@@ -146,7 +156,10 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-   solve();
+   int t;
+   cin>>t;
+    while(t--)solve();
 }
+
 
 

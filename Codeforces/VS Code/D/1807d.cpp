@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
  
- #define lower(x,y)        lower_bound(x.begin(), x.end(), y) - x.begin()
-#define upper(x,y)        upper_bound(x.begin(), x.end(), y) - x.begin()
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -14,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -62,83 +61,63 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
+    return x.first<y.first;
 }
- 
-int sumOfDigits(int n){
-    int i,j,sum=0;
-    i=10;
-    while(n){
-        sum+=n%i;
-        n/=i;
+
+
+int sqrtDec(int arr[],int b[], int n, int l,int r){
+    int len=sqrt(n)+1;
+    int sum=0;
+    l--;
+    r--;
+    for(int i=l;i<=r;){
+        if(i%len==0 && i+len-1<=r){
+            sum+=b[i/len];
+            i+=len;
+        }
+        else{
+            sum+=arr[i];
+            i++;
+        }
     }
     return sum;
 }
-vector<ll>sum1;
-vector<ll>sum2;
- 
-  ll binary_search(ll l, ll r, ll value){
 
-    if(l > r) return r;
-    else{
-        ll mid = l + (r-l)/2;
 
-        if(sum2[mid]==value){
-            return mid;
-        }
-        if(sum2[mid] > value) return binary_search(l, mid-1, value);
-        else return binary_search(mid+1, r, value);
-    }
-
-  }
- 
-  void subsum(ll arr[], ll i, ll n, ll sum, bool check){
-    if(i>=n){
-        if(!check)sum1.pb(sum);
-        else sum2.pb(sum);
-        return;
-    }
-
-    subsum(arr, i+1, n, arr[i]+sum, check);
-    subsum(arr, i+1, n, sum, check);
-
-    return;
-  }
+  
  
 void solve()
 {
-    ll i,j,a,b,c,m,n;
+    int i,j,a,q,c,d,m,n;
   
+    cin>>n>>q;
+    int arr[n],b[n];
+    memset(b,0,sizeof(b));
 
-    cin>>n>>a>>b;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-
-    ll n1,n2;
+    for(i=0;i<n;i++){
+        ll x;
+        cin>>x;
+        arr[i]=x%2;
+    }
+    int len=sqrt(n)+1;
     
-        n1=n/2;
-        if(n%2==0)n1--;
-        n2=n1+1;
+    for(i=0;i<n;i++){
+        b[i/len]+=arr[i];
+    }
+    int sum=sqrtDec(arr,b,n,1,n);
+   // cout<<sum<<endl;
+    while(q--){
+        int l,r;
+        ll k;
+        cin>>l>>r>>k;
+        a=k%2;
+       // cout<<sum-sqrtDec(arr,b,n,l,r)+(r-l+1)*k<<endl;
 
-        subsum(arr, 0, n1+1, 0, 0);
-        subsum(arr, n2, n, 0, 1);
-        sort(sum2.begin(), sum2.end());
-
-        n2=sum2.size();
-
-        ll ans=0;
-        for(auto l:sum1){
-            
-            //cout<<l<<" "<<x<<" "<<y<<endl;
-             
-        ans += (upper(sum2, b - l)) - (lower(sum2, a - l));
-        }
-        cout<<ans<<endl;
-
-
-   
-   
+        if((sum-sqrtDec(arr,b,n,l,r)+(r-l+1)*a)%2==1)cout<<"YES"<<endl;
+        else cout<<"NO"<<endl;
+    }
+    
     
 }
  
@@ -146,7 +125,9 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-   solve();
+       int t;
+       cin>>t;
+       while(t--)solve();
 }
 
 

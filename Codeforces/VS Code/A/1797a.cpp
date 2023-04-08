@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
- 
- #define lower(x,y)        lower_bound(x.begin(), x.end(), y) - x.begin()
-#define upper(x,y)        upper_bound(x.begin(), x.end(), y) - x.begin()
+
+
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -44,11 +43,11 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
- 
-#define INF                     1e9+5
+
+#define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -57,7 +56,7 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
- 
+
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
@@ -65,88 +64,50 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
- 
-int sumOfDigits(int n){
-    int i,j,sum=0;
-    i=10;
-    while(n){
-        sum+=n%i;
-        n/=i;
+
+int count_inversion(int arr[], int n){
+    int i,j,cnt=0, one=0,zero=0;
+
+    for(i=n-1;i>=0;i--){
+        if(arr[i]==0)zero++;
+        else one++;
+
+        if(arr[i]==1){
+            cnt += zero;
+        }
     }
-    return sum;
+    //cout<<cnt<<endl;
+    return cnt;
 }
-vector<ll>sum1;
-vector<ll>sum2;
- 
-  ll binary_search(ll l, ll r, ll value){
-
-    if(l > r) return r;
-    else{
-        ll mid = l + (r-l)/2;
-
-        if(sum2[mid]==value){
-            return mid;
-        }
-        if(sum2[mid] > value) return binary_search(l, mid-1, value);
-        else return binary_search(mid+1, r, value);
-    }
-
-  }
- 
-  void subsum(ll arr[], ll i, ll n, ll sum, bool check){
-    if(i>=n){
-        if(!check)sum1.pb(sum);
-        else sum2.pb(sum);
-        return;
-    }
-
-    subsum(arr, i+1, n, arr[i]+sum, check);
-    subsum(arr, i+1, n, sum, check);
-
-    return;
-  }
- 
-void solve()
-{
-    ll i,j,a,b,c,m,n;
-  
-
-    cin>>n>>a>>b;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-
-    ll n1,n2;
-    
-        n1=n/2;
-        if(n%2==0)n1--;
-        n2=n1+1;
-
-        subsum(arr, 0, n1+1, 0, 0);
-        subsum(arr, n2, n, 0, 1);
-        sort(sum2.begin(), sum2.end());
-
-        n2=sum2.size();
-
-        ll ans=0;
-        for(auto l:sum1){
-            
-            //cout<<l<<" "<<x<<" "<<y<<endl;
-             
-        ans += (upper(sum2, b - l)) - (lower(sum2, a - l));
-        }
-        cout<<ans<<endl;
 
 
+
+void solve(){
+
+    ll n,k,i,j,x,a,b,c,m,y;
+
+    cin>>n>>m;
+
+    ll x1,y1,x2,y2;
+    cin>>x1>>y1>>x2>>y2;
+
+    if((x1==1&&y1==1)||(x2==1&&y2==1)||(x1==n&&y1==m)||(x2==n&&y2==m)||(x1==n&&y1==1)||(x2==n&&y2==1)||(x1==1&&y1==m)||(x2==1&&y2==m))cout<<2<<endl;
+    else if(x1==1 || x2==1||x1==n || x2==n||y1==1||y2==1||y1==m||y2==m)cout<<3<<endl;
+    else cout<<4<<endl;
+
+   
+   
    
    
     
 }
- 
+
 int main()
 {
-       ios_base::sync_with_stdio(false);
-       cin.tie(NULL);
-   solve();
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
+   int t;
+  cin>>t;
+   
+    while(t--) solve();
 }
-
-

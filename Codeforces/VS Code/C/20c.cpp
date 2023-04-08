@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
- 
- #define lower(x,y)        lower_bound(x.begin(), x.end(), y) - x.begin()
-#define upper(x,y)        upper_bound(x.begin(), x.end(), y) - x.begin()
+
+
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -14,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -44,11 +43,11 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
- 
-#define INF                     1e9+5
+
+#define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -57,96 +56,80 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
- 
+
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(pair<ll , set<ll>>& x, pair<ll , set<ll>> & y){
+    return x.first > y.first;
 }
- 
-int sumOfDigits(int n){
-    int i,j,sum=0;
-    i=10;
-    while(n){
-        sum+=n%i;
-        n/=i;
-    }
-    return sum;
-}
-vector<ll>sum1;
-vector<ll>sum2;
- 
-  ll binary_search(ll l, ll r, ll value){
+ ll N=1e5+5,n,m;
+ bool found=false;
+ll INF=1e15+5;
 
-    if(l > r) return r;
-    else{
-        ll mid = l + (r-l)/2;
-
-        if(sum2[mid]==value){
-            return mid;
-        }
-        if(sum2[mid] > value) return binary_search(l, mid-1, value);
-        else return binary_search(mid+1, r, value);
-    }
-
-  }
- 
-  void subsum(ll arr[], ll i, ll n, ll sum, bool check){
-    if(i>=n){
-        if(!check)sum1.pb(sum);
-        else sum2.pb(sum);
-        return;
-    }
-
-    subsum(arr, i+1, n, arr[i]+sum, check);
-    subsum(arr, i+1, n, sum, check);
-
-    return;
-  }
- 
-void solve()
-{
-    ll i,j,a,b,c,m,n;
-  
-
-    cin>>n>>a>>b;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-
-    ll n1,n2;
+vector<pair<ll, ll>>graph[100005];
+ll parent[100005];
     
-        n1=n/2;
-        if(n%2==0)n1--;
-        n2=n1+1;
-
-        subsum(arr, 0, n1+1, 0, 0);
-        subsum(arr, n2, n, 0, 1);
-        sort(sum2.begin(), sum2.end());
-
-        n2=sum2.size();
-
-        ll ans=0;
-        for(auto l:sum1){
+    void dijkstra(ll source){
+        vector<ll> dist(N,INF);
+        vector<ll> vis(N,0);
+        set<pair<ll,ll>> st;
+        st.insert({0,source});
+        dist[source]=0;
+        
+        
+        while(!st.empty()){
+            auto x = *st.begin();
+            st.erase(st.begin());
+            ll node = x.second;
+            if(vis[node]==1)continue;
+            vis[node]=1;
             
-            //cout<<l<<" "<<x<<" "<<y<<endl;
-             
-        ans += (upper(sum2, b - l)) - (lower(sum2, a - l));
+            ll wt = x.first;
+            for(auto child:graph[node]){
+               // cout<<child.first<<endl;
+                ll curr_child = child.first;
+                if(dist[curr_child]>(child.second+dist[node])){
+                    dist[curr_child]=child.second+dist[node];
+                    st.insert({dist[curr_child],curr_child});
+                    parent[curr_child]=node;
+                }
+            }
         }
-        cout<<ans<<endl;
+    }
 
 
-   
-   
-    
-}
- 
+void solve(){
+
+    ll k,i,j,x,a=0,b,y;
+
+    cin>>n>>m;
+    for(i=0;i<m;i++){
+        cin>>x>>y>>a;
+        graph[x].push_back({y,a});
+        graph[y].push_back({x,a});
+    }
+    dijkstra(1);
+    vector<ll>ans;
+   ans.pb(n);
+   i=n;
+    if(parent[n]==0)cout<<"-1"<<endl;
+    else {
+        while(i!=1){
+            i=parent[i];
+            ans.pb(i);
+        }
+        reverse(ans.begin(), ans.end());
+        for(auto l:ans)cout<<l<<" ";
+        cout<<endl;
+    }
+    }
+
 int main()
 {
        ios_base::sync_with_stdio(false);
-       cin.tie(NULL);
+       cin.tie(NULL); 
    solve();
 }
-
 

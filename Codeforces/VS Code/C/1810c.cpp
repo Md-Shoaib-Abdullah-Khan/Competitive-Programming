@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
  
- #define lower(x,y)        lower_bound(x.begin(), x.end(), y) - x.begin()
-#define upper(x,y)        upper_bound(x.begin(), x.end(), y) - x.begin()
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -14,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -43,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
+#define mod                     1000000007
  
 #define INF                     1e9+5
 #define infinity                (1<<28)
@@ -62,83 +61,119 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
+    return x.first<y.first;
 }
- 
-int sumOfDigits(int n){
-    int i,j,sum=0;
-    i=10;
-    while(n){
-        sum+=n%i;
-        n/=i;
+
+
+int sqrtDec(int arr[],int b[], int n, int l,int r){
+    int len=sqrt(n)+1;
+    int sum=0;
+    l--;
+    r--;
+    for(int i=l;i<=r;){
+        if(i%len==0 && i+len-1<=r){
+            sum+=b[i/len];
+            i+=len;
+        }
+        else{
+            sum+=arr[i];
+            i++;
+        }
     }
     return sum;
 }
-vector<ll>sum1;
-vector<ll>sum2;
- 
-  ll binary_search(ll l, ll r, ll value){
 
-    if(l > r) return r;
-    else{
-        ll mid = l + (r-l)/2;
-
-        if(sum2[mid]==value){
-            return mid;
+    int difference(int n){
+        int mn=INF,mx=0;
+        while(n){
+            mn=min(n%10, mn);
+            mx=max(n%10, mx);
+            n/=10;
         }
-        if(sum2[mid] > value) return binary_search(l, mid-1, value);
-        else return binary_search(mid+1, r, value);
+        return mx-mn;
     }
+    bool vis;
+    vector<int>ans;
+    bool candy(ll n, ll i, ll item){
+        if(i>40 || n>item || vis)return false;
+        if(n==item){
+            vis=true;
+            return true;
+        }
+        //vis[n]=true;
+        //cout<<n<<endl;
+        bool a=candy(2*n-1,i+1, item);
+       
+        bool b= candy(2*n+1,i+1, item);
+        
+        if(a)ans.pb(1);
+        if(b)ans.pb(2);
+        
 
-  }
- 
-  void subsum(ll arr[], ll i, ll n, ll sum, bool check){
-    if(i>=n){
-        if(!check)sum1.pb(sum);
-        else sum2.pb(sum);
-        return;
+        return a|b;
+
     }
-
-    subsum(arr, i+1, n, arr[i]+sum, check);
-    subsum(arr, i+1, n, sum, check);
-
-    return;
-  }
  
 void solve()
 {
-    ll i,j,a,b,c,m,n;
+    ll i,j,a,q,c,d,m,n;
   
+  
+    
+    cin>>n>>c>>d;
 
-    cin>>n>>a>>b;
+    ll ans=0;
     ll arr[n];
     for(i=0;i<n;i++)cin>>arr[i];
 
-    ll n1,n2;
+    sort(arr,arr+n);
+
+    ll ans2=INF;
+    if(arr[0]!=1){
+        ans=d;
+        ll x=(arr[0]-2)*d;
+            ll y=(n-0)*c;
+            if(y<=x){
+                cout<<ans+y<<endl;
+                return;
+            }
+            else {
+                ans2=  ans+y;
+                ans+=x;
+                
+            }
+    }
     
-        n1=n/2;
-        if(n%2==0)n1--;
-        n2=n1+1;
-
-        subsum(arr, 0, n1+1, 0, 0);
-        subsum(arr, n2, n, 0, 1);
-        sort(sum2.begin(), sum2.end());
-
-        n2=sum2.size();
-
-        ll ans=0;
-        for(auto l:sum1){
+    for(i=1;i<n;i++){
+        if(arr[i]-1==arr[i-1]){
             
-            //cout<<l<<" "<<x<<" "<<y<<endl;
-             
-        ans += (upper(sum2, b - l)) - (lower(sum2, a - l));
+            continue;
         }
-        cout<<ans<<endl;
-
-
-   
-   
+        if(arr[i]==arr[i-1]){
+            ans+=c;
+        
+        }
+        else{
+            ll x=(arr[i]-arr[i-1]-1)*d;
+            ll y=(n-i)*c;
+            if(y<=x){
+                ans+=y;
+                break;
+            }
+            else {
+                if(ans2==INF)ans2= ans+y;
+                else ans2= min(ans2, ans+y);
+                ans+=x;
+                
+            }
+            
+        }
+        //cout<<i<<endl;
+    }
+    if(ans2!=INF)cout<<min(ans,ans2)<<endl;
+    else cout<<ans<<endl;
+    
     
 }
  
@@ -146,7 +181,10 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-   solve();
+
+       int t;
+       cin>>t;
+       while(t--)solve();
 }
 
 

@@ -1,8 +1,7 @@
 #include<bits/stdc++.h>
 using namespace std;
  
- #define lower(x,y)        lower_bound(x.begin(), x.end(), y) - x.begin()
-#define upper(x,y)        upper_bound(x.begin(), x.end(), y) - x.begin()
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -75,70 +74,106 @@ int sumOfDigits(int n){
     }
     return sum;
 }
-vector<ll>sum1;
-vector<ll>sum2;
- 
-  ll binary_search(ll l, ll r, ll value){
 
-    if(l > r) return r;
+ 
+  void binary_search(ll ans[], ll limit[], ll sum[], ll l, ll r, ll m, ll n, ll value){
+
+    if(l > r){
+        if(l>=n) limit[n-1]++;
+        else if(r<m){
+           if(m==0) ans[m] += value;
+           else ans[m]+=(value-sum[m-1]);
+        
+        }
+        else{
+            limit[l-1]++;
+            ans[l] += (value-sum[l-1]);
+        }
+        return;
+    }
     else{
         ll mid = l + (r-l)/2;
 
-        if(sum2[mid]==value){
-            return mid;
+        if(sum[mid]==value){
+            limit[mid]++;
+            return;
         }
-        if(sum2[mid] > value) return binary_search(l, mid-1, value);
-        else return binary_search(mid+1, r, value);
+        if(sum[mid] > value) binary_search(ans, limit, sum, l, mid-1, m, n, value);
+        else binary_search(ans, limit, sum, mid+1, r, m, n, value);
     }
 
   }
- 
-  void subsum(ll arr[], ll i, ll n, ll sum, bool check){
-    if(i>=n){
-        if(!check)sum1.pb(sum);
-        else sum2.pb(sum);
-        return;
-    }
+  int max_steps;
+  int vis[1000005];
+  int rec(int l, int r, bool used, int steps){
+    
+    if(l>r)return -1;
+    else if(l<=r && steps==max_steps)return 1;
+    else if(vis[l])return vis[l];
+    int cnt=0;
+   
+    int a=0,b=0;
+    a=rec(2*l,r,used,steps+1);
+    if(!used)b=rec(3*l,r,true,steps+1);
 
-    subsum(arr, i+1, n, arr[i]+sum, check);
-    subsum(arr, i+1, n, sum, check);
+    if(a>0)cnt+=a;
+    if(b>0)cnt+=b;
 
-    return;
+    return vis[l]=cnt;
   }
+
+
+  int power(int n, int m){
+    if(m==0)return 1;
+    if(m==1)return n;
+
+    return n*power(n, m-1);
+  }
+  
  
 void solve()
 {
-    ll i,j,a,b,c,m,n;
+    int i,j,a,b,c,m,n;
   
-
-    cin>>n>>a>>b;
-    ll arr[n];
+    cin>>n;
+    int arr[n];
     for(i=0;i<n;i++)cin>>arr[i];
+   int used=0, hand=0, male=0, female=0;
 
-    ll n1,n2;
-    
-        n1=n/2;
-        if(n%2==0)n1--;
-        n2=n1+1;
-
-        subsum(arr, 0, n1+1, 0, 0);
-        subsum(arr, n2, n, 0, 1);
-        sort(sum2.begin(), sum2.end());
-
-        n2=sum2.size();
-
-        ll ans=0;
-        for(auto l:sum1){
-            
-            //cout<<l<<" "<<x<<" "<<y<<endl;
-             
-        ans += (upper(sum2, b - l)) - (lower(sum2, a - l));
+   int cnt=0;
+   a=0;
+   b=0;
+   bool check=true;
+   for(i=0;i<n;i++){
+    if(arr[i]==1){
+        if(male%2==0 && a%2==0)a++;
+        else if(male%2==1 && a%2==1)a++;
+        else b++;
+    }
+    else {
+        hand=max(hand,a+b);
+        if(male%2==0 && a%2==1){
+            used++;
+            hand--;
         }
-        cout<<ans<<endl;
+        if(female%2==0 && b%2==1){
+            used++;
+            hand--;
+        }
+        male+=a;
+        female+=b;
+        used+=(a/2+b/2);
+        hand-=(a/2+b/2);
+        a=0;
+        b=0;
+    }
+   }
 
-
-   
-   
+    
+   cout<<max(hand,a+b)+used<<endl;
+    
+    
+    
     
 }
  
@@ -146,7 +181,9 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-   solve();
+   int t;
+   cin>>t;
+    while(t--)solve();
 }
 
 

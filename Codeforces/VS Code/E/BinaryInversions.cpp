@@ -65,8 +65,8 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-ll count_inversion(ll arr[], ll n){
-    ll i,j,cnt=0, one=0,zero=0;
+int count_inversion(int arr[], int n){
+    int i,j,cnt=0, one=0,zero=0;
 
     for(i=n-1;i>=0;i--){
         if(arr[i]==0)zero++;
@@ -84,30 +84,49 @@ ll count_inversion(ll arr[], ll n){
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+    int n,k,i,j,x,a,b,c,y;
 
     cin>> n;
 
-    string str[n];
-    for(i=0;i<n;i++)cin>>str;
+    int arr[n],sum=0,bit=-1;
+    int ans=0;
 
-    ll vis[n][n];
-    memset(vis, 0, sizeof(vis));
-    ll ans=0;
-    for(i=0;i<n/2;i++){
-        for(j=0;j<n;j++){
-            if(vis[i][i]==0){
-                vis[i][j]=1;
-                vis[j][n-i-j]=1;
-                vis[n-i-1][n-j-1]=1;
-                vis[n-j-1][i]=1;
-
-                ll cnt = str[i][j] + str[j][n-i-j] + str[n-i-1][n-j-1] + str[n-j-1][i] - 4*'0';
-                ans+=min(cnt,4-cnt);
-            }
+    int zero=0,one=0;
+    for(i=0;i<n;i++){
+        cin>>arr[i];
+        
+        
+    }
+    for(i=n-1;i>=0;i--){
+        
+        if(arr[i]==0)zero++;
+        else {
+            one++;
+            ans+=zero;
         }
     }
-   cout<<ans<<endl;
+    cout<<ans<<endl;
+   
+    int temp1=0,temp0=0;
+    for(i=n-1;i>=0;i--){
+        if(arr[i]==0){
+            ans=max(ans,ans+temp0-(one-temp1));
+            temp0++;        
+        }
+        else{
+            ans=max(ans,ans+(one-temp1)-temp0);
+            temp1++;
+        }
+    }
+
+
+    
+   
+
+    
+
+    cout<<ans<<endl;
+   
     
 }
 
@@ -120,4 +139,3 @@ int main()
    
     while(t--) solve();
 }
-

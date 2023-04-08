@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -61,95 +61,124 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(pair<pair<int,char>,pair<int,int>>&x, pair<pair<int,char>,pair<int,int>>& y){
+    return x.first.first<y.first.first;
 }
- 
-int sumOfDigits(int n){
-    int i,j,sum=0;
-    i=10;
-    while(n){
-        sum+=n%i;
-        n/=i;
-    }
-    return sum;
-}
+int dist(pair<pair<int,char>,pair<int,int>>&x, pair<pair<int,char>,pair<int,int>>& y){
+    return sqrt((x.second.first-y.second.first)*(x.second.first-y.second.first)+(x.second.second-y.second.second)*(x.second.second-y.second.second));
+ }
+ double angle(int a, int b, int c, int d){
+    double ans=atan((double)(d-b)/(c-a));
+    if(ans>=0)return (ans*180)/Pi;
+    else return (ans*180)/Pi+180;
+ }
+ bool turn(pair<pair<int,char>,pair<int,int>>&x, pair<pair<int,char>,pair<int,int>>& y, pair<pair<int,char>,pair<int,int>>& z){
+    int x1,y1,x2,y2;
+    
+    x1=y.second.first-x.second.first;
+    y1=y.second.second-x.second.second;
+    x2=z.second.first-y.second.first;
+    y2=z.second.second-y.second.second;
+    if((x1*y2-x2*y1)>0)return false;
+    else return true;
 
- 
-  void binary_search(ll ans[], ll limit[], ll sum[], ll l, ll r, ll m, ll n, ll value){
+ }
+ stack<int> grahamScan(vector<pair<pair<int,char>,pair<int,int>>>&points){
+    int i,j,a,b,c,d,m,n;
 
-    if(l > r){
-        if(l>=n) limit[n-1]++;
-        else if(r<m){
-           if(m==0) ans[m] += value;
-           else ans[m]+=(value-sum[m-1]);
+        stack<int>stack;
+        stack.push(0);
+        stack.push(1);
+        n=points.size();
+        for(i=2;i<n;i++){
+            b=stack.top();
+            stack.pop();
+            a=stack.top();
+            stack.pop();
+           
+            while(1){
+                if(!turn(points[a],points[b],points[i]))break;
+                b=a;
+                a=stack.top();
+                stack.pop();
+               
+            }
+            stack.push(a);
+            stack.push(b);
+            stack.push(i);
+            cout<<i<<endl;
+        }
+        return stack;
+
+ }
+    int dp[600][600];
+    int rec(string s1, string s2, int i, int j,int cnt, bool enable){
+       if(i<0||i>=s1.size()||j>=s2.size())return false;
+        if(s1[i]!=s2[j])return false;
+        if(cnt==s2.size())return true;
+        //if(dp[i][j]!=-1)return dp[i][j];
+        bool a;
         
-        }
-        else{
-            limit[l-1]++;
-            ans[l] += (value-sum[l-1]);
-        }
-        return;
-    }
-    else{
-        ll mid = l + (r-l)/2;
+        if(enable)a=rec(s1, s2, i+1,j+1,cnt+1, true);
+        a|=rec(s1, s2, i-1,j+1,cnt+1, false);
+        return a; 
+   }
 
-        if(sum[mid]==value){
-            limit[mid]++;
-            return;
-        }
-        if(sum[mid] > value) binary_search(ans, limit, sum, l, mid-1, m, n, value);
-        else binary_search(ans, limit, sum, mid+1, r, m, n, value);
-    }
-
-  }
+  
  
 void solve()
 {
-    ll i,j,a,b,c,m,n;
+    ll i,j,k,a,b,c,d,m,n;
   
+    cin>>n>>k;
+    a=k;
 
-    cin>>n;
+    k=(n*(n+1))/2-k;
 
-    int one=0, zero=0;
-
-    for(i=0;i<n;i++){
-        cin>>a;
-        if(a==1)one++;
-        else zero++;
-    }    
-    if(n%2==1 || one==0){
-        cout<<-1<<endl;
-        return;
+    int arr[35];
+    for(i=1;i<=30;i++){
+        arr[i]=(i*(i+1))/2;
+       
+    }
+    //cout<<arr[n]<<" "<<k<<endl;
+    
+   // cout<<i<<" "<<arr[i]<<endl;
+    
+   
+    if(k>=a){
+        for(i=1;i<=30;i++){
+        if(arr[i]>k)break;
+    }
+    i--;
+    int temp=k-arr[i];
+    
+        for(j=0;j<i;j++)
+            if(j!=temp-1)cout<<-1<<" ";
+            else cout<<-51<<" ";
+    if(temp>0)cout<<50<<" ";
+    else n++;
+        for(j=i+1;j<n;j++)cout<<1000<<" ";
+    }
+    else{
+        for(i=1;i<=30;i++){
+        if(arr[i]>a)break;
+    }
+    i--;
+    int temp=a-arr[i];
+        for(j=0;j<i;j++)
+            if(j!=temp-1)cout<<1<<" ";
+            else cout<<51<<" ";
+    if(temp>0)cout<<-50<<" ";
+    else n++;
+        for(j=i+1;j<n;j++)cout<<-1000<<" ";
     }
 
-    int ans=0, temp;
-    temp=n/2;
-    while(zero!=one){
-        ans++;
-        if(zero>one){
-            zero--;
-            one++;
-        }
-        else{
-            one-=2;
-            zero+=2;
-        }
-    }
-    //  if(zero==0){
-    //     if(temp%2==0)ans=temp/2;
-    //     else ans=(temp+1)/2+1;
-    // }
-    // else if(zero>one)ans=temp-one;
-    // else if(one>zero){
-    //     if(abs(temp-zero)%2==0)ans=abs(temp-zero)/2;
-    //     else ans=abs(temp-zero+1)/2+1;
-    // }
-    cout<<ans<<endl;
-
+    cout<<endl;
+        
     
     
-
+    
+    
     
 }
  
@@ -161,5 +190,6 @@ int main()
    cin>>t;
     while(t--)solve();
 }
+
 
 
