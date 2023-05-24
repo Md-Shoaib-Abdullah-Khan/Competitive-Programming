@@ -100,38 +100,34 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
+  
+    int n,m;
+    ll ans[2000000];
+    bool vis[2000000];
+    ll rec(ll x, ll y){
+        ll a=x;
+        x=(x*(x+1))/2 +y;
+        if(a==-1 || y==0 || y>a+1)return 0;
+        if(vis[x])return 0;
+       if(ans[x]!=0)return ans[x];
+       vis[x]=true;
+       
+       //cout<<x<<endl;
+         
+       return ans[x]=x*x+rec(a-1,y)+rec(a-1,y-1);
 
     }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,a,b,c,x,y,z;
+    cin>>n;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    cout<<ans[n]<<endl;
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
-    
+   
 
    
 
@@ -144,6 +140,33 @@ int main()
        cin.tie(NULL);
        int t;
        cin>>t;
+       
+       ll a,x,y,z,i,j;
+        memset(ans,0,sizeof(ans));
+
+
+    ans[1]=1;
+    ans[2]=5;
+    ans[3]=10;
+
+    i=2;
+    while(i<1500){
+        for(j=1;j<=i+1;j++){
+            x=(i*(i+1))/2+j;
+            y=((i-1)*i)/2+j-1;
+            z=((i-1)*i)/2+j;
+
+            if(j==1)ans[x]=ans[z]+x*x;
+            else if(j==i+1)ans[x]=ans[y]+x*x;
+            else{
+                ans[x]=x*x+ans[y]+ans[z];
+                a=i-2;
+                a=(a*(a+1))/2 + j-1;
+                ans[x]-=ans[a];
+            }
+        }
+        i++;
+    }
 
        while(t--)solve();
 }

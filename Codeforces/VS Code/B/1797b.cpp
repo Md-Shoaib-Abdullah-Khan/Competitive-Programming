@@ -93,24 +93,25 @@ void solve(){
     for(i=0;i<n;i++){
         for(j=0;j<n;j++)cin>>arr[i][j];
     }
-    // if(n==1){
-    //     cout<<"YES"<<endl;
-    //     return;
-    // }
+    if(n==1){
+        cout<<"YES"<<endl;
+        return;
+    }
     ll ans=0;
     for(i=0;i<n;i++){
-        for(j=0;j<n/2;j++){
+        for(j=0;j<n;j++){
             if(arr[i][j]!=arr[n-1-i][n-1-j])ans++;
         }
     }
-    if(n%2==1){
-        for(i=0;i<n/2;i++){
-            if(arr[i][n/2+1]!=arr[n-1-i][n/2+1])ans++;
-        }
-    }
+    // if(n%2==1){
+    //     for(i=0;i<n/2;i++){
+    //         if(arr[i][n/2+1]!=arr[n-1-i][n/2+1])ans++;
+    //     }
+    // }
+    ans/=2;
     //cout<<ans<<endl;
 
-   if(ans>m || (abs(ans-m)%2==1))cout<<"NO"<<endl;
+   if(ans>m || (n%2==0 && (abs(ans-m)%2==1)))cout<<"NO"<<endl;
     else cout<<"YES"<<endl;
 
    

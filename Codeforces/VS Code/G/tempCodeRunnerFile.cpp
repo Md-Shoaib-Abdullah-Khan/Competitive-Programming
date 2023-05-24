@@ -1,1 +1,1 @@
-cout<<i<<" "<<prime[i]<<endl;
+

@@ -1,5 +1,20 @@
 
-#include<bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iomanip>
+#include <cmath>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <queue>
+#include <cassert>
+#include <string>
+#include <cstring>
+#include <chrono>
 using namespace std;
  
  
@@ -7,18 +22,16 @@ using namespace std;
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define ull                     unsigned long long
-#define lo(i,a,n,x)             for(i=a;i<=n;i=i+x)
-#define loi(i,a,n,x)            for(i=a;i>=n;i=i-x)
-#define sc                      scanf
-#define pr                      printf
+#define lo(i,a,n)               for(i=a;i<n;i=i++)
+#define loi(i,a,n)              for(i=a;i>n;i=i--)
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define vrev(v)                 reverse(v.begin(),v.end());
+#define vsort(v)                sort(v.begin(),v.end());
 #define mp                      make_pair
-#define VI                      vector <int>
-#define PII                     pair <int,int>
-#define PLL                     pair <long long,long long>
+#define Vi                      vector <int>
+#define pii                     pair <int,int>
+#define Pll                     pair <long long,long long>
 #define ff                      first
 #define ss                      second
 #define sqr(x)                  (x)*(x)
@@ -44,11 +57,12 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
- 
-#define INF                     1e9+5
+#define out(a)                  cout<<a<<endl
+#define INF                     1e9+7
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+#define M                       1000000007
+#define print(arr)              for(auto a: arr) cout << a<< " "; cout << endl;
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -85,52 +99,73 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
     return sum;
 }
 
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
-
-        return a;
-    }
     ll power(ll n, ll m){
         ll i=1;
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
+  
 
-    }
+ 
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,k,c=0,d,x,y,m,n,z;
+    string s;
+    cin>>n;
+    ll odd=0, even=0;
+    ll arr[n], a=0,b=INF,mx,mn;
+    for(i=0;i<n;i++){
+        cin>>arr[i];
+        if(arr[i]>a){
+            a=arr[i];
+            mx=i;
+        }
+        
+    }
+    ll l,r;
+    if(mx==n-1){
+            
+            for(i=n-1;i>0;i--){
+                if(arr[i]>arr[0])cout<<arr[i]<<" ";
+                else break;
+            }
+            for(j=0;j<=i;j++)cout<<arr[j]<<" ";
+            cout<<endl;
+        }
+    else if(mx==0){
+        bool found=false;
+           for(i=0;i<n;i++){
+            if(arr[i]==n-1){
+                found=true;
+                r=i-1;
+            }
+            if(found)cout<<arr[i]<<" ";
+           }
+           if(r!=n-2){
+           cout<<arr[r]<<" ";
+           for(i=0;i<r;i++)cout<<arr[i]<<" ";
+           }
+           else{
+            for(i=0;i<=r;i++)cout<<arr[i]<<" ";
+           }
+           cout<<endl;
+     }
+     else{
+        for(i=mx;i<n;i++)cout<<arr[i]<<" ";
+        cout<<arr[mx-1]<<" ";
+        for(i=mx-2;i>0;i--){
+                if(arr[i]>arr[0])cout<<arr[i]<<" ";
+                else break;
+            }
+        for(j=0;j<=i;j++)cout<<arr[j]<<" ";
+        cout<<endl;
+
+     }
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
-
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
+ 
     
 
    

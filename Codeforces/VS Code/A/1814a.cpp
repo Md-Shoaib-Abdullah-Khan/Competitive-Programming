@@ -101,8 +101,23 @@ void solve()
     
     cin>>n>>m;
 
-    if(n%2==0 || n%2==m%2 || m==1)cout<<"YES"<<endl;
-    else cout<<"NO"<<endl;
+    
+
+    if(n==m){
+        cout<<2<<endl;
+        cout<<n-1<<" "<<m<<endl;
+        cout<<n<<" "<<m<<endl;
+    }
+    else if(n<m){
+        cout<<2<<endl;
+        cout<<n-1<<" "<<n<<endl;
+        cout<<n<<" "<<m<<endl;
+    }
+    else{
+        cout<<2<<endl;
+        cout<<m<<" "<<m-1<<endl;
+        cout<<n<<" "<<m<<endl;
+    }
     
     
     

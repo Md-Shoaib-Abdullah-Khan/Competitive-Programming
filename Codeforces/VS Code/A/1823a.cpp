@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -100,41 +99,47 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
+    ll i,j,q,c,a,b,m,n;
+    
     cin>>n>>m;
-    memset(vis,false,sizeof(vis));
-    
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    string s;
+    cin>>s;
+    if(m>n){
+        cout<<"WRONGANSWER"<<endl;
+        return;
+    }
+    ll cnt[26]={0};
+    for(auto l:s){
+        cnt[l-'a']++;
 
-
-        cout<<ans<<endl;
-
-    
+    }
+    char ch;
+    ll mx=INF;
+    for(i=0;i<26;i++){
+        if(cnt[i]==0){
+            for(j=0;j<n-m;j++)cout<<char('a'+i);
+            for(j=0;j<m;j++)cout<<s[j];
+            cout<<endl;
+            return;
+        }
+        if(cnt[i]<mx){
+            mx=cnt[i];
+            ch=char('a'+i);
+        }
+    }
 
    
-
+    if(mx>m)cout<<"WRONGANSWER"<<endl;
+    else{
+        for(j=0;j<n-m;j++)cout<<ch;
+        for(j=0;j<m;j++)cout<<s[j];
+            cout<<endl;
+    }
     
 }
  
@@ -142,10 +147,7 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+      solve();
 }
 
 

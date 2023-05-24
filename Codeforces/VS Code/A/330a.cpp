@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -85,56 +84,47 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
     return sum;
 }
 
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
-
-        return a;
-    }
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
-    }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
+    int difference(int n){
+        int mn=INF,mx=0;
+        while(n){
+            mn=min(n%10, mn);
+            mx=max(n%10, mx);
+            n/=10;
+        }
+        return mx-mn;
     }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
+    int i,j,q,a,m,n;
+    
     cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+
+    string s[n];
+
+    for(i=0;i<n;i++)cin>>s[i];
+
+    set<int>row;
+    set<int>col;
+    int r,c;
+
+    for(i=0;i<n;i++){
+        for(j=0;j<m;j++){
+            if(s[i][j]=='S'){
+                row.insert(i);
+                col.insert(j);
+            }
+        }
+    }
+    r=n-row.size();
+    c=m-col.size();
+
+    cout<<r*m+n*c-r*c<<endl;
+
+
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
-
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
     
-
-   
-
     
 }
  
@@ -142,10 +132,8 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+       
+       solve();
 }
 
 

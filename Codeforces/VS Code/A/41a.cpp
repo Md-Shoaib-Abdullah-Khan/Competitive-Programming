@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -100,38 +99,28 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,c,a,b,m,n;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
-
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
+    string s1,s2;
     
+   cin>>s1>>s2;
+
+    reverse(s2.begin(),s2.end());
+   if(s1==s2)cout<<"YES"<<endl;
+   else cout<<"NO"<<endl;
+
+   
+
+ 
+        
+ 
+    
+
+   
 
    
 
@@ -142,10 +131,7 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+       solve();
 }
 
 

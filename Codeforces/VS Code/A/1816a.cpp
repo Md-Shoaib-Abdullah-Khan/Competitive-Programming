@@ -1,8 +1,7 @@
-
 #include<bits/stdc++.h>
 using namespace std;
- 
- 
+
+
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -14,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define pop()                   pop_back()
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -44,11 +43,11 @@ using namespace std;
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
 #define mod                     998244353
- 
-#define INF                     1e9+5
+
+#define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -57,95 +56,53 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
- 
+
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
-    return x.first<y.first;
+bool compare(ll x, ll y){
+    return x>y;
+}
+
+int count_inversion(int arr[], int n){
+    int i,j,cnt=0, one=0,zero=0;
+
+    for(i=n-1;i>=0;i--){
+        if(arr[i]==0)zero++;
+        else one++;
+
+        if(arr[i]==1){
+            cnt += zero;
+        }
+    }
+    //cout<<cnt<<endl;
+    return cnt;
 }
 
 
-int sqrtDec(int arr[],int b[], int n, int l,int r){
-    int len=sqrt(n)+1;
-    int sum=0;
-    l--;
-    r--;
-    for(int i=l;i<=r;){
-        if(i%len==0 && i+len-1<=r){
-            sum+=b[i/len];
-            i+=len;
-        }
-        else{
-            sum+=arr[i];
-            i++;
-        }
-    }
-    return sum;
-}
 
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
+void solve(){
 
-        return a;
-    }
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
-    }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
+    ll n,k,i,j,x,a,b,c,m,y;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
-    
- 
-void solve()
-{
-    int i,j,q,a,b,c;
     cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+
+    if()
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
-
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
-    
-
    
-
+   
+   
+   
     
 }
- 
+
 int main()
 {
-       ios_base::sync_with_stdio(false);
-       cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+    //   ios_base::sync_with_stdio(false);
+    //   cin.tie(NULL); 
+   int t;
+  cin>>t;
+   
+    while(t--) solve();
 }
-
-

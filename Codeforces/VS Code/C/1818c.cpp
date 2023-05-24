@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -100,36 +99,38 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,c,a,b,m,n;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    cin>>n>>m;
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    ll arr[n],cnt[n]={0};
+    for(i=0;i<n;i++)cin>>arr[i];
+    ll cnt1=0;
+    for(i=2;i<n;i++){
 
+        if(arr[i]<=arr[i-1] && arr[i-1]<=arr[i-2])cnt1++;
+        cnt[i]=cnt1;
+    }
+    while(m--){
+        ll l,r;
+        cin>>l>>r;
+        l--;
+        r--;
+        a=r-l+1;
 
-        cout<<ans<<endl;
+        if(r-l+1<3){
+            cout<<a<<endl;
+            continue;
+        }
+        
+        ll diff=(cnt[r]-cnt[l]);
+        if(l>0 && arr[l-1]>=arr[l]&& arr[l]>=arr[l+1])diff--;
+        cout<<a-diff<<endl;
+    }
 
     
 
@@ -142,10 +143,7 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+       solve();
 }
 
 

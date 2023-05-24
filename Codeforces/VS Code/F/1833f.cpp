@@ -1,5 +1,20 @@
 
-#include<bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iomanip>
+#include <cmath>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <queue>
+#include <cassert>
+#include <string>
+#include <cstring>
+#include <chrono>
 using namespace std;
  
  
@@ -7,18 +22,18 @@ using namespace std;
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define ull                     unsigned long long
-#define lo(i,a,n,x)             for(i=a;i<=n;i=i+x)
-#define loi(i,a,n,x)            for(i=a;i>=n;i=i-x)
-#define sc                      scanf
-#define pr                      printf
+#define lo(i,a,n)               for(i=a;i<n;i=i++)
+#define loi(i,a,n)              for(i=a;i>n;i=i--)
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define vrev(v)                 reverse(v.begin(),v.end());
+#define vsort(v)                sort(v.begin(),v.end());
 #define mp                      make_pair
-#define VI                      vector <int>
-#define PII                     pair <int,int>
-#define PLL                     pair <long long,long long>
+#define vi                      vector <int>
+#define vp                      vector <pair <long long,long long>>
+#define vpb(a,b)                push_back({a,b})
+#define pii                     pair <int,int>
+#define Pll                     pair <long long,long long>
 #define ff                      first
 #define ss                      second
 #define sqr(x)                  (x)*(x)
@@ -43,12 +58,13 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
- 
-#define INF                     1e9+5
+#define mod                     1000000007
+#define out(a)                  cout<<a<<endl
+#define INF                     1e9+7
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+#define M                       1000000007
+#define print(arr)              for(auto a: arr) cout << a<< " "; cout << endl;
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -67,73 +83,67 @@ bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
 }
 
 
-int sqrtDec(int arr[],int b[], int n, int l,int r){
-    int len=sqrt(n)+1;
-    int sum=0;
-    l--;
-    r--;
-    for(int i=l;i<=r;){
-        if(i%len==0 && i+len-1<=r){
-            sum+=b[i/len];
-            i+=len;
-        }
-        else{
-            sum+=arr[i];
-            i++;
-        }
-    }
-    return sum;
-}
-
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
-
-        return a;
-    }
     ll power(ll n, ll m){
         ll i=1;
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
+  
 
-    }
+ 
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
+    ll i,j,q,k,c=0,d,x,y,m,n,z;
+    
     cin>>n>>m;
-    memset(vis,false,sizeof(vis));
-    
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+   ll arr[n];
+   for(i=0;i<n;i++)cin>>arr[i];
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
-    
-
+   if(m==1){
+    out(n);
+    return;
+   }
+   sort(arr, arr+n);
+    vp vec;
+   ll cnt=1;
+   for(i=0;i<n-1;i++){
+    if(arr[i]==arr[i+1])cnt++;
+    else{
+        vec.vpb(arr[i],cnt);
+        cnt=1;
+    }
+   }
+   vec.vpb(arr[i],cnt);
+   vsort(vec);
    
+
+    
+    ll ans=0;
+    cnt=vec[0].second;
+    n=vec.size();
+    for(i=0,j=0;j<n;){
+        if(vec[j].first-vec[i].first < m-1){
+            j++;
+            if(j<n)cnt=((cnt%mod)*(vec[j].second%mod))%mod;
+        }
+        else if(vec[j].first-vec[i].first == m-1){
+            ans=(ans+cnt)%mod;
+            cnt/=vec[i].second;
+            i++;
+            j++;
+            if(j<n)cnt=((cnt%mod)*(vec[j].second%mod))%mod;
+        }
+        else{
+            i=j;
+            if(j<n)cnt=vec[j].second;
+        }
+    }
+     //if(vec[j].first-vec[i].first == m-1)ans=(ans+cnt)%mod;
+
+   out(ans%mod);
 
     
 }

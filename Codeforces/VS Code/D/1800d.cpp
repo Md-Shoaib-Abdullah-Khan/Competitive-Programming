@@ -117,21 +117,12 @@ void solve()
 
     
     int ans=n-1,cnt=0;
-    for(i=0;i<n-1;){
+    for(i=0;i<n-2;i++){
         
-        if(s[i]==s[i+1]){
-            cnt++;
-            if(cnt>=2){
-                s.erase(s.begin()+i);
-                n--;
-                ans--;
-            }
-            else i++;
-        }
-        else {
-            i++;
-            cnt=0;
-        }
+        if(s[i]==s[i+2]){
+         
+            ans--;
+         }
         
     }
    // cout<<ans<<endl;
@@ -145,14 +136,7 @@ void solve()
     //     }
        
     // }
-    for(i=0;i<n-2;i++){
-        
-        if(s[i]==s[i+2]){
-            ans--;
-           
-        }
-       
-    }
+    
 
     cout<<ans<<endl;
 

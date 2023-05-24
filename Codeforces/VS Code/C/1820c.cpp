@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -95,43 +94,53 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
 
         return a;
     }
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
-    }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,c,m,n;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+   cin>>n;
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+   ll arr[n];
 
+   for(i=0;i<n;i++)cin>>arr[i];
 
-        cout<<ans<<endl;
+   if(n==1){
+    if(arr[0]==0)cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+    return;
+   }
 
+    ll a=mex(arr, n);
+
+    if(a==n){
+        cout<<"NO"<<endl;
+        return;
+    }
+    //cout<<a<<endl;
+    i=0;
+    j=n-1;
+    while(i<=j){
+        if(arr[i]==a+1 && arr[j]==a+1)break;
+        if(arr[i]!=a+1)i++;
+        if(arr[j]!=a+1)j--;
+    }
+    if(i>j){
+        cout<<"YES"<<endl;
+        return;
+    }
+    while(i<=j){
+        arr[i]=a;
+        i++;
+    }
     
+    ll b=mex(arr,n);
+    //cout<<a<<" "<<b<<endl;
+
+    if(a+1 !=b)cout<<"NO"<<endl;
+    else cout<<"YES"<<endl;
+   
 
    
 
@@ -144,7 +153,6 @@ int main()
        cin.tie(NULL);
        int t;
        cin>>t;
-
        while(t--)solve();
 }
 

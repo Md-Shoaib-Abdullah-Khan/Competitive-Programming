@@ -1,5 +1,20 @@
 
-#include<bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iomanip>
+#include <cmath>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <queue>
+#include <cassert>
+#include <string>
+#include <cstring>
+#include <chrono>
 using namespace std;
  
  
@@ -7,18 +22,16 @@ using namespace std;
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define ull                     unsigned long long
-#define lo(i,a,n,x)             for(i=a;i<=n;i=i+x)
-#define loi(i,a,n,x)            for(i=a;i>=n;i=i-x)
-#define sc                      scanf
-#define pr                      printf
+#define lo(i,a,n)               for(i=a;i<n;i=i++)
+#define loi(i,a,n)              for(i=a;i>n;i=i--)
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define vrev(v)                 reverse(v.begin(),v.end());
+#define vsort(v)                sort(v.begin(),v.end());
 #define mp                      make_pair
-#define VI                      vector <int>
-#define PII                     pair <int,int>
-#define PLL                     pair <long long,long long>
+#define Vi                      vector <int>
+#define pii                     pair <int,int>
+#define Pll                     pair <long long,long long>
 #define ff                      first
 #define ss                      second
 #define sqr(x)                  (x)*(x)
@@ -43,12 +56,13 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
- 
-#define INF                     1e9+5
+#define mod                     200005
+#define out(a)                  cout<<a<<endl
+#define INF                     1e9+7
 #define infinity                (1<<28)
 #define EPS                     10E-9
- 
+#define M                       1000000007
+#define print(arr)              for(auto a: arr) cout << a<< " "; cout << endl;
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -65,7 +79,30 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
     return x.first<y.first;
 }
+int parent[mod];
+int siz[mod],mx_size=0,component;
+void make(int n){
+    parent[n] = n;
+    siz[n] = 1;
+}
 
+int find(int n){
+    if(parent[n] == n)return n;
+
+    return parent[n]=find(parent[n]);
+}
+
+void Union(int a, int b){
+    a = find(a);
+    b = find(b);
+    if(a != b){
+        component--;
+        if(siz[a] < siz[b])swap(a,b);
+        parent[b] = a;
+        siz[a] += siz[b];
+        mx_size=max(mx_size,siz[a]);
+    }
+}
 
 int sqrtDec(int arr[],int b[], int n, int l,int r){
     int len=sqrt(n)+1;
@@ -85,52 +122,54 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
     return sum;
 }
 
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
-
-        return a;
-    }
     ll power(ll n, ll m){
         ll i=1;
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
+  
 
-    }
+ 
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,k,c=0,d,x,y,m,n,z;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    cin>>n;
+    for(i=1;i<=n;i++)make(i);
+    ll arr[n+1];
+    for(i=1;i<=n;i++){
+        cin>>arr[i];
+        Union(i,arr[i]);
+    }
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    bool vis[n+1];
+    memset(vis,false,sizeof(vis));
 
+    ll ans1=0,ans2=0;
+    bool found=false;
+    for(i=1;i<=n;i++){
 
-        cout<<ans<<endl;
+        if(parent[i]==i)ans2++;
 
+        if(vis[i])continue;
+        j=i;
+        ll length=0;
+        while(!vis[j]){
+            length++;
+            vis[j]=true;
+            j=arr[j];
+        }
+        if(j==i && length>2)ans1++;
+        else found=true;
+        
+    }
+    if(found)ans1++;
+    cout<<max(ans1,(ll)1)<<" "<<ans2<<endl;
+    
+ 
     
 
    

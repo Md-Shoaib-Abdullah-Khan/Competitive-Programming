@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -85,56 +84,37 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
     return sum;
 }
 
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
-
-        return a;
-    }
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
-    }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
+    int difference(int n){
+        int mn=INF,mx=0;
+        while(n){
+            mn=min(n%10, mn);
+            mx=max(n%10, mx);
+            n/=10;
+        }
+        return mx-mn;
     }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,a,c,m,n;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    cin>>n;
+    ll odd=0, even=0;
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
-
-
-        cout<<ans<<endl;
-
+    for(i=0;i<n;i++){
+        cin>>a;
+        if(a%2==1)odd++;
+        else even++;
+    }
+    if(even>=odd)cout<<odd<<endl;
+    else cout<<even<<endl;
     
 
-   
-
+    
+    
+    
+    
     
 }
  
@@ -144,7 +124,6 @@ int main()
        cin.tie(NULL);
        int t;
        cin>>t;
-
        while(t--)solve();
 }
 

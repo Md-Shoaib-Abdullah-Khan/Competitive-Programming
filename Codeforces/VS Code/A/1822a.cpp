@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -100,38 +99,30 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
+    ll i,j,q,c,a,b,m,n;
+    
     cin>>n>>m;
-    memset(vis,false,sizeof(vis));
-    
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    ll arr1[n],arr2[n];
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    for(i=0;i<n;i++)cin>>arr1[i];
+    for(i=0;i<n;i++)cin>>arr2[i];
+    ll mx=0,  indx=0, time=0;
+  
+    for(i=0;i<n;i++){
+        if(time+arr1[i]<=m && arr2[i]>mx){
+            mx=arr2[i];
+            indx=i+1;
+        }
+        time++;
+    }
+    if(indx>0)cout<<indx<<endl;
+    else cout<<-1<<endl;
 
-
-        cout<<ans<<endl;
-
-    
+   
 
    
 

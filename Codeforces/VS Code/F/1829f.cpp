@@ -115,22 +115,40 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
  
 void solve()
 {
-    int i,j,q,a,b,c;
+    int i,j,q,a,b,c,x,y;
     cin>>n>>m;
-    memset(vis,false,sizeof(vis));
     
+    vector<int>vec[n];
+
+    for(i=0;i<m;i++){
+        cin>>a>>b;
+        a--;
+        b--;
+        if(a>b)swap(a,b);
+        vec[a].pb(b);
+        vec[b].pb(a);
+    }
+    vector<int>st;
     for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+        if(vec[i].size()!=1)st.pb(vec[i].size());
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    sort(st.begin(),st.end());
 
+    //for(i=0;i<st.size();i++)cout<<st[i]<<" ";
+    
+    a=st.size();
 
-        cout<<ans<<endl;
-
+    if(st[0]==st[1]){
+        x=st[0]-1;
+        y=st[a-1];
+    }
+    else{
+         x=st[a-1]-1;
+         y=st[0];
+    }
+    cout<<y<<" "<<x<<endl;
+    
+    
     
 
    

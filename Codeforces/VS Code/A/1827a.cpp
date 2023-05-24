@@ -14,7 +14,8 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-
+#define vrev(v)                 reverse(v.begin(),v.end());
+#define vsort(v)                sort(v.begin(),v.end());
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -100,37 +101,29 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
+  
+   
+ 
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
-    
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    ll i,j,q,k,a,b,c,d,x,y,m,n,z;
+    string s;
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    cin>>n;
+    ll sum=0;
+    for(i=1;i<=n;i++)sum+=i;
+    a=ceil((double)sum/n);
+    a=n*a-sum;
 
+    cout<<a+1<<" ";
+    for(i=2;i<=n;i++)cout<<i<<" ";
+    cout<<endl;
 
-        cout<<ans<<endl;
-
+   
+   
     
 
    

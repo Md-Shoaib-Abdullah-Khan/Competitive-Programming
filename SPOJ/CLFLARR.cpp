@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -62,79 +61,109 @@ bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
-    return x.first<y.first;
+bool compare(ll x, ll y){
+    return x>y;
 }
-
-
-int sqrtDec(int arr[],int b[], int n, int l,int r){
-    int len=sqrt(n)+1;
-    int sum=0;
-    l--;
-    r--;
-    for(int i=l;i<=r;){
-        if(i%len==0 && i+len-1<=r){
-            sum+=b[i/len];
-            i+=len;
-        }
-        else{
-            sum+=arr[i];
-            i++;
-        }
+ 
+int sumOfDigits(int n){
+    int i,j,sum=0;
+    i=10;
+    while(n){
+        sum+=n%i;
+        n/=i;
     }
     return sum;
 }
 
-    
-    ll mex(ll arr[], ll n){
-        ll i,a=0;
-        ll arr1[n];
-        for(i=0;i<n;i++)arr1[i]=arr[i];
-        sort(arr1, arr1+n);
-        for(i=0;i<n;i++)if(arr1[i]==a)a++;
+ 
+  void binary_search(ll ans[], ll limit[], ll sum[], ll l, ll r, ll m, ll n, ll value){
 
-        return a;
+    if(l > r){
+        if(l>=n) limit[n-1]++;
+        else if(r<m){
+           if(m==0) ans[m] += value;
+           else ans[m]+=(value-sum[m-1]);
+        
+        }
+        else{
+            limit[l-1]++;
+            ans[l] += (value-sum[l-1]);
+        }
+        return;
     }
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
-    }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
+    else{
+        ll mid = l + (r-l)/2;
 
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
+        if(sum[mid]==value){
+            limit[mid]++;
+            return;
+        }
+        if(sum[mid] > value) binary_search(ans, limit, sum, l, mid-1, m, n, value);
+        else binary_search(ans, limit, sum, mid+1, r, m, n, value);
+    }
+
+  }
+  ll cnt=0;
+  void subsum(ll arr[], ll i, ll n, ll sum, ll a, ll b){
+    if(i==n){
+        if (sum>=a && sum<=b)cnt++;
+        return;
+    }
+
+    subsum(arr, i+1, n, arr[i]+sum, a, b);
+    subsum(arr, i+1, n, sum, a, b);
+
+    return;
+  }
+  vector<int>grid[20005];
+
+  int BFS(int source){
+    bool vis[20005];
+    int level[20005]={0};
+    memset(vis,0,sizeof(vis));
+    queue<int>qu;
+    qu.push(source);
+    while(!qu.empty()){
+        int curr_v=qu.front();
+        qu.pop();
+        for(auto child:grid[curr_v]){
+            if(child==source)return level[curr_v]+1;
+            else if(!vis[child]){
+                vis[child]=1;
+                qu.push(child);
+                level[child]=level[curr_v]+1;
+            }
+        }
 
     }
-    
+    return -1;
+  }
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,a,q,b,c,m,n;
+  
+
+    cin>>n>>q;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    ll arr[n+1];
+    memset(arr, 0, sizeof(arr));
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+    vector<pair<ll,ll>>vec;
 
-
-        cout<<ans<<endl;
-
+    ll color[n+1];
+    for(i=1;i<=q;i++){
+        cin>>a>>b>>color[i];
+        vec.push_back({a,b});
+    }
+    for(i=vec.size()-1;i>=0;i--){
+        a=vec[i].first;
+        b=vec[i].second;
+        for(j=a;j<=n&&arr[j]==0;j++)arr[j]=
+    }
     
-
    
-
+   
     
 }
  
@@ -142,10 +171,7 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+   solve();
 }
 
 

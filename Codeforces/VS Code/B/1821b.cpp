@@ -1,4 +1,3 @@
-
 #include<bits/stdc++.h>
 using namespace std;
  
@@ -100,38 +99,69 @@ int sqrtDec(int arr[],int b[], int n, int l,int r){
         while(m--)i*=n;
         return i;
     }
-    int arr[1005][1005];
-    bool vis[1005][1005];
-    int n,m;
-    int rec(int i, int j){
-       if(i<0||j<0||i>=n||j>=m)return 0;
-       else if(vis[i][j] || arr[i][j]==0)return 0;
-        vis[i][j]=true;
-
-       return arr[i][j]+rec(i+1,j)+rec(i-1,j)+rec(i,j+1)+rec(i,j-1);
-
-    }
     
  
 void solve()
 {
-    int i,j,q,a,b,c;
-    cin>>n>>m;
-    memset(vis,false,sizeof(vis));
+    ll i,j,q,c,a,b,m,n;
     
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            cin>>arr[i][j];
+    
+   cin>>n;
 
-    int ans=0;
-    for(i=0;i<n;i++)
-        for(j=0;j<m;j++)
-            if(vis[i][j]==false && arr[i][j]>0)ans=max(rec(i,j),ans);
+  ll arr1[n], arr2[n];
 
+  for(i=0;i<n;i++)cin>>arr1[i];
+  for(i=0;i<n;i++)cin>>arr2[i];
 
-        cout<<ans<<endl;
+  ll l=1,r=n;
+  
+    ll cnt=1,mx=0;
+//     for(i=0;i<n-1;i++){
+//     if(cnt==1)a=i+1;
+//     if(arr2[i]<=arr2[i+1])cnt++;
+//     else{
+//         if(cnt>mx){
+//             mx=cnt;
+//             l=a;
+//             r=i+1;
+//         }
+//         cnt=1;
+//     }
+//   }
+//   if(cnt>mx){
+//             mx=cnt;
+//             l=a;
+//             r=i+1;
+            
+//         }
+    cnt=1,mx=0;
+    bool enable=false;
+  for(i=0;i<n-1;i++){
+    if(arr1[i]!=arr2[i])enable = true;
+    if(cnt==1)a=i+1;
+    if(arr2[i]<=arr2[i+1])cnt++;
+    else{
+        if(enable){
+            enable=false;
+            mx=cnt;
+            l=a;
+            r=i+1;
+            break;
+        }
+        cnt=1;
+    }
+  }
+  if(enable){
+            mx=cnt;
+            l=a;
+            r=i+1;
+            
+        }
+  cout<<l<<" "<<r<<endl;
 
     
+
+   
 
    
 
@@ -144,7 +174,6 @@ int main()
        cin.tie(NULL);
        int t;
        cin>>t;
-
        while(t--)solve();
 }
 
