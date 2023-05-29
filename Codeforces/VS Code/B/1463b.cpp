@@ -130,15 +130,15 @@ void solve()
         else b+=(arr[i]-1);
         c+=arr[i];
     }
-    if(a<=ceil((double)c/2)){
+    if(a<=c/2){
         lo(i,0,n){
-            if(i%2)cout<<arr[i]<<" ";
+            if(i%2!=0)cout<<arr[i]<<" ";
             else cout<<1<<" ";
         }
     }
     else 
         lo(i,0,n){
-            if(!i%2)cout<<arr[i]<<" ";
+            if(i%2==0)cout<<arr[i]<<" ";
             else cout<<1<<" ";
         }
     cout<<endl;

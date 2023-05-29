@@ -22,8 +22,8 @@ using namespace std;
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define lo(i,a,n)               for(i=a;i<n;i++)
-#define loi(i,a,n)              for(i=a;i>n;i--)
+#define lo(i,a,n)               for(i=a;i<n;i=i++)
+#define loi(i,a,n)              for(i=a;i>n;i=i--)
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
 #define vrev(v)                 reverse(v.begin(),v.end());
@@ -109,40 +109,60 @@ vl ans;
         return cnt+1;
     }
   
-
-    ll find(ll n){
-        ll a=1;
-        while(a<=n)a*=2;
-        return a/2;
-    }
+   
+    
+   
+ 
     
  
 void solve()
 {
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
-    
+    string s;
     cin>>n;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-  a=0;b=0;c=0;
-    for(i=0;i<n;i++){
-        if(i%2==0)a+=(arr[i]-1);
-        else b+=(arr[i]-1);
-        c+=arr[i];
+    if(n<7){
+        out(-1);
+        return;
     }
-    if(a<=ceil((double)c/2)){
-        lo(i,0,n){
-            if(i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
+   a=1;
+   ll cnt=1,temp=0;
+   while(a<=n){
+        if(a&n){
+            temp=cnt;
         }
+        cnt++;
+        a<<=1;
+   }
+   temp--;
+   b=(ll)1<<temp;
+   b>>=1;
+   
+   if(POPCOUNT(n)<3)temp--;
+   
+   cnt=3;
+   a=(ll)1<<temp;
+   //out(a);
+   ll ans=0;
+    while(cnt && a){
+        if(a&n){
+            ans|=a;
+            cnt--;
+        }
+        a>>=1;
     }
-    else 
-        lo(i,0,n){
-            if(!i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
-    cout<<endl;
-     
+    //out(b);
+   a=b;
+  //out((a&n));
+  while(cnt){
+    if((a&n)==0){
+    ans|=a;
+    cnt--;
+    //out(a);
+    }
+    a>>=1;
+ }
+    out(ans);
+    
     
 }
  
@@ -150,10 +170,9 @@ int main()
 {
        ios_base::sync_with_stdio(false);
        cin.tie(NULL);
-       int t;
+       ll t;
        cin>>t;
-
-       while(t--)solve();
+      while(t--)solve();
 }
 
 

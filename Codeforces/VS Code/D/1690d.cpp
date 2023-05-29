@@ -121,27 +121,24 @@ void solve()
 {
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
     
-    cin>>n;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-  a=0;b=0;c=0;
-    for(i=0;i<n;i++){
-        if(i%2==0)a+=(arr[i]-1);
-        else b+=(arr[i]-1);
-        c+=arr[i];
-    }
-    if(a<=ceil((double)c/2)){
-        lo(i,0,n){
-            if(i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
+    cin>>n>>m;
+    string s;
+    cin>>s;
+
+    ll ans=n,cnt=0;
+    for(i=0,j=0;j<n;i++,j++){
+        if(j-i<m-1){
+            i--;
+            if(s[j]=='W')cnt++;
+        }
+        else{
+            if(s[j]=='W')cnt++;
+            ans=min(ans,cnt);
+            if(s[i]=='W')cnt--;
         }
     }
-    else 
-        lo(i,0,n){
-            if(!i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
-    cout<<endl;
+    out(ans);
+    
      
     
 }

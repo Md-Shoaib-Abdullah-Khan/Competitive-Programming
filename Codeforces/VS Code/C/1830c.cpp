@@ -1,40 +1,23 @@
-
-#include <iostream>
-#include <cstdio>
-#include <cstdlib>
-#include <algorithm>
-#include <iomanip>
-#include <cmath>
-#include <vector>
-#include <set>
-#include <map>
-#include <unordered_set>
-#include <unordered_map>
-#include <queue>
-#include <cassert>
-#include <string>
-#include <cstring>
-#include <chrono>
+#include<bits/stdc++.h>
 using namespace std;
- 
- 
+
+
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define lo(i,a,n)               for(i=a;i<n;i++)
-#define loi(i,a,n)              for(i=a;i>n;i--)
+#define ull                     unsigned long long
+#define lo(i,a,n,x)             for(i=a;i<=n;i=i+x)
+#define loi(i,a,n,x)            for(i=a;i>=n;i=i-x)
+#define sc                      scanf
+#define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define vrev(v)                 reverse(v.begin(),v.end());
-#define vsort(v)                sort(v.begin(),v.end());
+
 #define mp                      make_pair
-#define vi                      vector <int>
-#define vl                      vector <long long>
-#define vp                      vector <pair <long long,long long>>
-#define vpb(a,b)                push_back({a,b})
-#define pii                     pair <int,int>
-#define Pll                     pair <long long,long long>
+#define VI                      vector <int>
+#define PII                     pair <int,int>
+#define PLL                     pair <long long,long long>
 #define ff                      first
 #define ss                      second
 #define sqr(x)                  (x)*(x)
@@ -59,13 +42,12 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     1000000007
-#define out(a)                  cout<<a<<endl
-#define INF                     1e9+7
+#define mod                     200007
+
+#define intlim                  2147483648
 #define infinity                (1<<28)
 #define EPS                     10E-9
-#define M                       1000000007
-#define print(arr)              for(auto a: arr) cout << a<< " "; cout << endl;
+
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -75,82 +57,92 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
- 
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
-    return x.first<y.first;
+bool compare(ll x, ll y){
+    return x>y;
 }
-vp vec[200005];
-bool vis[200005];
-vl ans;
+int parent[mod];
+
+void make(int n){
+    parent[n] = n;
+}
 
 
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
-    }
+int find(int n){
+    if(parent[n] == n)return n;
 
-    ll dfs(ll n){
-        ll cnt=0;
-        vis[n]=true;
-        //cout<<n<<endl;
-        for(auto l:vec[n]){
-            if(vis[l.first])continue;
-            ll a=dfs(l.first);
-            if(a==3)ans.pb(l.second);
-            else cnt+=a;
-            
-        }
-        
-        return cnt+1;
-    }
-  
+    return find(parent[n]);
+}
+int cnt_find(int n, int m){
+    if(parent[n] == n)return m;
 
-    ll find(ll n){
-        ll a=1;
-        while(a<=n)a*=2;
-        return a/2;
-    }
+    return cnt_find(parent[n],m+1);
+}
+vector<int>vec[mod];
+int priority[mod];
+void Union(int a, int b){
+    a = find(a);
+    b = find(b);
     
- 
+    if(a != b){ 
+        if(priority[b] < priority[a])swap(a,b);
+        parent[b] = a;
+    }
+}
+
+
+void dfs(int n, int m){
+    if(priority[n])return;
+    priority[n]=m;
+    for(auto l:vec[n])dfs(l,m+1);
+}
+
 void solve()
 {
-    ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
+    int i,a,b,j,q,k,c=0,d,x,y,m,n,z;
+    string s;
     
     cin>>n;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-  a=0;b=0;c=0;
-    for(i=0;i<n;i++){
-        if(i%2==0)a+=(arr[i]-1);
-        else b+=(arr[i]-1);
-        c+=arr[i];
+    for(i=1;i<=n;i++){
+        make(i);
+        vec[i].clear();
+        priority[i]=0;
     }
-    if(a<=ceil((double)c/2)){
-        lo(i,0,n){
-            if(i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
+    
+    
+    vector<pair<int,int>>v;
+    for(i=0;i<n-1;i++){
+        cin>>a>>b;
+        vec[a].pb(b);
+        vec[b].pb(a);
+        v.push_back({a,b});
     }
-    else 
-        lo(i,0,n){
-            if(!i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
-    cout<<endl;
+    dfs(1,1);
+   
+    for(i=0;i<n-1;i++){
+        Union(v[i].first,v[i].second);
+    }
+    int ans=0;
+    for(i=1;i<=n;i++)cout<<parent[i]<<endl;
+    //cnt_find(6,0);
+  // for(i=1;i<=n;i++)ans=max(ans,cnt_find(i,0));
+    
+    
+
+    //cout<<ans<<endl;
+    
      
     
 }
- 
+
 int main()
 {
-       ios_base::sync_with_stdio(false);
-       cin.tie(NULL);
-       int t;
+    // ios_base::sync_with_stdio(false);
+    //    cin.tie(NULL);
+   int t;
        cin>>t;
 
        while(t--)solve();

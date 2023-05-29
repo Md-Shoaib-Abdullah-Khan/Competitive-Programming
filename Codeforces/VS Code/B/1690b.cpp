@@ -122,27 +122,37 @@ void solve()
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
     
     cin>>n;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-  a=0;b=0;c=0;
+   ll arra[n], arrb[n];
+   a=-1;
+   ll cnt=0;
+   for(i=0;i<n;i++)cin>>arra[i];
+   for(i=0;i<n;i++){
+    cin>>arrb[i];
+    if(arrb[i]!=0) a=arra[i]-arrb[i];
+    else cnt++;
+   }
+   
+   if(cnt==n){
+    out("YES");
+    return;
+   }
+    if(a<0){
+    out("NO");
+    return;
+   }
+    
     for(i=0;i<n;i++){
-        if(i%2==0)a+=(arr[i]-1);
-        else b+=(arr[i]-1);
-        c+=arr[i];
-    }
-    if(a<=ceil((double)c/2)){
-        lo(i,0,n){
-            if(i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
+        if((arra[i]-arrb[i] != a && arrb[i]!=0) || (arra[i]<arrb[i]) ){
+            out("NO");
+            return;
         }
+        else if(arrb[i]==0 && arra[i]-arrb[i]>a){
+            out("NO");
+            return;
+        }    
     }
-    else 
-        lo(i,0,n){
-            if(!i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
-    cout<<endl;
-     
+    
+     out("YES");
     
 }
  

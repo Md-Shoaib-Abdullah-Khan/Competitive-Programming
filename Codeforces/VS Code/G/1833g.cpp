@@ -22,8 +22,8 @@ using namespace std;
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define lo(i,a,n)               for(i=a;i<n;i++)
-#define loi(i,a,n)              for(i=a;i>n;i--)
+#define lo(i,a,n)               for(i=a;i<n;i=i++)
+#define loi(i,a,n)              for(i=a;i>n;i=i--)
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
 #define vrev(v)                 reverse(v.begin(),v.end());
@@ -110,11 +110,7 @@ vl ans;
     }
   
 
-    ll find(ll n){
-        ll a=1;
-        while(a<=n)a*=2;
-        return a/2;
-    }
+ 
     
  
 void solve()
@@ -122,27 +118,31 @@ void solve()
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
     
     cin>>n;
-    ll arr[n];
-    for(i=0;i<n;i++)cin>>arr[i];
-  a=0;b=0;c=0;
-    for(i=0;i<n;i++){
-        if(i%2==0)a+=(arr[i]-1);
-        else b+=(arr[i]-1);
-        c+=arr[i];
+    for(i=1;i<=n;i++)vec[i].clear();
+    ans.clear();
+    memset(vis,false,sizeof(vis));
+    
+    ll cnt[n+1]={0};
+    for(i=1;i<n;i++){
+        cin>>a>>b;
+        vec[a].vpb(b,i);
+        vec[b].vpb(a,i);
+        cnt[a]++;
+        cnt[b]++;
     }
-    if(a<=ceil((double)c/2)){
-        lo(i,0,n){
-            if(i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
-    }
-    else 
-        lo(i,0,n){
-            if(!i%2)cout<<arr[i]<<" ";
-            else cout<<1<<" ";
-        }
+
+    for(i=1;i<=n;i++)if(cnt[i]==1)break;
+    //cout<<i<<endl;
+    a= dfs(i);
+   if(a!=3)out(-1);
+   else{
+    out(ans.size());
+    for(auto l:ans)cout<<l<<" ";
     cout<<endl;
-     
+   }
+  
+   
+  
     
 }
  
