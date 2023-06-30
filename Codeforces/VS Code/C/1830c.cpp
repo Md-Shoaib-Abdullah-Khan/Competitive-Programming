@@ -64,40 +64,19 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-int parent[mod];
-
-void make(int n){
-    parent[n] = n;
-}
+map<pair<int,int>,int>mp;
 
 
-int find(int n){
-    if(parent[n] == n)return n;
 
-    return find(parent[n]);
-}
-int cnt_find(int n, int m){
-    if(parent[n] == n)return m;
 
-    return cnt_find(parent[n],m+1);
-}
-vector<int>vec[mod];
-int priority[mod];
-void Union(int a, int b){
-    a = find(a);
-    b = find(b);
-    
-    if(a != b){ 
-        if(priority[b] < priority[a])swap(a,b);
-        parent[b] = a;
-    }
-}
 
 
 void dfs(int n, int m){
-    if(priority[n])return;
-    priority[n]=m;
-    for(auto l:vec[n])dfs(l,m+1);
+    
+    for(auto l:vec[n]){
+        dfs(l,m+1);
+        
+    }
 }
 
 void solve()
@@ -106,11 +85,7 @@ void solve()
     string s;
     
     cin>>n;
-    for(i=1;i<=n;i++){
-        make(i);
-        vec[i].clear();
-        priority[i]=0;
-    }
+    
     
     
     vector<pair<int,int>>v;
@@ -118,22 +93,8 @@ void solve()
         cin>>a>>b;
         vec[a].pb(b);
         vec[b].pb(a);
-        v.push_back({a,b});
+        mp[{a,b}]=mp[{b,a}]=i;
     }
-    dfs(1,1);
-   
-    for(i=0;i<n-1;i++){
-        Union(v[i].first,v[i].second);
-    }
-    int ans=0;
-    for(i=1;i<=n;i++)cout<<parent[i]<<endl;
-    //cnt_find(6,0);
-  // for(i=1;i<=n;i++)ans=max(ans,cnt_find(i,0));
-    
-    
-
-    //cout<<ans<<endl;
-    
      
     
 }

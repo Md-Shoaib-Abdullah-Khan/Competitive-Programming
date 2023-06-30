@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +42,7 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
+#define mod                     200007
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -65,70 +65,46 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-int count_inversion(int arr[], int n){
-    int i,j,cnt=0, one=0,zero=0;
 
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
 
-        if(arr[i]==1){
-            cnt += zero;
+
+
+
+
+
+void solve()
+{
+    ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
+    string s;
+    cin>>n>>m;
+   
+    ll ans=1;
+    if(n==1){
+        cout<<m<<endl;
+        return;
+    }
+    a=m;
+    for(i=2;i<=sqrt(a);i++){
+        ll cnt=0;
+        while(m%i==0){
+            m/=i;
+            cnt++;
         }
+        ll temp=cnt/n;
+        while(temp--)ans*=i;
     }
-    //cout<<cnt<<endl;
-    return cnt;
-}
-
-
-
-void solve(){
-
-    ll n,k,i,j,x,a,b,c,y;
-
-    cin>> n;
-
-    ll arr[n], cum[n]={0};
-    for(i=0;i<n;i++){
-        cin>>arr[i];
-        if(i==0)cum[i]=arr[i];
-        else cum[i]=arr[i]+cum[i-1];
-        //cout<<cum[i]<<" ";
-    }
-    ll inv=0,cnt=0;
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)cnt++;
-        else inv+=cnt;
-        
-    }
-    ll ans=inv;
-    for(i=0;i<n;i++){
-        int l=0,r=0;
-        if(i!=0)l=cum[i-1];
-        if(i!=n-1)r=(n-i-1)-(cum[n-1]-cum[i]);
-        if(arr[i]==0){
-            ll temp=inv-l;
-            temp+=r;
-            ans=max(ans,temp);
-            //cout<<i<<" "<<temp<<" "<<l<<" "<<r<<endl;
-        }
-        else{
-            ll temp=inv-r;
-            temp+=l;
-            ans=max(ans,temp);
-             //cout<<i<<" "<<temp<<" "<<l<<" "<<r<<endl;
-        }
-    }
-   cout<<ans<<endl;
+    cout<<ans<<endl;
+    
+    
+     
     
 }
 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   int t;
-  cin>>t;
-   
-    while(t--) solve();
+    // ios_base::sync_with_stdio(false);
+    //    cin.tie(NULL);
+   solve();
 }
+
+

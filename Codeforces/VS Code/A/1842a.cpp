@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -16,8 +15,6 @@
 #include <cstring>
 #include <chrono>
 using namespace std;
- 
- 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -61,11 +58,12 @@ using namespace std;
 #define Pi                      acos(-1)
 #define mod                     1000000007
 #define out(a)                  cout<<a<<endl
-#define INF                     1e9+7
+#define INF                     1e8+7
 #define infinity                (1<<28)
 #define EPS                     10E-9
 #define M                       1000000007
 #define print(arr)              for(auto a: arr) cout << a<< " "; cout << endl;
+#define Faster ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -83,102 +81,101 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
     return x.first<y.first;
 }
-vp vec[200005];
-bool vis[200005];
-vl ans;
 
+ ll query(int tree[], int qlow, int qhigh, int low, int high, int pos){
 
-    ll power(ll n, ll m){
-        ll i=1;
-        while(m--)i*=n;
-        return i;
+    if(qlow<=low && qhigh>=high)return tree[pos];
+
+    else if(qlow>high || qhigh<low)return 0;
+
+    int mid=(low+high)/2;
+
+    return query(tree, qlow, qhigh, low, mid, 2*pos+1)+ query(tree, qlow, qhigh, mid+1, high, 2*pos+2);
+ }
+ void update(int tree[], int low, int high, int pos, int indx, int value){
+    if(low==high){
+        if(low==indx)tree[pos]=value;
+        return;
     }
+    int mid = (low + high)/2;
+    update(tree, low, mid, 2*pos+1, indx, value);
+    update(tree, mid+1, high, 2*pos+2, indx, value);
 
-    ll dfs(ll n){
-        ll cnt=0;
-        vis[n]=true;
-        //cout<<n<<endl;
-        for(auto l:vec[n]){
-            if(vis[l.first])continue;
-            ll a=dfs(l.first);
-            if(a==3)ans.pb(l.second);
-            else cnt+=a;
-            
+    tree[pos]=tree[2*pos+1]+tree[2*pos+2];
+ }
+ bool isPossible(int q[], vector<pair<int,int>>& range, int mid , int n){
+    int cnt[n]={0};
+    for(int i=0;i<=mid;i++)cnt[q[i]-1]++;
+    for(int i=1;i<n;i++)cnt[i]+=cnt[i-1];
+    for(auto e:range){
+        int l=e.first-1;int r=e.second-1;
+        int sum=cnt[r];
+        if(l>0)sum-=cnt[l-1];
+        int a=e.second-e.first+1-sum;
+        if(sum>a){
+            return true;
         }
+    }
+    return false;
+ }
+
+ int binary_search(int q[], vector<pair<int,int>>& range, int n, int low, int high){
+    if(low>high)return INF;
+    else{
+        int mid=low+(high-low)/2, ans=INF;
+    
+        if(isPossible(q, range, mid, n))ans=mid;
         
-        return cnt+1;
+        if(ans==INF)ans=min(ans,binary_search(q, range, n, mid+1, high));
+        else ans=min(ans,binary_search(q, range, n, low, mid-1));
+        return ans;
     }
-    ll binary_search(ll arr[], ll l, ll r, ll value){
-        if(l>r )return l;
-        else{
-            ll mid = l+(r-l)/2;
-    
-             if(arr[mid] == value)return mid;
-            else if(value > arr[mid])return binary_search(arr, mid+1, r, value);
-            else return binary_search(arr, l, mid-1, value);
-        }
+ }
+
+
+void solve(){
+
+ ll n,m,i,j,k,a,b;
+    cin>>n>>m;
+   ll arr1[n],arr2[n],arr3[n];
+
+    for(i=0;i<n;i++){
+        cin>>arr1[i];
+        
     }
-  
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
+    for(i=0;i<n;i++){
+        cin>>arr2[i];
+        
     }
- 
-    
- 
-void solve()
-{
-    ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
-    
-    string s;
-    cin>>s;
-    n=s.size();
-    ll arr[n];
-    
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
+    for(i=0;i<n;i++){
+        cin>>arr3[i];
+        
     }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
-    
+    bool check[]={1,1,1};
     ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
-
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
-    for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
-        }
-        cnt1[s[i]-'A']++;
+    for(i=0;i<n;i++){
+        if((arr1[i]|m)==m && check[0])ans|=arr1[i];
+        else check[0]=false;
+        if((arr2[i]|m)==m && check[1])ans|=arr2[i];
+        else check[1]=false;
+        if((arr3[i]|m)==m && check[2])ans|=arr3[i];
+        else check[2]=false;
     }
-   out(ans);
+    if(ans==m)out("YES");
+    else out("NO");
+
+
+    
+
     
 }
- 
+
 int main()
 {
-       ios_base::sync_with_stdio(false);
-       cin.tie(NULL);
-       int t;
-       cin>>t;
-
-       while(t--)solve();
+    Faster;
+   int t;
+  cin>>t;
+   
+    while(t--) solve();
 }
+

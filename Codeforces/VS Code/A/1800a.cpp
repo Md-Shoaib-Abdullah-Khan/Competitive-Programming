@@ -115,23 +115,19 @@ void solve()
 
     transform(s.begin(), s.end(), s.begin(), ::tolower);
 
-    //cout<<s<<endl;
-    string s1="meow";
-
-    
-    
-   
-
-    for(i=0;i<s.size()-1;){
-        if(s[i]==s[i+1]){
-            s.erase(s.begin()+i);
+    int cnt=0;
+    for(i=0;i<n-1;i++){
+        if((s[i]=='m'&&s[i+1]!='m'&&s[i+1]!='e')||(s[i]=='e'&&s[i+1]!='e'&&s[i+1]!='o')||(s[i]=='o'&&s[i+1]!='o'&&s[i+1]!='w')||(s[i]=='w'&&s[i+1]!='w')){
+            cout<<"NO"<<endl;
+            return;
         }
-        else i++;
-        
+        if(s[i]!=s[i+1])cnt++;
     }
-    //cout<<s<<endl;
-    if(s1.compare(s)==0)cout<<"YES"<<endl;
+    if(cnt==3){
+        cout<<"YES"<<endl;
+    }
     else cout<<"NO"<<endl;
+
 
     
 }

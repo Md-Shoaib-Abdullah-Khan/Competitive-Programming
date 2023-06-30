@@ -1,23 +1,37 @@
-#include<bits/stdc++.h>
+#include <iostream>
+#include <cstdio>
+#include <cstdlib>
+#include <algorithm>
+#include <iomanip>
+#include <cmath>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <queue>
+#include <cassert>
+#include <string>
+#include <cstring>
+#include <chrono>
 using namespace std;
-
-
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
 #define ll                      long long
-#define ull                     unsigned long long
-#define lo(i,a,n,x)             for(i=a;i<=n;i=i+x)
-#define loi(i,a,n,x)            for(i=a;i>=n;i=i-x)
-#define sc                      scanf
-#define pr                      printf
+#define lo(i,a,n)               for(i=a;i<n;i++)
+#define loi(i,a,n)              for(i=a;i>n;i--)
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+#define vrev(v)                 reverse(v.begin(),v.end());
+#define vsort(v)                sort(v.begin(),v.end());
 #define mp                      make_pair
-#define VI                      vector <int>
-#define PII                     pair <int,int>
-#define PLL                     pair <long long,long long>
+#define vi                      vector <int>
+#define vl                      vector <long long>
+#define vp                      vector <pair <long long,long long>>
+#define vpb(a,b)                push_back({a,b})
+#define pii                     pair <int,int>
+#define Pll                     pair <long long,long long>
 #define ff                      first
 #define ss                      second
 #define sqr(x)                  (x)*(x)
@@ -42,12 +56,14 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
-#define intlim                  2147483648
+#define mod                     1000000007
+#define out(a)                  cout<<a<<endl
+#define INF                     1e8+7
 #define infinity                (1<<28)
 #define EPS                     10E-9
-
+#define M                       1000000007
+#define print(arr)              for(auto a: arr) cout << a<< " "; cout << endl;
+#define Faster ios_base::sync_with_stdio(false);cin.tie(0);cout.tie(0);
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -57,45 +73,95 @@ void dbg_out(Head H, Tail... T) {
 }
 //----------------------------------------------------------------
 
+ 
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
 }
-bool compare(ll x, ll y){
-    return x>y;
+bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
+    return x.first<y.first;
 }
 
+ ll query(int tree[], int qlow, int qhigh, int low, int high, int pos){
+
+    if(qlow<=low && qhigh>=high)return tree[pos];
+
+    else if(qlow>high || qhigh<low)return 0;
+
+    int mid=(low+high)/2;
+
+    return query(tree, qlow, qhigh, low, mid, 2*pos+1)+ query(tree, qlow, qhigh, mid+1, high, 2*pos+2);
+ }
+ void update(int tree[], int low, int high, int pos, int indx, int value){
+    if(low==high){
+        if(low==indx)tree[pos]=value;
+        return;
+    }
+    int mid = (low + high)/2;
+    update(tree, low, mid, 2*pos+1, indx, value);
+    update(tree, mid+1, high, 2*pos+2, indx, value);
+
+    tree[pos]=tree[2*pos+1]+tree[2*pos+2];
+ }
+ bool isPossible(int q[], vector<pair<int,int>>& range, int mid , int n){
+    int cnt[n]={0};
+    for(int i=0;i<=mid;i++)cnt[q[i]-1]++;
+    for(int i=1;i<n;i++)cnt[i]+=cnt[i-1];
+    for(auto e:range){
+        int l=e.first-1;int r=e.second-1;
+        int sum=cnt[r];
+        if(l>0)sum-=cnt[l-1];
+        int a=e.second-e.first+1-sum;
+        if(sum>a){
+            return true;
+        }
+    }
+    return false;
+ }
+
+ int binary_search(int q[], vector<pair<int,int>>& range, int n, int low, int high){
+    if(low>high)return INF;
+    else{
+        int mid=low+(high-low)/2, ans=INF;
+    
+        if(isPossible(q, range, mid, n))ans=mid;
+        
+        if(ans==INF)ans=min(ans,binary_search(q, range, n, mid+1, high));
+        else ans=min(ans,binary_search(q, range, n, low, mid-1));
+        return ans;
+    }
+ }
 
 
 void solve(){
 
-    ll n,k,i,x,a,b,y;
+ int n,m,i,j,k,a,b;
+    cin>>n;
 
-    cin>> n;
-
-    ll arr[n+1];
-
-    for(i=0;i<n;i++){
-        cin>>arr[i];
-    }
-    ll sum=0,ans=0;
+    map<int,int>mp;
     
-    for(i=0;i<n-1;i++){
-        
-        if(sum+arr[i] < arr[i+1]) {
-            sum+=arr[i];
-            ans++;
+    for(i=0;i<n;i++){
+        cin>>a;
+        mp[a]++;
+    }
+    ll ans=0;
+    for(i=0;i<n;i++){
+        for(j=i+1;j<n && (j^i)<=j-i;j++){
+            if(mp[i] && mp[j] && (j^i)==GCD(i,j))ans+=mp[i]*mp[j];
         }
     }
-   ans++;
-   cout<<ans<<endl;
+    out(ans);
+
+    
+    
+    
+
     
 }
 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
+    Faster;
    int t;
   cin>>t;
    

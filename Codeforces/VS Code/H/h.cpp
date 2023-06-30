@@ -13,7 +13,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,7 +42,8 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
+#define mod                     100000
+#define INF                     1e9+7
 
 #define intlim                  2147483648
 #define infinity                (1<<28)
@@ -65,70 +66,103 @@ bool compare(ll x, ll y){
     return x>y;
 }
 
-int count_inversion(int arr[], int n){
-    int i,j,cnt=0, one=0,zero=0;
-
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)zero++;
-        else one++;
-
-        if(arr[i]==1){
-            cnt += zero;
-        }
+ void constructMxTree(int input[], int tree[], int low, int high, int pos){
+    if(low==high){
+        tree[pos]=input[low];
+        return;
     }
-    //cout<<cnt<<endl;
-    return cnt;
-}
+    int mid = (low + high)/2;
+    constructMxTree(input, tree, low, mid, 2*pos+1);
+    constructMxTree(input, tree, mid+1, high, 2*pos+2);
 
+    tree[pos]=max(tree[2*pos+1], tree[2*pos+2]);
+ }
+ void constructMnTree(int input[], int tree[], int low, int high, int pos){
+    if(low==high){
+        tree[pos]=input[low];
+        return;
+    }
+    int mid = (low + high)/2;
+    constructMnTree(input, tree, low, mid, 2*pos+1);
+    constructMnTree(input, tree, mid+1, high, 2*pos+2);
 
+    tree[pos]=min(tree[2*pos+1], tree[2*pos+2]);
+ }
+ void childs(int tree[], int low, int high, int pos){
+    if(low==high){
+        tree[pos]=1;
+        return;
+    }
+    int mid = (low + high)/2;
+    childs( tree, low, mid, 2*pos+1);
+    childs(tree, mid+1, high, 2*pos+2);
+
+    tree[pos]=tree[2*pos+1]+ tree[2*pos+2];
+ }
+
+ int query(int tree[], int qlow, int qhigh, int low, int high, int pos){
+
+    if(qlow<=low && qhigh>=high)return tree[pos];
+
+    else if(qlow>high || qhigh<low)return INF;
+
+    int mid=(low+high)/2;
+
+    return min(query(tree, qlow, qhigh, low, mid, 2*pos+1), query(tree, qlow, qhigh, mid+1, high, 2*pos+2));
+ }
+ void update(int tree[], int low, int high, int pos, int indx, int value){
+    if(low==high){
+        if(low==indx)tree[pos]=value;
+        return;
+    }
+    int mid = (low + high)/2;
+    update(tree, low, mid, 2*pos+1, indx, value);
+    update(tree, mid+1, high, 2*pos+2, indx, value);
+
+    tree[pos]=min(tree[2*pos+1], tree[2*pos+2]);
+ }
+
+ int loose(int mxTree[], int mnTree[], int child[], int low, int high, int pos, int length){
+    if(low==high){
+        return 0;
+    }
+    else if(mxTree[pos] + mnTree[pos]>length)return child[pos];
+    int mid=(low+high)/2;
+    
+    return max(loose(mxTree, mnTree, child, low, mid, 2*pos+1, length),loose(mxTree, mnTree, child, mid+1, high, 2*pos+2, length));
+ }
 
 void solve(){
 
-    ll n,k,i,j,x,a,b,c,y;
+ int n,m,i,j,a,b;
+    cin>>n>>m;
 
-    cin>> n;
+    i=1;
+    while(i<n)i*=2;
+    int mxtree[2*i-1],mntree[2*i-1],child[2*i-1];
+    int input[n];
+    for(i=0;i<n;i++)cin>>input[i];
+    
+    constructMxTree(input, mxtree, 0, n-1, 0);
+    constructMnTree(input, mntree, 0, n-1, 0);
+    childs(child, 0, n-1, 0);
 
-    ll arr[n], cum[n]={0};
-    for(i=0;i<n;i++){
-        cin>>arr[i];
-        if(i==0)cum[i]=arr[i];
-        else cum[i]=arr[i]+cum[i-1];
-        //cout<<cum[i]<<" ";
+    cout<<loose(mxtree, mntree, child, 0, n-1, 0, n)<<endl;
+    while(m--){
+        cin>>a;
+        cout<<child[a]<<endl;
     }
-    ll inv=0,cnt=0;
-    for(i=n-1;i>=0;i--){
-        if(arr[i]==0)cnt++;
-        else inv+=cnt;
-        
-    }
-    ll ans=inv;
-    for(i=0;i<n;i++){
-        int l=0,r=0;
-        if(i!=0)l=cum[i-1];
-        if(i!=n-1)r=(n-i-1)-(cum[n-1]-cum[i]);
-        if(arr[i]==0){
-            ll temp=inv-l;
-            temp+=r;
-            ans=max(ans,temp);
-            //cout<<i<<" "<<temp<<" "<<l<<" "<<r<<endl;
-        }
-        else{
-            ll temp=inv-r;
-            temp+=l;
-            ans=max(ans,temp);
-             //cout<<i<<" "<<temp<<" "<<l<<" "<<r<<endl;
-        }
-    }
-   cout<<ans<<endl;
+
+
     
 }
 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
-   int t;
+    
+   ll t;
   cin>>t;
    
     while(t--) solve();
 }
+

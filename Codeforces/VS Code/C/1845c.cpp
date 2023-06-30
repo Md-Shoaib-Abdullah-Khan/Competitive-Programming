@@ -15,6 +15,7 @@
 #include <string>
 #include <cstring>
 #include <chrono>
+#include <stack>
 using namespace std;
  
  
@@ -87,50 +88,14 @@ vp vec[200005];
 bool vis[200005];
 vl ans;
 
-
     ll power(ll n, ll m){
         ll i=1;
         while(m--)i*=n;
         return i;
     }
 
-    ll dfs(ll n){
-        ll cnt=0;
-        vis[n]=true;
-        //cout<<n<<endl;
-        for(auto l:vec[n]){
-            if(vis[l.first])continue;
-            ll a=dfs(l.first);
-            if(a==3)ans.pb(l.second);
-            else cnt+=a;
-            
-        }
-        
-        return cnt+1;
-    }
-    ll binary_search(ll arr[], ll l, ll r, ll value){
-        if(l>r )return l;
-        else{
-            ll mid = l+(r-l)/2;
-    
-             if(arr[mid] == value)return mid;
-            else if(value > arr[mid])return binary_search(arr, mid+1, r, value);
-            else return binary_search(arr, l, mid-1, value);
-        }
-    }
-  
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
-    }
+   
+   
  
     
  
@@ -138,38 +103,35 @@ void solve()
 {
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
     
-    string s;
+    string s,s1,s2;
     cin>>s;
-    n=s.size();
-    ll arr[n];
+    cin>>n;
+    cin>>s1>>s2;
     
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
-    }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
-    
-    ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
-
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
-    for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
+   
+    stack<ll>pos[10];
+    for(i=s.size()-1;i>=0;i--)pos[s[i]-'0'].push(i);
+    k=0;
+    for(i=0;i<n;i++){
+        
+        b=0;
+        for(j=s1[i]-'0';j<=s2[i]-'0';j++){
+            a=-1;
+            while(a<k){
+                if(pos[j].empty()){
+                    out("YES");
+                    return;
+                }
+                a=pos[j].top();
+                pos[j].pop();
+                //cout<<a<<" ";
+            }
+            b=max(b,a);
         }
-        cnt1[s[i]-'A']++;
+        
+        k=b;
     }
-   out(ans);
+    out("NO");
     
 }
  

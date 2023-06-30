@@ -119,18 +119,7 @@ vl ans;
         }
     }
   
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
-    }
+
  
     
  
@@ -138,38 +127,46 @@ void solve()
 {
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
     
-    string s;
-    cin>>s;
-    n=s.size();
+    
+    cin>>n;
+    
+    
     ll arr[n];
+   char s[n+5];
+    for(i=0;i<n;i++)cin>>arr[i];
+    for(i=0;i<n;i++)s[i]='0';
     
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
-    }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
     
-    ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
+    bool found=false;
+    a=arr[0];
+    s[0]='1';
+    for(i=1;i<n;i++){
+        
+            if(!found){
+                if(arr[i]>=a){
+                    s[i]='1';
+                    a=arr[i];
+                }
+                else {
+                    if(arr[i]<=arr[0]){
+                        found=true;
+                        s[i]='1';
+                        a=arr[i];
+                    }
+                }
+            
+            }
+            else{
+                if(arr[i]>=a && arr[i]<=arr[0]){
+                    s[i]='1';
+                    a=arr[i];
+                }
+            }
 
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
-    for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
-        }
-        cnt1[s[i]-'A']++;
     }
-   out(ans);
+   for(i=0;i<n;i++)cout<<s[i];
+   cout<<endl;
+    
     
 }
  

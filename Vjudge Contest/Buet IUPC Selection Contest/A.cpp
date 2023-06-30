@@ -1,7 +1,8 @@
-#include<bits/stdc++.h>
+#include<iostream>
+#include<vector>
 using namespace std;
-
-
+ 
+ 
 #pragma GCC                     optimize ("Ofast")
 #pragma GCC                     optimize("O3")
 #define db                      double
@@ -13,7 +14,7 @@ using namespace std;
 #define pr                      printf
 #define ms(a,b)                 memset(a, b, sizeof(a))
 #define pb(a)                   push_back(a)
-#define pop()                   pop_back()
+
 #define mp                      make_pair
 #define VI                      vector <int>
 #define PII                     pair <int,int>
@@ -42,12 +43,12 @@ using namespace std;
 #define end0                    "\n"
 #define end1                    cout<<"\n";
 #define Pi                      acos(-1)
-#define mod                     998244353
-
-#define intlim                  2147483648
+#define mod                     1005
+ 
+#define INF                     1e9+5
 #define infinity                (1<<28)
 #define EPS                     10E-9
-
+ 
 //----------------------------------------------------------------
 void dbg_out() { cerr << endl; }
 template<typename Head, typename... Tail>
@@ -56,7 +57,7 @@ void dbg_out(Head H, Tail... T) {
      dbg_out(T...);
 }
 //----------------------------------------------------------------
-
+ 
 bool sortcol( const vector<int>& v1,
                const vector<int>& v2 ) {
  return v1[1] < v2[1];
@@ -64,38 +65,40 @@ bool sortcol( const vector<int>& v1,
 bool compare(ll x, ll y){
     return x>y;
 }
-
-
-
-void solve(){
-
-    ll n,k,i,x,a,b,y;
-
-    cin>> n;
-
-    ll arr[n+1];
-
-    for(i=0;i<n;i++){
-        cin>>arr[i];
+ 
+int sumOfDigits(int n){
+    int i,j,sum=0;
+    i=10;
+    while(n){
+        sum+=n%i;
+        n/=i;
     }
-    ll ans=0;
-    sort(arr, arr+n);
-    for(i=0;i<n-1;i+=2){
-    if(arr[i] != arr[i+1]){
-        cout<<arr[i]<<endl;
-        return;
-    }
-    }
-    cout<<arr[n-1]<<endl;
+    return sum;
+}
+
+
+
+
+ 
+void solve()
+{
+   ll i,j,a,b,c,d;
+  
+    ll m,n,k;
+   cin>>n>>m>>k;
+   k=(k*(k+1))/2;
+   k*=n;
+   k-=m;
+   cout<<max(k,(ll)0)<<endl;
+
+    
+    
     
 }
-
+ 
 int main()
 {
-    //   ios_base::sync_with_stdio(false);
-    //   cin.tie(NULL); 
- 
-   
-     solve();
+       
+   int t;
+   solve();
 }
-

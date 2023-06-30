@@ -61,7 +61,7 @@ using namespace std;
 #define Pi                      acos(-1)
 #define mod                     1000000007
 #define out(a)                  cout<<a<<endl
-#define INF                     1e9+7
+#define INF                     1e18+7
 #define infinity                (1<<28)
 #define EPS                     10E-9
 #define M                       1000000007
@@ -118,58 +118,57 @@ vl ans;
             else return binary_search(arr, l, mid-1, value);
         }
     }
-  
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
+  int DP[100005][8];
+    int dp(int arr[][3], int i, int k){
+
+        
+        if(i<0)return 0;
+        else if(DP[i][k]!=-1)return DP[i][k];
+
+        int cost=0;
+
+        for(int j=0;j<3;j++)if(k&(1<<j))cost=max(cost,dp(arr, i-1, 7^(1<<j))+arr[i][j]);
+
+        return DP[i][k]=cost;
     }
- 
+        
     
  
 void solve()
 {
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
-    
     string s;
+    
+    cin>>n>>m;
     cin>>s;
-    n=s.size();
-    ll arr[n];
-    
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
+
+    ll ans=1, cnt=1, vowels=0;
+    if(m==1){
+        for(i=0;i<n;i++){
+        if(s[i]=='a'||s[i]=='e'||s[i]=='o'||s[i]=='i'||s[i]=='u'){
+            vowels++;
+            ans*=cnt;
+            cnt=1;
+        }  
+        else if(vowels>0)cnt++;
+        
     }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
-    
-    ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
-
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
-    for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
+    out(ans);
+    return;
+    }
+   
+    for(i=0;i<n;i++){
+        if(s[i]=='a'||s[i]=='e'||s[i]=='o'||s[i]=='i'||s[i]=='u')vowels++;
+        else if(vowels%m==0 && vowels>0)cnt++;
+        if(vowels%m!=0){
+            ans=(ans*cnt)%mod;
+            cnt=1;
         }
-        cnt1[s[i]-'A']++;
+        
+
     }
-   out(ans);
+    
+    out(ans);
     
 }
  

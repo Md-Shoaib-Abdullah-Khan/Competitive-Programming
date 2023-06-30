@@ -112,64 +112,28 @@ vl ans;
         if(l>r )return l;
         else{
             ll mid = l+(r-l)/2;
-    
-             if(arr[mid] == value)return mid;
+        ll a;
+             if(arr[mid] == value)return mid+1;
             else if(value > arr[mid])return binary_search(arr, mid+1, r, value);
             else return binary_search(arr, l, mid-1, value);
         }
     }
   
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
-    }
+
  
     
  
 void solve()
 {
     ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
+    string s1,s2;
+    cin>>n;
+    ll arr[n], ans=0;
+    for(i=0;i<n;i++)cin>>arr[i];
+    sort(arr, arr+n);
+    for(i=0,j=n-1;i<j;i++,j--)ans+=abs(arr[i]-arr[j]);
+    out(ans);
     
-    string s;
-    cin>>s;
-    n=s.size();
-    ll arr[n];
-    
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
-    }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
-    
-    ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
-
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
-    for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
-        }
-        cnt1[s[i]-'A']++;
-    }
-   out(ans);
     
 }
  
@@ -182,3 +146,5 @@ int main()
 
        while(t--)solve();
 }
+
+

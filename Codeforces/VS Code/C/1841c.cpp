@@ -108,7 +108,7 @@ vl ans;
         
         return cnt+1;
     }
-    ll binary_search(ll arr[], ll l, ll r, ll value){
+    ll binary_search(ll cnt[5],  ll value){
         if(l>r )return l;
         else{
             ll mid = l+(r-l)/2;
@@ -119,17 +119,9 @@ vl ans;
         }
     }
   
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
+    ll value(char s, ll cnt[][5], ){
+
+        
     }
  
     
@@ -141,35 +133,41 @@ void solve()
     string s;
     cin>>s;
     n=s.size();
-    ll arr[n];
-    
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
-    }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
-    
-    ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
-
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
-    for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
+    ll cnt[n][5];
+    memset(cnt, 0, sizeof(cnt));
+    reverse(s.begin(), s.end());
+    for(i=0;i<n;i++){
+        if(i==0)cnt[i][s[i]-'A']=1;
+        else{
+            cnt[i][0]=cnt[i-1][0];
+            cnt[i][1]=cnt[i-1][1];
+            cnt[i][2]=cnt[i-1][2];
+            cnt[i][3]=cnt[i-1][3];
+            cnt[i][4]=cnt[i-1][4];
+            cnt[i][s[i]-'A']++;
         }
-        cnt1[s[i]-'A']++;
     }
-   out(ans);
+    //for(i=0;i<n;i++)cout<<cnt[i][0]<<" "<<cnt[i][1]<<" "<<cnt[i][2]<<" "<<cnt[i][3]<<" "<<cnt[i][4]<<" "<<endl;
+    ll flg[]={1,10,100,1000,10000};
+    ll mx=0,temp=0;
+    for(i=0;i<n;i++){
+        if(temp<=(s[i]-'A'))mx+=flg[s[i]-'A'];
+        else mx-=flg[s[i]-'A'];
+        temp=max(temp,(ll)(s[i]-'A'));
+    }
+    
+    ll ans=mx;
+    temp=0;
+    ll ranom=0;
+     for(i=0;i<n;i++){
+        if(temp<=s[i]-'A')ranom=mx-flg[s[i]-'A'];
+        else ranom=mx+flg[s[i]-'A'];
+        for(i=0;i<5;i++)ans=max(ans,value())
+     }
+    
+    
+
+   
     
 }
  

@@ -83,9 +83,9 @@ bool sortcol( const vector<int>& v1,
 bool compare(pair<int,pair<int,int>>&x, pair<int,pair<int,int>>& y){
     return x.first<y.first;
 }
-vp vec[200005];
+vector<int> graph[200005];
 bool vis[200005];
-vl ans;
+int leaf[200005];
 
 
     ll power(ll n, ll m){
@@ -94,82 +94,58 @@ vl ans;
         return i;
     }
 
-    ll dfs(ll n){
-        ll cnt=0;
+    int dfs(int n){
+        
+        if(graph[n].size()==1 && n!=1){
+            leaf[n]=1;
+            return 1;
+        }
         vis[n]=true;
-        //cout<<n<<endl;
-        for(auto l:vec[n]){
-            if(vis[l.first])continue;
-            ll a=dfs(l.first);
-            if(a==3)ans.pb(l.second);
-            else cnt+=a;
+       
+        for(auto l:graph[n]){
+            if(vis[l])continue;
+            
+            leaf[n] += dfs(l);
             
         }
         
-        return cnt+1;
+        return leaf[n];
     }
     ll binary_search(ll arr[], ll l, ll r, ll value){
         if(l>r )return l;
         else{
             ll mid = l+(r-l)/2;
-    
-             if(arr[mid] == value)return mid;
+        ll a;
+             if(arr[mid] == value)return mid+1;
             else if(value > arr[mid])return binary_search(arr, mid+1, r, value);
             else return binary_search(arr, l, mid-1, value);
         }
     }
   
-    ll value(char s, ll cnt1[], ll cnt2[]){
-        ll ans=0,i,j=0;
-        for(i=0;i<5;i++)if(cnt2[i]>0)j=i;
-        j=max(j,(ll)s-'A');
-    //cout<<s<<endl;
-        for(i=0;i<5;i++){
-            if(i>=j)ans+=(cnt1[i]*power(10,i));
-            else ans-=(cnt1[i]*power(10,i));
-        }
-        if(s-'A'>=j)return ans+power(10,s-'A');
-        else return ans-power(10,s-'A');
-    }
+
  
     
  
 void solve()
 {
-    ll i,a,b,j,q,k,c=0,d,x,y,m,n,z;
+    int i,a,b,j,q,k,c=0,d,x,y,m,n,z;
+    string s1,s2;
+    cin>>n;
+    for(i=1;i<=n;i++)graph[i].clear();
     
-    string s;
-    cin>>s;
-    n=s.size();
-    ll arr[n];
-    
-    ll cnt1[5]={0}, cnt2[5]={0}, val[n]={0};
-    char ch=s[n-1];
-    for(i=n-1;i>=0;i--){
-        if(ch>s[i])val[i]=-power(10,(ll)(s[i]-'A'));
-        else val[i]=power(10,(s[i]-'A'));
-        ch=max(ch,s[i]);
-    }
-    for(i=0;i<n;i++)cnt2[s[i]-'A']++;
-    //for(i=0;i<n;i++)cout<<val[i]<<" ";
-    
-    ll ans=0;
-    ch=s[0];
-    ll temp1=0, temp2=0;
-
-    for(i=0;i<n;i++)temp2+=val[i];
-
-    ans=temp2;
     for(i=0;i<n-1;i++){
-        cnt2[s[i]-'A']--;
-        temp2-=val[i];
-        for(j=0;j<5;j++){
-            ans=max(ans,(value('A'+j, cnt1, cnt2)+temp2));
-           // cout<<(char)('A'+j)<<" "<<(value('A'+j, cnt1, cnt2)+temp2)<<endl;
-        }
-        cnt1[s[i]-'A']++;
-    }
-   out(ans);
+        cin>>a>>b;
+        graph[a].push_back(b);
+        graph[b].push_back(a);
+    }  
+   memset(vis, 0, sizeof(vis));
+   for(i=1;i<=n;i++)leaf[i]=0;
+   a=dfs(1);
+   cin>>m;
+   while(m--){
+    cin>>a>>b;
+    out((ll)leaf[a]*leaf[b]);
+   }
     
 }
  
@@ -182,3 +158,5 @@ int main()
 
        while(t--)solve();
 }
+
+

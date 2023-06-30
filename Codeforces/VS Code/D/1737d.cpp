@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstdio>
 #include <cstdlib>
@@ -125,42 +124,58 @@ void solve()
         return;
     }
    a=1;
-   ll cnt=1,temp=0;
+   ll cnt=0,temp=0;
+   vector<ll>vec;
    while(a<=n){
         if(a&n){
             temp=cnt;
+            vec.pb(cnt);
         }
         cnt++;
         a<<=1;
    }
    temp--;
-   b=(ll)1<<temp;
-   b>>=1;
-   
-   if(POPCOUNT(n)<3)temp--;
-   
-   cnt=3;
-   a=(ll)1<<temp;
-   //out(a);
    ll ans=0;
-    while(cnt && a){
-        if(a&n){
-            ans|=a;
-            cnt--;
-        }
-        a>>=1;
-    }
-    //out(b);
-   a=b;
-  //out((a&n));
-  while(cnt){
-    if((a&n)==0){
-    ans|=a;
-    cnt--;
-    //out(a);
-    }
-    a>>=1;
- }
+  if(vec.size()==1){
+    a=vec[0];
+    a--;
+    ans|=((ll)1<<a);
+    a--;
+    ans|=((ll)1<<a);
+    a--;
+    ans|=((ll)1<<a);
+  }
+  else if(vec.size()==2 && vec[0]>1){
+    a=vec[1];
+    ans|=((ll)1<<a);
+    a=vec[0];
+    a--;
+    ans|=((ll)1<<a);
+    a--;
+    ans|=((ll)1<<a);
+  }
+  else if(vec.size()==2 && vec[0]<=1){
+    a=vec[1];
+    a--;
+    ans|=((ll)1<<a);
+    a--;
+    ans|=((ll)1<<a);
+    a--;
+    ans|=((ll)1<<a);
+  }
+  else{
+    n=vec.size();
+    ans|=((ll)1<<(vec[n-1]));
+    n--;
+    ans|=((ll)1<<(vec[n-1]));
+    n--;
+    ans|=((ll)1<<(vec[n-1]));
+    n--;
+    
+  }
+   
+   
+    
     out(ans);
     
     
